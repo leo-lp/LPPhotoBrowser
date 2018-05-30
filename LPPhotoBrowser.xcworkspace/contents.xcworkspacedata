@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../LPLogger/LPLogger/LPLogger.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:LPPhotoBrowser/LPPhotoBrowser.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:LPPhotoBrowserDemo/LPPhotoBrowserDemo.xcodeproj">
+   </FileRef>
+</Workspace>

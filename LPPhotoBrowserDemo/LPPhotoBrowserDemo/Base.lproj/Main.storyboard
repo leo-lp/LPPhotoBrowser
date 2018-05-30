@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="I5h-8L-mCz">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--LPPhotoBrowser-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="LPMainViewController" customModule="LPPhotoBrowserDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FjR-z3-E08">
+                                <rect key="frame" x="20" y="84" width="335" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="5Ex-tK-fKi"/>
+                                </constraints>
+                                <state key="normal" title="图片浏览"/>
+                                <connections>
+                                    <segue destination="cob-H7-aQ4" kind="show" id="Qvd-6L-zw1"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="FjR-z3-E08" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="FhA-52-W8y"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FjR-z3-E08" secondAttribute="trailing" constant="20" id="TUz-tn-HyE"/>
+                            <constraint firstItem="FjR-z3-E08" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ZSE-P8-ARa"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="LPPhotoBrowser" id="SoC-pk-RGD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="822" y="-581"/>
+        </scene>
+        <!--Photo Browser Controller-->
+        <scene sceneID="igA-nc-6fi">
+            <objects>
+                <collectionViewController id="cob-H7-aQ4" customClass="LPPhotoBrowserController" customModule="LPPhotoBrowserDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="fnm-IE-zEd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="n12-vz-aUb">
+                            <size key="itemSize" width="100" height="100"/>
+                            <size key="headerReferenceSize" width="50" height="44"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LPPhotoBrowserCell" id="PpR-or-nmc" customClass="LPPhotoBrowserCell" customModule="LPPhotoBrowserDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KfM-GG-Sok">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        </imageView>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大图" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0Z-mi-wHE">
+                                            <rect key="frame" x="60" y="75" width="40" height="25"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="2Lj-Yw-eJg"/>
+                                                <constraint firstAttribute="width" constant="40" id="c0b-uX-DXY"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="h0Z-mi-wHE" secondAttribute="bottom" id="CMu-iK-qv7"/>
+                                    <constraint firstAttribute="trailing" secondItem="KfM-GG-Sok" secondAttribute="trailing" id="EY1-6F-fsY"/>
+                                    <constraint firstItem="KfM-GG-Sok" firstAttribute="leading" secondItem="PpR-or-nmc" secondAttribute="leading" id="Kvz-UO-qAL"/>
+                                    <constraint firstItem="KfM-GG-Sok" firstAttribute="top" secondItem="PpR-or-nmc" secondAttribute="top" id="UNY-A8-SXO"/>
+                                    <constraint firstAttribute="bottom" secondItem="KfM-GG-Sok" secondAttribute="bottom" id="fAr-xl-6pD"/>
+                                    <constraint firstAttribute="trailing" secondItem="h0Z-mi-wHE" secondAttribute="trailing" id="n8t-aO-rj3"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="bigPhotoFlagLabel" destination="h0Z-mi-wHE" id="0Xt-dr-Z5g"/>
+                                    <outlet property="imageView" destination="KfM-GG-Sok" id="vGG-jn-wbx"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="LPPhotoBrowserCellHeader" id="OAu-Ng-bZe" customClass="LPPhotoBrowserCellHeader" customModule="LPPhotoBrowserDemo" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="图片" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3m-io-rtD">
+                                    <rect key="frame" x="20" y="0.0" width="335" height="44"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                    <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="U3m-io-rtD" firstAttribute="top" secondItem="OAu-Ng-bZe" secondAttribute="top" id="AtK-MQ-lqg"/>
+                                <constraint firstItem="U3m-io-rtD" firstAttribute="leading" secondItem="OAu-Ng-bZe" secondAttribute="leading" constant="20" id="dtC-Uk-2Qk"/>
+                                <constraint firstAttribute="trailing" secondItem="U3m-io-rtD" secondAttribute="trailing" constant="20" id="e2l-Hm-RDa"/>
+                                <constraint firstAttribute="bottom" secondItem="U3m-io-rtD" secondAttribute="bottom" id="ybm-13-D4f"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="titleLabel" destination="U3m-io-rtD" id="hso-9E-xud"/>
+                            </connections>
+                        </collectionReusableView>
+                        <connections>
+                            <outlet property="dataSource" destination="cob-H7-aQ4" id="TCV-qb-2Pr"/>
+                            <outlet property="delegate" destination="cob-H7-aQ4" id="icc-B0-SVp"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nts-0Q-JZz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1488.8" y="-582.45877061469275"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wxu-qL-WfF">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="I5h-8L-mCz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9bH-e2-GF4">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="WMi-kd-ZmE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jyv-5h-hZ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="186" y="-582"/>
+        </scene>
+    </scenes>
+</document>
