@@ -1,5 +1,5 @@
 //
-//  LPPhotoBrowserViewModel.swift
+//  LPPhotoBrowserVM.swift
 //  LPPhotoBrowserDemo
 //
 //  Created by pengli on 2018/5/28.
@@ -9,11 +9,11 @@
 import UIKit
 import LPPhotoBrowser
 
-class LPPhotoBrowserViewModel {
+class LPPhotoBrowserVM {
     
     var imageNames: [String] = {
         var names: [String] = []
-        for idx in 1...18 {
+        for idx in 2...18 {
             let name = String(format: "girl%02d.jpg", idx)
             names.append(name)
         }
@@ -62,7 +62,6 @@ class LPPhotoBrowserViewModel {
             let indexPath = IndexPath(item: idx, section: 0)
             model.sourceImageView = self.imageView(in: collectionView,
                                                    at: indexPath)
-            
             models.append(model)
         }
         return models

@@ -167,25 +167,29 @@ extension LPPhotoBrowserAnimatedTransitioning {
 //}
 //
     private func outAnimationMove(using transitionContext: UIViewControllerContextTransitioning, animatingView: UIView) {
-        //    CGRect toFrame = [self getFrameInWindowWithView:[self getCurrentModelFromBrowser:browser].sourceImageView];
+        let containerView = transitionContext.containerView
         
-        //    UIImageView *fromImageView = [self getCurrentImageViewFromBrowser:browser];
-        //    if (CGRectEqualToRect(toFrame, CGRectZero) || !fromImageView) {
-        //        [self outAnimation_fadeWithContext:transitionContext containerView:containerView fromView:fromView];
-        //        return;
-        //    }
-        //
-        //    self.animateImageView.image = fromImageView.image;
-        //    self.animateImageView.frame = [self getFrameInWindowWithView:fromImageView];
-        //    [containerView addSubview:self.animateImageView];
-        //
-        //    fromImageView.hidden = YES;
-        //    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-        //        fromView.alpha = 0;
-        //        self.animateImageView.frame = toFrame;
-        //    } completion:^(BOOL finished) {
-        //        [self completeTransition:transitionContext isIn:NO];
-        //    }];
+        guard let info = self.currBrowserInfo
+            , let animateIv = animateIv(in: containerView, isCreate: false) else {
+            return completeTransition(using: transitionContext, isPresenting: false, iv: nil)
+        }
+        
+        let toFrame = frameInWindow(for: info.model.sourceImageView)
+        
+        let fromIv = info.fromIv
+        animateIv.image = fromIv.image
+        animateIv.frame = frameInWindow(for: fromIv)
+        
+        animateIv.isHidden = false
+        fromIv.isHidden = true
+        let duration = transitionDuration(using: transitionContext)
+        UIView.animate(withDuration: duration, animations: {
+            animatingView.alpha = 0
+            animateIv.frame = toFrame
+        }) { [weak self](finished) in
+            guard let `self` = self else { return }
+            self.completeTransition(using: transitionContext, isPresenting: false, iv: animateIv)
+        }
     }
 
 //- (void)outAnimation_noWithContext:(id <UIViewControllerContextTransitioning>)transitionContext {
@@ -294,7 +298,7 @@ extension LPPhotoBrowserAnimatedTransitioning {
     }
     
     /// 从图片浏览器获取当前显示的Model和animateIv信息
-    var currBrowserInfo: (model: LPPhotoBrowserModel, animateIv: UIImageView)? {
+    var currBrowserInfo: (model: LPPhotoBrowserModel, fromIv: UIImageView)? {
         guard let delegate = delegate else { return nil }
         let currentIndex = delegate.currentIndex
         let indexPath = IndexPath(item: currentIndex, section: 0)

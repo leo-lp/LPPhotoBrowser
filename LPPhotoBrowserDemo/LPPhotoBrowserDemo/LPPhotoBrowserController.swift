@@ -12,7 +12,7 @@ import LPPhotoBrowser
 class LPPhotoBrowserController: UICollectionViewController {
     var currentTouchIndexPath: IndexPath?
     
-    let vm = LPPhotoBrowserViewModel()
+    let vm = LPPhotoBrowserVM()
     
     override func viewDidLoad() {
         super.viewDidLoad()

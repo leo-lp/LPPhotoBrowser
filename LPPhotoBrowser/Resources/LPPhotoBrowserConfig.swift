@@ -13,7 +13,6 @@ import UIKit
 //{
 //    UIInterfaceOrientationMask supportAutorotateTypes;
 //    UIWindow *window;
-//    YBImageBrowserAnimatedTransitioning *animatedTransitioningManager;
 //}
 //
 //@property (nonatomic, strong) YBImageBrowserView *browserView;

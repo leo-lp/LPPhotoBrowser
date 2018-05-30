@@ -266,20 +266,16 @@ extension LPPhotoBrowser {
 
 // MARK: - Delegate funcs
 
-extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserViewDelegate, LPPhotoBrowserViewDataSource {
+extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserViewDelegate, LPPhotoBrowserViewDataSource, LPPhotoBrowserAnimatedDelegate {
     
     // MARK: - UIViewControllerTransitioningDelegate
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        //    [animatedTransitioningManager setInfoWithImageBrowser:self];
-        //    return animatedTransitioningManager;
-        return nil
+        return LPPhotoBrowserAnimatedTransitioning(delegate: self)
     }
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        //    [animatedTransitioningManager setInfoWithImageBrowser:self];
-        //    return animatedTransitioningManager;
-        return nil
+        return LPPhotoBrowserAnimatedTransitioning(delegate: self)
     }
     
     // MARK: - LPPhotoBrowserViewDelegate
@@ -468,7 +464,6 @@ extension LPPhotoBrowser {
 //    _yb_supportedInterfaceOrientations = UIInterfaceOrientationMaskAllButUpsideDown;
 //    _distanceBetweenPages = 18;
 //    _autoCountMaximumZoomScale = YES;
-//    animatedTransitioningManager = [YBImageBrowserAnimatedTransitioning new];
 //    _cancelLongPressGesture = NO;
 //    _inAnimation = YBImageBrowserAnimationMove;
 //    _outAnimation = YBImageBrowserAnimationMove;
