@@ -140,7 +140,7 @@ extension LPPhotoBrowserCellVM {
         isZooming = false
         let animateImageView = cell.animateImageView
         
-        guard animateImageView.superview == nil else { return }
+        guard animateImageView.superview != nil else { return }
         
         let maxHeight = cell.bounds.height
         guard maxHeight > 0 else { return }
