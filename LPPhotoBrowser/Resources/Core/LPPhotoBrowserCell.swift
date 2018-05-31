@@ -200,16 +200,17 @@ extension LPPhotoBrowserCell {
     }
     
     private func addNotifications() {
-        //let center = NotificationCenter.default
-        
-        //    [[NS defaultCenter] addObserver:self selector:@selector(yBImageBrowser_notification_willToRespondsDeviceOrientation) name:YBImageBrowser_notification_willToRespondsDeviceOrientation object:nil];
+        let center = NotificationCenter.default
+        center.addObserver(self,
+                           selector: #selector(deviceOrientationDidChange),
+                           name: .UIDeviceOrientationDidChange,
+                           object: nil)
     }
     
-    //- (void)yBImageBrowser_notification_willToRespondsDeviceOrientation {
-    //    if (self.animateImageView.superview) {
-    //        [self.animateImageView removeFromSuperview];
-    //    }
-    //}
+    @objc private func deviceOrientationDidChange() {
+        guard animateImageView.superview != nil else { return }
+        animateImageView.removeFromSuperview()
+    }
     
     private func loadImage(with model: LPPhotoBrowserModel, isPreview: Bool) {
         if let image = model.image {

@@ -129,6 +129,8 @@
 		18983C8D20BBF75D009141F4 /* LPPhotoBrowserCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserCellHeader.swift; sourceTree = "<group>"; };
 		18983C8F20BBF77D009141F4 /* LPPhotoBrowserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserCell.swift; sourceTree = "<group>"; };
 		18983C9320BC07E3009141F4 /* LPPhotoBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LPPhotoBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E81BAC3820C000C500DC2C16 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
+		E81BAC3920C000C500DC2C16 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -363,6 +365,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				18983C0520BBDE8E009141F4 /* Base */,
+				E81BAC3820C000C500DC2C16 /* ar */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				18983C0A20BBDE8F009141F4 /* Base */,
+				E81BAC3920C000C500DC2C16 /* ar */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -382,6 +386,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -442,6 +447,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

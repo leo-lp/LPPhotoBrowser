@@ -1,0 +1,12 @@
+
+/* Class = "UIButton"; normalTitle = "图片浏览"; ObjectID = "FjR-z3-E08"; */
+"FjR-z3-E08.normalTitle" = "图片浏览";
+
+/* Class = "UINavigationItem"; title = "LPPhotoBrowser"; ObjectID = "SoC-pk-RGD"; */
+"SoC-pk-RGD.title" = "LPPhotoBrowser";
+
+/* Class = "UILabel"; text = "图片"; ObjectID = "U3m-io-rtD"; */
+"U3m-io-rtD.text" = "图片";
+
+/* Class = "UILabel"; text = "大图"; ObjectID = "h0Z-mi-wHE"; */
+"h0Z-mi-wHE.text" = "大图";

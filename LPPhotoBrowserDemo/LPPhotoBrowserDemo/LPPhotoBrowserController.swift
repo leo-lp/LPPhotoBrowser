@@ -33,21 +33,19 @@ extension LPPhotoBrowserController: UICollectionViewDelegateFlowLayout {
     
     // MARK: - UICollectionViewDelegateFlowLayout
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        guard let collectionView = collectionView
+            , let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
         let wh = (view.frame.width - 18.0) / 4.0
-        return CGSize(width: wh, height: wh)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2.0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 2.0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0.0, left: 6.0, bottom: 0.0, right: 6.0)
+        layout.itemSize = CGSize(width: wh, height: wh)
+        layout.minimumLineSpacing = 2
+        layout.minimumInteritemSpacing = 2
+        layout.sectionInset = UIEdgeInsets(top: 0,
+                                           left: 6,
+                                           bottom: 0,
+                                           right: 6)
+        collectionView.collectionViewLayout = layout
     }
     
     // MARK: UICollectionViewDataSource
@@ -59,7 +57,7 @@ extension LPPhotoBrowserController: UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return vm.numberOfItems(in: section)
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LPPhotoBrowserCell", for: indexPath) as! LPPhotoBrowserCell
         let name = vm.modelForConfigCell(at: indexPath)

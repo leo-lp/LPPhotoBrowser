@@ -82,12 +82,6 @@ class LPPhotoBrowserView: UICollectionView {
         }
         contentOffset = CGPoint(x: bounds.width * CGFloat(index), y: 0)
     }
-    
-    @objc private func deviceOrientationDidChange() {
-        reloadData()
-        layoutIfNeeded()
-        scrollToPageIndex(currentIndex)
-    }
 }
 
 // MARK: - Delegate funcs
@@ -163,5 +157,15 @@ extension LPPhotoBrowserView: UICollectionViewDataSource, UICollectionViewDelega
     
     func photoBrowserCell(_ cell: LPPhotoBrowserCell, willShowBrowerViewWith timeInterval: TimeInterval) {
         pb_delegate?.photoBrowserView(self, willShowBrowerViewWith: timeInterval)
+    }
+}
+
+// MARK: - Private funcs
+
+extension LPPhotoBrowserView {
+    @objc private func deviceOrientationDidChange() {
+//        reloadData()
+//        layoutIfNeeded()
+//        scrollToPageIndex(currentIndex)
     }
 }

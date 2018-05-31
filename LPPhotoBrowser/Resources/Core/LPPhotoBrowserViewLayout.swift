@@ -30,24 +30,44 @@ class LPPhotoBrowserViewLayout: UICollectionViewFlowLayout {
         
         let centerX = collectionView.contentOffset.x + collectionView.bounds.width / 2.0
         
-        var min = CGFloat.greatestFiniteMagnitude
-        var minIdx: Int = 0
+        var currValue = CGFloat.greatestFiniteMagnitude
+        var currIdx: Int = 0
         for (idx, atts) in layoutAttsArray.enumerated() {
             let absValue = abs(centerX-atts.center.x)
-            if absValue < min {
-                min = absValue
-                minIdx = idx
+            if absValue < currValue {
+                currValue = absValue
+                currIdx = idx
             }
         }
         
+        let leftIdx = currIdx - 1
+        let rightIdx = currIdx + 1
+        
+        // 页间距
         let distance = LPPhotoBrowserConfig.shared.distanceBetweenPages
+        
+        /// 获取当前用户界面布局方向
+        let attribute = UIView.appearance().semanticContentAttribute
+        let direction = UIView.userInterfaceLayoutDirection(for: attribute)
+        let isLeftToRight = direction == .leftToRight
+        
         for (idx, atts) in layoutAttsArray.enumerated() {
-            if minIdx - 1 == idx {
-                let x = atts.center.x - distance
+            if leftIdx == idx {
+                let x: CGFloat
+                if isLeftToRight {
+                    x = atts.center.x - distance
+                } else {
+                    x = atts.center.x + distance
+                }
                 atts.center = CGPoint(x: x, y: atts.center.y)
             }
-            if minIdx + 1 == idx {
-                let x = atts.center.x + distance
+            if rightIdx == idx {
+                let x: CGFloat
+                if isLeftToRight {
+                    x = atts.center.x + distance
+                } else {
+                    x = atts.center.x - distance
+                }
                 atts.center = CGPoint(x: x, y: atts.center.y)
             }
         }

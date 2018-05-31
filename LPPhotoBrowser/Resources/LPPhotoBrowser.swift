@@ -108,9 +108,12 @@ open class LPPhotoBrowser: UIViewController {
         return LPPhotoBrowser.isHideStatusBar
     }
     
-    open override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         browserView.frame = view.bounds
+//        browserView.reloadData()
+//        browserView.layoutIfNeeded()
+//        browserView.scrollToPageIndex(currentIndex)
     }
 }
 
