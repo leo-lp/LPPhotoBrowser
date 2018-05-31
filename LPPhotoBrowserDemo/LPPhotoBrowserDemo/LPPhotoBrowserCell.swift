@@ -56,7 +56,7 @@ class LPPhotoBrowserCell: UICollectionViewCell {
         }
         
         imageView.kf.setImage(with: URL(string: URLString), placeholder: nil, options: nil, progressBlock: nil) { (img, error, type, url) in
-            print("error=\(error)")
+//            print("error=\(error)")
         }
     }
 }

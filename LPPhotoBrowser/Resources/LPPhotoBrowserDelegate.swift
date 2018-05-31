@@ -41,12 +41,6 @@ public extension LPPhotoBrowserDelegate {
 }
 
 
-
-
-
-
-
-
 //@interface YBImageBrowser : UIViewController <YBImageBrowserScreenOrientationProtocol>
 //
 ///**
@@ -78,11 +72,6 @@ public extension LPPhotoBrowserDelegate {
 // */
 //@property (nonatomic, strong, readonly) YBImageBrowserToolBar *toolBar;
 //
-///**
-// 取消长按手势的响应
-// */
-//@property (nonatomic, assign) BOOL cancelLongPressGesture;
-//
 //#pragma mark 动画相关 (animation)
 ///**
 // 入场动画类型
@@ -94,10 +83,7 @@ public extension LPPhotoBrowserDelegate {
 // */
 //@property (nonatomic, assign) YBImageBrowserAnimation outAnimation;
 //
-///**
-// 页与页之间的间距
-// */
-//@property (nonatomic, assign) CGFloat distanceBetweenPages;
+
 //
 //#pragma mark 屏幕方向相关 (screen direction)
 //
@@ -108,13 +94,7 @@ public extension LPPhotoBrowserDelegate {
 //@property (nonatomic, assign) UIInterfaceOrientationMask yb_supportedInterfaceOrientations;
 //
 //#pragma mark 缩放相关 (scale)
-//
-///**
-// 是否需要自动计算缩放
-// （默认是自动的，若改为NO，可用 YBImageBrowserModel 的 maximumZoomScale 设置希望当前图片的最大缩放比例）
-// */
-//@property (nonatomic, assign) BOOL autoCountMaximumZoomScale;
-//
+
 //#pragma mark 性能和内存相关 (performance and memory)
 //
 ///**

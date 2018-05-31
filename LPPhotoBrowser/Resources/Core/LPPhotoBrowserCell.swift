@@ -9,7 +9,7 @@
 import UIKit
 
 protocol LPPhotoBrowserCellDelegate: class {
-    func photoBrowserCell(_ cell: LPPhotoBrowserCell, longPressBegin: UILongPressGestureRecognizer)
+    func photoBrowserCell(_ cell: LPPhotoBrowserCell, longPressBegin press: UILongPressGestureRecognizer)
     func applyHidden(by cell: LPPhotoBrowserCell)
     
     func hideBrowerViewWhenStartDragging(in cell: LPPhotoBrowserCell)
@@ -23,7 +23,7 @@ class LPPhotoBrowserCell: UICollectionViewCell {
     
     weak var delegate: LPPhotoBrowserCellDelegate?
     
-    var autoCountMaximumZoomScale: Bool = true
+    
     
     // MARK: - Private Propertys
     
@@ -87,6 +87,8 @@ class LPPhotoBrowserCell: UICollectionViewCell {
         scrollView.frame = bounds
         scrollView.contentSize = bounds.size
         //self.progressBar.frame = self.bounds
+        
+        print("scrollView.frame=\(scrollView.frame)")
     }
 }
 
@@ -125,6 +127,7 @@ extension LPPhotoBrowserCell: UIScrollViewDelegate {
             frame.origin.x = (scrollViewWidth - frame.width) / 2.0
         }
         imageView.frame = frame
+        print("1.imageView.frame=\(imageView.frame)")
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -293,13 +296,17 @@ extension LPPhotoBrowserCell {
         scrollView.contentSize = info.contentSize
         scrollView.minimumZoomScale = info.minimumZoomScale
         
-        if autoCountMaximumZoomScale {
+        let config = LPPhotoBrowserConfig.shared
+        if config.autoCountMaximumZoomScale {
             scrollView.maximumZoomScale = info.maximumZoomScale * 1.2
         } else {
             scrollView.maximumZoomScale = model.maximumZoomScale
         }
         
         imageView.frame = info.imageFrame
+        
+        print("2.imageView.frame=\(imageView.frame)")
+        
         return info.imageFrame
     }
 }

@@ -9,9 +9,11 @@
 import UIKit
 
 protocol LPPhotoBrowserViewDelegate: class {
-    //- (void)yBImageBrowserView:(YBImageBrowserView *)imageBrowserView didScrollToIndex:(NSUInteger)index;
-    //
-    //- (void)yBImageBrowserView:(YBImageBrowserView *)imageBrowserView longPressBegin:(UILongPressGestureRecognizer *)gesture;
+    func photoBrowserView(_ browserView: LPPhotoBrowserView,
+                          didScrollTo index: Int)
+    
+    func photoBrowserView(_ browserView: LPPhotoBrowserView,
+                          longPressBegin press: UILongPressGestureRecognizer)
     
     func applyHidden(in browserView: LPPhotoBrowserView)
     
@@ -31,29 +33,13 @@ protocol LPPhotoBrowserViewDataSource: class {
 
 private let LPCellID = "LPPhotoBrowserCellID"
 class LPPhotoBrowserView: UICollectionView {
-    
-    //@interface YBImageBrowserView : UICollectionView <YBImageBrowserScreenOrientationProtocol>
-    
     weak var pb_delegate: LPPhotoBrowserViewDelegate?
     weak var pb_dataSource: LPPhotoBrowserViewDataSource?
     
     var currentIndex: Int = 0
 
-    //@property (nonatomic, assign) YBImageBrowserImageViewFillType verticalScreenImageViewFillType;
-    //@property (nonatomic, assign) YBImageBrowserImageViewFillType horizontalScreenImageViewFillType;
     //@property (nonatomic, strong) NSString *loadFailedText;
     //@property (nonatomic, strong) NSString *isScaleImageText;
-    //@property (nonatomic, assign) BOOL autoCountMaximumZoomScale;
-    //
-    //@interface YBImageBrowserView ()
-    //@end
-    //
-    //@implementation YBImageBrowserView
-    //
-    //@synthesize so_screenOrientation = _so_screenOrientation;
-    //@synthesize so_frameOfVertical = _so_frameOfVertical;
-    //@synthesize so_frameOfHorizontal = _so_frameOfHorizontal;
-    //@synthesize so_isUpdateUICompletely = _so_isUpdateUICompletely;
     
     deinit {
         log.warning("release memory.")
@@ -81,6 +67,12 @@ class LPPhotoBrowserView: UICollectionView {
         if #available(iOS 11.0, *) {
             contentInsetAdjustmentBehavior = .never
         }
+        
+        let center = NotificationCenter.default
+        center.addObserver(self,
+                           selector: #selector(deviceOrientationDidChange),
+                           name: .UIDeviceOrientationDidChange,
+                           object: nil)
     }
     
     func scrollToPageIndex(_ index: Int) {
@@ -90,34 +82,13 @@ class LPPhotoBrowserView: UICollectionView {
         }
         contentOffset = CGPoint(x: bounds.width * CGFloat(index), y: 0)
     }
+    
+    @objc private func deviceOrientationDidChange() {
+        reloadData()
+        layoutIfNeeded()
+        scrollToPageIndex(currentIndex)
+    }
 }
-
-//
-//#pragma mark YBImageBrowserScreenOrientationProtocol
-//
-//- (void)so_setFrameInfoWithSuperViewScreenOrientation:(YBImageBrowserScreenOrientation)screenOrientation superViewSize:(CGSize)size {
-//
-//    BOOL isVertical = screenOrientation == YBImageBrowserScreenOrientationVertical;
-//    CGRect rect0 = CGRectMake(0, 0, size.width, size.height), rect1 = CGRectMake(0, 0, size.height, size.width);
-//    _so_frameOfVertical = isVertical ? rect0 : rect1;
-//    _so_frameOfHorizontal = !isVertical ? rect0 : rect1;
-//}
-//
-//- (void)so_updateFrameWithScreenOrientation:(YBImageBrowserScreenOrientation)screenOrientation {
-//    if (screenOrientation == _so_screenOrientation) return;
-//
-//    _so_isUpdateUICompletely = NO;
-//
-//    self.frame = screenOrientation == YBImageBrowserScreenOrientationVertical ? _so_frameOfVertical : _so_frameOfHorizontal;
-//
-//    _so_screenOrientation = screenOrientation;
-//
-//    [self reloadData];
-//    [self layoutIfNeeded];
-//    [self scrollToPageWithIndex:self.currentIndex];
-//
-//    _so_isUpdateUICompletely = YES;
-//}
 
 // MARK: - Delegate funcs
 
@@ -143,10 +114,6 @@ extension LPPhotoBrowserView: UICollectionViewDataSource, UICollectionViewDelega
         
 //    cell.isScaleImageText = self.isScaleImageText;
 //    cell.loadFailedText = self.loadFailedText;
-//    cell.verticalScreenImageViewFillType = self.verticalScreenImageViewFillType;
-//    cell.horizontalScreenImageViewFillType = self.horizontalScreenImageViewFillType;
-//    cell.autoCountMaximumZoomScale = self.autoCountMaximumZoomScale;
-//    [cell so_updateFrameWithScreenOrientation:_so_screenOrientation];
        
         cell.bindData(with: model)
         return cell
@@ -154,30 +121,27 @@ extension LPPhotoBrowserView: UICollectionViewDataSource, UICollectionViewDelega
     
     // MARK: - UIScrollViewDelegate
     
-    //- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    //    CGFloat indexF = (scrollView.contentOffset.x / scrollView.bounds.size.width);
-    //    NSUInteger index = (NSUInteger)(indexF + 0.5);
-    //    if (index > [self collectionView:self numberOfItemsInSection:0]) return;
-    //    if (self.currentIndex != index && _so_isUpdateUICompletely) {
-    //        self.currentIndex = index;
-    //        if (_yb_delegate && [_yb_delegate respondsToSelector:@selector(yBImageBrowserView:didScrollToIndex:)]) {
-    //            [_yb_delegate yBImageBrowserView:self didScrollToIndex:self.currentIndex];
-    //        }
-    //    }
-    //}
-    //- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    //    NSArray<YBImageBrowserCell *>* array = (NSArray<YBImageBrowserCell *>*)[self visibleCells];
-    //    for (YBImageBrowserCell *cell in array) {
-    //        [cell reDownloadImageUrl];
-    //    }
-    //}
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let indexRatio = scrollView.contentOffset.x / scrollView.bounds.width
+        let index = Int(indexRatio + 0.5)
+        let numberOfItems = collectionView(self, numberOfItemsInSection: 0)
+        guard index < numberOfItems && currentIndex != index else { return }
+        
+        currentIndex = index
+        pb_delegate?.photoBrowserView(self, didScrollTo: index)
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard let visible = visibleCells as? [LPPhotoBrowserCell] else { return }
+        //    for (YBImageBrowserCell *cell in array) {
+        //        [cell reDownloadImageUrl];
+        //    }
+    }
     
     // MARK: - LPPhotoBrowserCellDelegate
     
-    func photoBrowserCell(_ cell: LPPhotoBrowserCell, longPressBegin: UILongPressGestureRecognizer) {
-        //    if (_yb_delegate && [_yb_delegate respondsToSelector:@selector(yBImageBrowserView:longPressBegin:)]) {
-        //        [_yb_delegate yBImageBrowserView:self longPressBegin:gesture];
-        //    }
+    func photoBrowserCell(_ cell: LPPhotoBrowserCell, longPressBegin press: UILongPressGestureRecognizer) {
+        pb_delegate?.photoBrowserView(self, longPressBegin: press)
     }
     
     func applyHidden(by cell: LPPhotoBrowserCell) {
@@ -200,10 +164,4 @@ extension LPPhotoBrowserView: UICollectionViewDataSource, UICollectionViewDelega
     func photoBrowserCell(_ cell: LPPhotoBrowserCell, willShowBrowerViewWith timeInterval: TimeInterval) {
         pb_delegate?.photoBrowserView(self, willShowBrowerViewWith: timeInterval)
     }
-}
-
-// MARK: - Private funcs
-
-extension LPPhotoBrowserView {
-    
 }

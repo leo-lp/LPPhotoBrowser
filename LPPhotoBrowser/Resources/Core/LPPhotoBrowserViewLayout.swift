@@ -9,7 +9,6 @@
 import UIKit
 
 class LPPhotoBrowserViewLayout: UICollectionViewFlowLayout {
-    var distanceBetweenPages: CGFloat = 18.0
     
     override func prepare() {
         super.prepare()
@@ -41,13 +40,14 @@ class LPPhotoBrowserViewLayout: UICollectionViewFlowLayout {
             }
         }
         
+        let distance = LPPhotoBrowserConfig.shared.distanceBetweenPages
         for (idx, atts) in layoutAttsArray.enumerated() {
             if minIdx - 1 == idx {
-                let x = atts.center.x - distanceBetweenPages
+                let x = atts.center.x - distance
                 atts.center = CGPoint(x: x, y: atts.center.y)
             }
             if minIdx + 1 == idx {
-                let x = atts.center.x + distanceBetweenPages
+                let x = atts.center.x + distance
                 atts.center = CGPoint(x: x, y: atts.center.y)
             }
         }

@@ -46,7 +46,7 @@ open class LPPhotoBrowserModel {
     open var sourceImageView: UIImageView?
     
     /// 最大缩放值 默认4
-    ///（若 YBImageBrowser 的 autoCountMaximumZoomScale 属性为 NO 有效）
+    ///（若LPPhotoBrowserConfig的autoCountMaximumZoomScale属性为false有效）
     var maximumZoomScale: CGFloat = 4
     
     /// 是否需要裁剪显示

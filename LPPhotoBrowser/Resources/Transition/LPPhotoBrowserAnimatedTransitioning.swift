@@ -8,9 +8,7 @@
 
 import UIKit
 
-protocol LPPhotoBrowserAnimatedDelegate: class {
-    
-}
+protocol LPPhotoBrowserAnimatedDelegate: class { }
 
 class LPPhotoBrowserAnimatedTransitioning: NSObject {
     private weak var delegate: (LPPhotoBrowser & LPPhotoBrowserAnimatedDelegate)?
@@ -46,10 +44,12 @@ extension LPPhotoBrowserAnimatedTransitioning: UIViewControllerAnimatedTransitio
         if isPresenting {
             transitionContext.containerView.addSubview(animatingView)
             switch LPPhotoBrowserAnimatedOptions.transitionAnimation {
-            case .none: break
-                //[self inAnimation_noWithContext:transitionContext];
-            case .fade: break
-                //[self inAnimation_fadeWithContext:transitionContext containerView:containerView toView:toView];
+            case .none:
+                inAnimationNone(using: transitionContext,
+                                animatingView: animatingView)
+            case .fade:
+                inAnimationFade(using: transitionContext,
+                                animatingView: animatingView)
             case .move:
                 inAnimationMove(using: transitionContext,
                                 animatingView: animatingView)
@@ -59,10 +59,12 @@ extension LPPhotoBrowserAnimatedTransitioning: UIViewControllerAnimatedTransitio
         /// 出场动效
         else {
             switch LPPhotoBrowserAnimatedOptions.transitionAnimation {
-            case .none: break
-            //[self outAnimation_noWithContext:transitionContext];
-            case .fade: break
-            //[self outAnimation_fadeWithContext:transitionContext containerView:containerView fromView:fromView];
+            case .none:
+                outAnimationNone(using: transitionContext,
+                                 animatingView: animatingView)
+            case .fade:
+                outAnimationFade(using: transitionContext,
+                                 animatingView: animatingView)
             case .move:
                 outAnimationMove(using: transitionContext,
                                  animatingView: animatingView)
@@ -104,30 +106,32 @@ extension LPPhotoBrowserAnimatedTransitioning {
     }
     
     private func inAnimationFade(using transitionContext: UIViewControllerContextTransitioning, animatingView: UIView) {
-//        let containerView = transitionContext.containerView
-//
-//        guard let info = showInfoForPresenting, info.image == nil else {
-//            return completeTransition(using: transitionContext,
-//                                      isPresenting: true,
-//                                      iv: nil)
-//        }
+        let containerView = transitionContext.containerView
         
-        //    __block CGRect toFrame = CGRectZero;
-        //    [YBImageBrowserCell countWithContainerSize:containerView.bounds.size image:image screenOrientation:browser.so_screenOrientation verticalFillType:browser.verticalScreenImageViewFillType horizontalFillType:browser.horizontalScreenImageViewFillType completed:^(CGRect imageFrame, CGSize contentSize, CGFloat minimumZoomScale, CGFloat maximumZoomScale) {
-        //        toFrame = imageFrame;
-        //    }];
-        //
-        //    self.animateImageView.image = image;
-        //    self.animateImageView.frame = toFrame;
-        //    [containerView addSubview:self.animateImageView];
-        //    toView.alpha = 0;
-        //    self.animateImageView.alpha = 0;
-        //    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-        //        toView.alpha = 1;
-        //        self.animateImageView.alpha = 1;
-        //    } completion:^(BOOL finished) {
-        //        [self completeTransition:transitionContext isIn:YES];
-        //    }];
+        guard let info = showInfoForPresenting
+            , let image = info.image
+            , let iv = animateIv(in: containerView, isCreate: true) else {
+            return completeTransition(using: transitionContext,
+                                      isPresenting: true,
+                                      iv: nil)
+        }
+        
+        let toFrame = LPPhotoBrowserCellVM.calculateImage(containerSize: containerView.bounds.size, image: image).imageFrame
+        
+        iv.image = image
+        iv.frame = toFrame
+        
+        animatingView.alpha = 0
+        iv.alpha = 0
+        let duration = transitionDuration(using: transitionContext)
+        UIView.animate(withDuration: duration, animations: {
+            animatingView.alpha = 1
+            iv.alpha = 1
+        }) { [weak self](finished) in
+            self?.completeTransition(using: transitionContext,
+                                     isPresenting: true,
+                                     iv: iv)
+        }
     }
     
     private func inAnimationNone(using transitionContext: UIViewControllerContextTransitioning, animatingView: UIView) {
@@ -141,35 +145,10 @@ extension LPPhotoBrowserAnimatedTransitioning {
 
 extension LPPhotoBrowserAnimatedTransitioning {
     
-
-//- (void)outAnimation_fadeWithContext:(id <UIViewControllerContextTransitioning>)transitionContext containerView:(UIView *)containerView fromView:(UIView *)fromView {
-//
-//    UIImageView *fromImageView = [self getCurrentImageViewFromBrowser:browser];
-//    if (!fromImageView) {
-//        [self completeTransition:transitionContext isIn:NO];
-//        return;
-//    }
-//
-//    self.animateImageView.image = fromImageView.image;
-//    self.animateImageView.frame = [self getFrameInWindowWithView:fromImageView];
-//    [containerView addSubview:self.animateImageView];
-//
-//    fromView.alpha = 1;
-//    self.animateImageView.alpha = 1;
-//    //因为可能是拖拽动画的视图，索性隐藏掉
-//    fromImageView.hidden = YES;
-//    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-//        fromView.alpha = 0;
-//        self.animateImageView.alpha = 0;
-//    } completion:^(BOOL finished) {
-//        [self completeTransition:transitionContext isIn:NO];
-//    }];
-//}
-//
     private func outAnimationMove(using transitionContext: UIViewControllerContextTransitioning, animatingView: UIView) {
         let containerView = transitionContext.containerView
         
-        guard let info = self.currBrowserInfo
+        guard let info = currBrowserInfo
             , let animateIv = animateIv(in: containerView, isCreate: false) else {
             return completeTransition(using: transitionContext, isPresenting: false, iv: nil)
         }
@@ -188,15 +167,47 @@ extension LPPhotoBrowserAnimatedTransitioning {
             animateIv.frame = toFrame
         }) { [weak self](finished) in
             guard let `self` = self else { return }
-            self.completeTransition(using: transitionContext, isPresenting: false, iv: animateIv)
+            self.completeTransition(using: transitionContext,
+                                    isPresenting: false,
+                                    iv: animateIv)
         }
     }
-
-//- (void)outAnimation_noWithContext:(id <UIViewControllerContextTransitioning>)transitionContext {
-//    UIImageView *fromImageView = [self getCurrentImageViewFromBrowser:browser];
-//    if (fromImageView) fromImageView.hidden = YES;
-//    [self completeTransition:transitionContext isIn:NO];
-//}
+    
+    private func outAnimationFade(using transitionContext: UIViewControllerContextTransitioning, animatingView: UIView) {
+        let containerView = transitionContext.containerView
+        
+        guard let info = currBrowserInfo
+            , let animateIv = animateIv(in: containerView, isCreate: false) else {
+            return completeTransition(using: transitionContext,
+                                      isPresenting: false,
+                                      iv: nil)
+        }
+        
+        let fromIv = info.fromIv
+        
+        animateIv.image = fromIv.image
+        animateIv.frame = frameInWindow(for: fromIv)
+        
+        animatingView.alpha = 1
+        animateIv.alpha = 1
+        
+        fromIv.isHidden = true
+        let duration = transitionDuration(using: transitionContext)
+        UIView.animate(withDuration: duration, animations: {
+            animatingView.alpha = 0
+            animateIv.alpha = 0
+        }) { [weak self](finished) in
+            guard let `self` = self else { return }
+            self.completeTransition(using: transitionContext,
+                                    isPresenting: false,
+                                    iv: animateIv)
+        }
+    }
+    
+    private func outAnimationNone(using transitionContext: UIViewControllerContextTransitioning, animatingView: UIView) {
+        currBrowserInfo?.fromIv.isHidden = true
+        completeTransition(using: transitionContext, isPresenting: false, iv: nil)
+    }
 }
 
 // MARK: - Private funcs (Common)
@@ -282,9 +293,7 @@ extension LPPhotoBrowserAnimatedTransitioning {
             
             return (frame, image)
         }
-        
         //    } else if (browser.dataSource) {
-        //
         //        //用户使用了数据源代理
         //        UIImageView *tempImageView = [browser.dataSource respondsToSelector:@selector(imageViewOfTouchForImageBrowser:)] ? [browser.dataSource imageViewOfTouchForImageBrowser:browser] : nil;
         //        _fromFrame = tempImageView ? [self getFrameInWindowWithView:tempImageView] : CGRectZero;
