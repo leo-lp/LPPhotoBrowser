@@ -25,11 +25,7 @@ open class LPPhotoBrowser: UIViewController {
     open weak var delegate: LPPhotoBrowserDelegate?
     
     open var dataModels: [LPPhotoBrowserModel]?
-    open var currentIndex: Int = 0 {
-        didSet {
-            if isViewDidAppear { browserView.scrollToPageIndex(currentIndex) }
-        }
-    }
+    open var currentIndex: Int = 0
     
     open var isCancelLongPressGesture: Bool = false /// 取消长按手势的响应
     
