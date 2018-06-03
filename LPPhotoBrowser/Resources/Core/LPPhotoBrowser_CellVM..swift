@@ -88,13 +88,13 @@ extension LPPhotoBrowser_CellVM {
         guard zoomView.frame.width > 0
             && zoomView.frame.height > 0 else { return }
         
-        if !LPPhotoBrowser.isControllerPreferredForStatusBar {
-            let isStatusBarHidden = UIApplication.shared.isStatusBarHidden
-            let isHideBefore = LPPhotoBrowser.isHideStatusBarBefore
-            if isStatusBarHidden != isHideBefore {
-                UIApplication.shared.isStatusBarHidden = isHideBefore
-            }
-        }
+//        if !LPPhotoBrowser.isControllerPreferredForStatusBar {
+//            let isStatusBarHidden = UIApplication.shared.isStatusBarHidden
+//            let isHideBefore = LPPhotoBrowser.isHideStatusBarBefore
+//            if isStatusBarHidden != isHideBefore {
+//                UIApplication.shared.isStatusBarHidden = isHideBefore
+//            }
+//        }
         
         cell.delegate?.hideBrowerViewWhenStartDragging(in: cell)
         
@@ -167,13 +167,13 @@ extension LPPhotoBrowser_CellVM {
             UIView.animate(withDuration: duration, animations: {
                 animateImageView.frame = self.frameOfOriginalOfImageView
             }) { [weak self](finished) in
-                if !LPPhotoBrowser.isControllerPreferredForStatusBar {
-                    let isStatusBarHidden = UIApplication.shared.isStatusBarHidden
-                    let isHide = LPPhotoBrowser.isHideStatusBar
-                    if isStatusBarHidden != isHide {
-                        UIApplication.shared.isStatusBarHidden = isHide
-                    }
-                }
+//                if !LPPhotoBrowser.isControllerPreferredForStatusBar {
+//                    let isStatusBarHidden = UIApplication.shared.isStatusBarHidden
+//                    let isHide = LPPhotoBrowser.isHideStatusBar
+//                    if isStatusBarHidden != isHide {
+//                        UIApplication.shared.isStatusBarHidden = isHide
+//                    }
+//                }
                 
                 guard let `self` = self else { return }
                 scrollView.contentOffset = self.startOffsetOfScrollView
@@ -220,15 +220,15 @@ extension LPPhotoBrowser_CellVM {
         
         let config = LPPhotoBrowserConfig.shared
         
-        let fillType: LPPhotoBrowserViewFillType
-        if UIApplication.shared.isOrientationVertical {
-            fillType = config.verticalScreenImageViewFillType
-        } else {
-            fillType = config.horizontalScreenImageViewFillType
-        }
-        
-        switch fillType {
-        case .fullWidth:
+//        let fillType: LPPhotoBrowserViewFillType
+//        if UIApplication.shared.isOrientationVertical {
+//            fillType = config.verticalScreenImageViewFillType
+//        } else {
+//            fillType = config.horizontalScreenImageViewFillType
+//        }
+//
+//        switch fillType {
+//        case .fullWidth:
             width = containerWidth
             height = containerWidth * (imageSize.height / imageSize.width)
             if imageSize.width / imageSize.height >= containerScale {
@@ -244,22 +244,22 @@ extension LPPhotoBrowser_CellVM {
                                      height: height)
                 minimumZoomScale = containerHeight / height
             }
-        case .completely:
-            if imageSize.width / imageSize.height >= containerScale {
-                width = containerWidth
-                height = containerWidth * (imageSize.height / imageSize.width)
-                x = 0
-                y = (containerHeight - height) / 2.0
-            } else {
-                height = containerHeight
-                width = containerHeight * (imageSize.width / imageSize.height)
-                x = (containerWidth - width) / 2.0
-                y = 0
-            }
-            contentSize = CGSize(width: containerWidth,
-                                 height: containerHeight)
-            minimumZoomScale = 1
-        }
+//        case .completely:
+//            if imageSize.width / imageSize.height >= containerScale {
+//                width = containerWidth
+//                height = containerWidth * (imageSize.height / imageSize.width)
+//                x = 0
+//                y = (containerHeight - height) / 2.0
+//            } else {
+//                height = containerHeight
+//                width = containerHeight * (imageSize.width / imageSize.height)
+//                x = (containerWidth - width) / 2.0
+//                y = 0
+//            }
+//            contentSize = CGSize(width: containerWidth,
+//                                 height: containerHeight)
+//            minimumZoomScale = 1
+//        }
         
         let frame = CGRect(x: x, y: y, width: width, height: height)
         return (frame, contentSize, minimumZoomScale, maximumZoomScale)

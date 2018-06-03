@@ -13,7 +13,6 @@ enum LPPhotoBrowserViewFillType {
     case completely // 保证图片完整显示情况下最大限度填充
 }
 
-
 //@class YBImageBrowserModel;
 //
 //typedef void(^YBImageBrowserModelDownloadProgressBlock)(YBImageBrowserModel *backModel, NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL);

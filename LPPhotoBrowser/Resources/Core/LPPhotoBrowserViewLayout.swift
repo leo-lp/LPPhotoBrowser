@@ -21,6 +21,7 @@ class LPPhotoBrowserViewLayout: UICollectionViewFlowLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        print("rect=\(rect)")
         guard let layoutAttsArray = super.layoutAttributesForElements(in: rect)
             else { return nil }
         
@@ -51,27 +52,32 @@ class LPPhotoBrowserViewLayout: UICollectionViewFlowLayout {
         let direction = UIView.userInterfaceLayoutDirection(for: attribute)
         let isLeftToRight = direction == .leftToRight
         
+        var attributes: [UICollectionViewLayoutAttributes] = []
         for (idx, atts) in layoutAttsArray.enumerated() {
+            let attsCopy = atts.copy() as! UICollectionViewLayoutAttributes
+            
             if leftIdx == idx {
                 let x: CGFloat
                 if isLeftToRight {
-                    x = atts.center.x - distance
+                    x = attsCopy.center.x - distance
                 } else {
-                    x = atts.center.x + distance
+                    x = attsCopy.center.x + distance
                 }
-                atts.center = CGPoint(x: x, y: atts.center.y)
+                attsCopy.center = CGPoint(x: x, y: atts.center.y)
             }
             if rightIdx == idx {
                 let x: CGFloat
                 if isLeftToRight {
-                    x = atts.center.x + distance
+                    x = attsCopy.center.x + distance
                 } else {
-                    x = atts.center.x - distance
+                    x = attsCopy.center.x - distance
                 }
-                atts.center = CGPoint(x: x, y: atts.center.y)
+                attsCopy.center = CGPoint(x: x, y: atts.center.y)
             }
+            
+            attributes.append(attsCopy)
         }
-        return layoutAttsArray
+        return attributes
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {

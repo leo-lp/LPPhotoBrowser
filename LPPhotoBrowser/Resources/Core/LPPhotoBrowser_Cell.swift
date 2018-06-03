@@ -1,3 +1,97 @@
+
+//// MARK: - Private funcs
+//
+//extension LPPhotoBrowser_Cell {
+//
+//    private func addNotifications() {
+//        let center = NotificationCenter.default
+//        center.addObserver(self,
+//                           selector: #selector(deviceOrientationDidChange),
+//                           name: .UIDeviceOrientationDidChange,
+//                           object: nil)
+//    }
+//
+//    @objc private func deviceOrientationDidChange() {
+//        guard animateImageView.superview != nil else { return }
+//        animateImageView.removeFromSuperview()
+//    }
+//
+//    private func loadImage(with model: LPPhotoBrowserModel, isPreview: Bool) {
+//        if let image = model.image {
+//            // 若是压缩过后的图片，用原图计算缩放比例
+//            if model.needCutToShow {
+//                //[self countLayoutWithImage:[model valueForKey:YBImageBrowserModel_KVCKey_largeImage] completed:nil];
+//            } else {
+//                calculateLayout(model, image: image)
+//            }
+//            imageView.image = image
+//        } else if model.needCutToShow {
+//        }
+//    }
+//
+//    @objc private func singleGesture(_ tap: UITapGestureRecognizer) {
+//        delegate?.applyHidden(by: self)
+//    }
+//
+//    @objc private func doubleGesture(_ tap: UITapGestureRecognizer) {
+//        let point = tap.location(in: imageView)
+//        guard imageView.bounds.contains(point) else { return }
+//
+//        if scrollView.zoomScale == scrollView.maximumZoomScale {
+//            scrollView.setZoomScale(1, animated: true)
+//        } else {
+//            /// 让指定区域尽可能大的显示在可视区域
+//            let rect = CGRect(x: point.x, y: point.y, width: 1, height: 1)
+//            scrollView.zoom(to: rect, animated: true)
+//        }
+//    }
+//
+//    @objc private func longPressGesture(_ press: UILongPressGestureRecognizer) {
+//        guard press.state == .began else { return }
+//        delegate?.photoBrowserCell(self, longPressBegin: press)
+//    }
+//}
+//
+//// MARK: - Image calculate funcs
+//
+//extension LPPhotoBrowser_Cell {
+//
+//    @discardableResult
+//    private func calculateLayout(_ model: LPPhotoBrowserModel,
+//                                 image: UIImage) -> CGRect {
+//        let info = LPPhotoBrowser_CellVM.calculateImage(containerSize: scrollView.bounds.size, image: image)
+//
+//        scrollView.contentSize = info.contentSize
+//        scrollView.minimumZoomScale = info.minimumZoomScale
+//
+//        let config = LPPhotoBrowserConfig.shared
+//        if config.autoCountMaximumZoomScale {
+//            scrollView.maximumZoomScale = info.maximumZoomScale * 1.2
+//        } else {
+//            scrollView.maximumZoomScale = model.maximumZoomScale
+//        }
+//
+//        imageView.frame = info.imageFrame
+//
+//        print("2.imageView.frame=\(imageView.frame)")
+//
+//        return info.imageFrame
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //
 //  LPPhotoBrowser_Cell.swift
 //  LPPhotoBrowser

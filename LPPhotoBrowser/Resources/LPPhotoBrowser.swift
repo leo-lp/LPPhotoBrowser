@@ -8,37 +8,35 @@
 
 import UIKit
 
-open class LPPhotoBrowser: UIViewController {
+public class LPPhotoBrowser: UIViewController {
     
     // MARK: - Static Propertys
    
-    /// 状态栏是否是控制器优先
-    static var isControllerPreferredForStatusBar: Bool = true
-    static var maxDisplaySize: CGFloat = 3500
-    static var isHideStatusBar: Bool = true
-    
-    /// 状态栏在模态切换之前是否隐藏
-    static var isHideStatusBarBefore: Bool = false
+//    /// 状态栏是否是控制器优先
+//    static var isControllerPreferredForStatusBar: Bool = true
+//    static var maxDisplaySize: CGFloat = 3500
+//    static var isHideStatusBar: Bool = true
+//    /// 状态栏在模态切换之前是否隐藏
+//    static var isHideStatusBarBefore: Bool = false
     
     // MARK: - Custom Propertys
     
-    open weak var delegate: LPPhotoBrowserDelegate?
+    public weak var dataSource: LPPhotoBrowserDataSource?
+    public weak var delegate: LPPhotoBrowserDelegate?
     
-    open var dataModels: [LPPhotoBrowserModel]?
-    open var currentIndex: Int = 0
+    public private(set) var currentIndex: Int = 0
     
-    open var isCancelLongPressGesture: Bool = false /// 取消长按手势的响应
+    public private(set) var type: LPPhotoBrowserType = .image
+    
+//    open var isCancelLongPressGesture: Bool = false /// 取消长按手势的响应
     
     private var isViewDidAppear: Bool = false
     private var backgroundColor: UIColor = UIColor.black
     
-    private(set) lazy var browserView: LPPhotoBrowserView = {
+    private(set) var browserView: LPPhotoBrowserView = {
         let layout = LPPhotoBrowserViewLayout()
-        let browser = LPPhotoBrowserView(frame: .zero,
-                                         collectionViewLayout: layout)
-        browser.pb_delegate = self
-        browser.pb_dataSource = self
-        return browser
+        return LPPhotoBrowserView(frame: .zero,
+                                  collectionViewLayout: layout)
     }()
     
     // MARK: - Override Funcs
@@ -48,8 +46,10 @@ open class LPPhotoBrowser: UIViewController {
         log.warning("release memory.")
     }
     
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    public init(type: LPPhotoBrowserType, index: Int) {
+        super.init(nibName: nil, bundle: nil)
+        self.type = type
+        self.currentIndex = index
         commonInit()
     }
     
@@ -58,62 +58,59 @@ open class LPPhotoBrowser: UIViewController {
         commonInit()
     }
     
-    open override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = backgroundColor
         
-        if LPPhotoBrowser.isControllerPreferredForStatusBar
-            && LPPhotoBrowser.isHideStatusBar
-            && !LPPhotoBrowser.isHideStatusBarBefore {
-            configStatusBarHide(true)
-        }
+//        if LPPhotoBrowser.isControllerPreferredForStatusBar
+//            && LPPhotoBrowser.isHideStatusBar
+//            && !LPPhotoBrowser.isHideStatusBarBefore {
+//            configStatusBarHide(true)
+//        }
     }
     
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let isHidden = UIApplication.shared.isStatusBarHidden
-        LPPhotoBrowser.isHideStatusBarBefore = isHidden
-    }
+//    open override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        let isHidden = UIApplication.shared.isStatusBarHidden
+//        LPPhotoBrowser.isHideStatusBarBefore = isHidden
+//    }
     
-    open override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard !isViewDidAppear else { return }
-        
-        setupBrowserView()
-        setupToolBar()
-        
+        browserView.dataSource = self
+        browserView.delegate = self
         view.addSubview(browserView)
         
-//        [self.view addSubview:self.toolBar];
-        browserView.scrollToPageIndex(currentIndex)
+        browserView.scrollToIndex(currentIndex)
         
 //        [self setTooBarNumberCountWithCurrentIndex:_currentIndex+1];
-
+        
         isViewDidAppear = true
         
         browserView.layer.borderColor = UIColor.red.cgColor
         browserView.layer.borderWidth = 1
     }
     
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if LPPhotoBrowser.isControllerPreferredForStatusBar
-            && LPPhotoBrowser.isHideStatusBar
-            && !LPPhotoBrowser.isHideStatusBarBefore {
-            configStatusBarHide(false)
-        }
-    }
+//    open override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        if LPPhotoBrowser.isControllerPreferredForStatusBar
+//            && LPPhotoBrowser.isHideStatusBar
+//            && !LPPhotoBrowser.isHideStatusBarBefore {
+//            configStatusBarHide(false)
+//        }
+//    }
+//
+//    open override var prefersStatusBarHidden: Bool {
+//        return LPPhotoBrowser.isHideStatusBar
+//    }
     
-    open override var prefersStatusBarHidden: Bool {
-        return LPPhotoBrowser.isHideStatusBar
-    }
-    
-    open override func viewDidLayoutSubviews() {
+    public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         browserView.frame = view.bounds
 //        browserView.reloadData()
 //        browserView.layoutIfNeeded()
-//        browserView.scrollToPageIndex(currentIndex)
+        browserView.scrollToIndex(currentIndex)
     }
 }
 
@@ -121,14 +118,10 @@ open class LPPhotoBrowser: UIViewController {
 
 extension LPPhotoBrowser {
     
-    open func show(from controller: UIViewController? = nil,
+    public func show(from controller: UIViewController? = nil,
                    completion: (() -> Void)?) {
         guard let vc = controller ?? UIViewController.topController()
             else { return }
-        
-        guard let models = dataModels, models.count > 0 else {
-            return log.error("dataModels is invalid.")
-        }
         
         //    if (self.dataArray) {
         //    } else if (_dataSource && [_dataSource respondsToSelector:@selector(numberInYBImageBrowser:)]) {
@@ -143,17 +136,71 @@ extension LPPhotoBrowser {
         vc.present(self, animated: true, completion: completion)
     }
     
-    open func hide(_ completion: (() -> Void)?) {
-        if !LPPhotoBrowser.isControllerPreferredForStatusBar {
-            UIApplication.shared.isStatusBarHidden = LPPhotoBrowser.isHideStatusBarBefore
-        }
+    public func hide(_ completion: (() -> Void)?) {
+//        if !LPPhotoBrowser.isControllerPreferredForStatusBar {
+//            UIApplication.shared.isStatusBarHidden = LPPhotoBrowser.isHideStatusBarBefore
+//        }
         dismiss(animated: true, completion: completion)
     }
 }
 
 // MARK: - Delegate funcs
 
-extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserViewDelegate, LPPhotoBrowserViewDataSource, LPPhotoBrowserAnimatedDelegate {
+extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    // MARK: - UICollectionViewDataSource
+    
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let dataSource = dataSource else { return 0 }
+        return dataSource.photoBrowser(self, numberOf: type)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let source = dataSource?.photoBrowser(self,
+                                              sourceAt: indexPath.item,
+                                              of: type)
+        return browserView.configCell(with: source, at: indexPath)
+    }
+    
+    // MARK: - UICollectionViewDelegate
+    
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? LPPhotoBrowserCell {
+            cell.recoverSubviews()
+        }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? LPPhotoBrowserCell {
+            cell.recoverSubviews()
+        }
+    }
+    
+//    // MARK: - UIScrollViewDelegate
+//
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let indexRatio = scrollView.contentOffset.x / scrollView.bounds.width
+//        let index = Int(indexRatio + 0.5)
+//        let numberOfItems = collectionView(self, numberOfItemsInSection: 0)
+//        guard index < numberOfItems && currentIndex != index else { return }
+//
+//        currentIndex = index
+//        pb_delegate?.photoBrowserView(self, didScrollTo: index)
+//    }
+//
+//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        guard let visible = visibleCells as? [LPPhotoBrowser_Cell] else { return }
+//        //    for (YBImageBrowserCell *cell in array) {
+//        //        [cell reDownloadImageUrl];
+//        //    }
+//    }
+}
+
+extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserAnimatedDelegate {
     
     // MARK: - UIViewControllerTransitioningDelegate
     
@@ -168,14 +215,14 @@ extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserV
     // MARK: - LPPhotoBrowserViewDelegate
     
     func photoBrowserView(_ browserView: LPPhotoBrowserView, didScrollTo index: Int) {
-        currentIndex = index
+//        currentIndex = index
         //    [self setTooBarNumberCountWithCurrentIndex:index+1];
         
-        delegate?.photoBrowser(self, didScrollTo: index)
+        //delegate?.photoBrowser(self, didScrollTo: index)
     }
     
     func photoBrowserView(_ browserView: LPPhotoBrowserView, longPressBegin press: UILongPressGestureRecognizer) {
-        guard !isCancelLongPressGesture else { return }
+//        guard !isCancelLongPressGesture else { return }
         
         //    if (self.fuctionDataArray.count > 1) {
         //        //弹出功能栏
@@ -206,23 +253,23 @@ extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserV
     // MARK: - LPPhotoBrowserViewDataSource
     
     func numberOfPhotos(in browserView: LPPhotoBrowserView) -> Int {
-        if let models = dataModels {
-            let count = models.count
-            //        [self setTooBarHideWithDataSourceCount:count];
-            return count
-        }
-        //    } else if (_dataSource && [_dataSource respondsToSelector:@selector(numberInYBImageBrowser:)]) {
-        //        NSUInteger count = [_dataSource numberInYBImageBrowser:self];
-        //        [self setTooBarHideWithDataSourceCount:count];
-        //        return count;
-        //    }
+//        if let models = dataModels {
+//            let count = models.count
+//            //        [self setTooBarHideWithDataSourceCount:count];
+//            return count
+//        }
+//        //    } else if (_dataSource && [_dataSource respondsToSelector:@selector(numberInYBImageBrowser:)]) {
+//        //        NSUInteger count = [_dataSource numberInYBImageBrowser:self];
+//        //        [self setTooBarHideWithDataSourceCount:count];
+//        //        return count;
+//        //    }
         return 0
     }
     
     func photoBrowserView(_ browserView: LPPhotoBrowserView, modelForCellAt index: Int) -> LPPhotoBrowserModel? {
-        if let models = dataModels, models.count > index {
-            return models[index]
-        }
+//        if let models = dataModels, models.count > index {
+//            return models[index]
+//        }
 //        else if (_dataSource && [_dataSource respondsToSelector:@selector(yBImageBrowser:modelForCellAtIndex:)]) {
             //        return [_dataSource yBImageBrowser:self modelForCellAtIndex:index];
             //    }
@@ -280,48 +327,30 @@ extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserV
 extension LPPhotoBrowser {
     
     private func commonInit() {
-        transitioningDelegate = self
-        modalPresentationStyle = .custom
-        
-//    isDealViewDidAppear = NO;
-//    _cancelLongPressGesture = NO;
-//    _yb_supportedInterfaceOrientations = UIInterfaceOrientationMaskAllButUpsideDown;
-//    _cancelLongPressGesture = NO;
-//    _inAnimation = YBImageBrowserAnimationMove;
-//    _outAnimation = YBImageBrowserAnimationMove;
-//    window = [YBImageBrowserUtilities getNormalWindow];
+//        transitioningDelegate = self
+//        modalPresentationStyle = .custom
 //    self.fuctionDataArray = @[[YBImageBrowserFunctionModel functionModelForSavePictureToAlbum]];
-        
         statusBarConfigByInfoPlist()
     }
     
     private func statusBarConfigByInfoPlist() {
-        guard let path = Bundle.main.path(forResource: "Info", ofType: "plist")
-            , let data = FileManager.default.contents(atPath: path) else { return }
-        var format = PropertyListSerialization.PropertyListFormat.xml
-        do {
-            let objc = try PropertyListSerialization.propertyList(from: data, options: .mutableContainersAndLeaves, format: &format)
-            guard let dict = objc as? [String: AnyObject] else { return }
-            let flag = dict["UIViewControllerBasedStatusBarAppearance"]?.boolValue
-            LPPhotoBrowser.isControllerPreferredForStatusBar = flag ?? true
-        } catch {
-            print(error)
-        }
+//        guard let path = Bundle.main.path(forResource: "Info", ofType: "plist")
+//            , let data = FileManager.default.contents(atPath: path) else { return }
+//        var format = PropertyListSerialization.PropertyListFormat.xml
+//        do {
+//            let objc = try PropertyListSerialization.propertyList(from: data, options: .mutableContainersAndLeaves, format: &format)
+//            guard let dict = objc as? [String: AnyObject] else { return }
+//            let flag = dict["UIViewControllerBasedStatusBarAppearance"]?.boolValue
+//            LPPhotoBrowser.isControllerPreferredForStatusBar = flag ?? true
+//        } catch {
+//            print(error)
+//        }
     }
     
     private func configStatusBarHide( _ hide: Bool) {
         guard let statusBarWindow = UIApplication.shared.value(forKey: "statusBarWindow") as? NSObject
             , let statusBar = statusBarWindow.value(forKey: "statusBar") as? UIView else { return }
         statusBar.alpha = hide ? 0 : 1
-    }
-
-    private func setupBrowserView() {
-//    self.browserView.loadFailedText = self.copywriter.loadFailedText;
-//    self.browserView.isScaleImageText = self.copywriter.isScaleImageText;
-    }
-    
-    private func setupToolBar() {
-        
     }
     
     ////获取屏幕展示的方向

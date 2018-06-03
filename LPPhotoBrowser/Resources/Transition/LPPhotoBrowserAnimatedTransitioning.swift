@@ -88,7 +88,7 @@ extension LPPhotoBrowserAnimatedTransitioning {
                                       iv: nil)
         }
         
-        let toFrame = LPPhotoBrowserCellVM.calculateImage(containerSize: containerView.bounds.size, image: image).imageFrame
+        let toFrame = LPPhotoBrowser_CellVM.calculateImage(containerSize: containerView.bounds.size, image: image).imageFrame
         
         iv.image = image
         iv.frame = info.fromFrame
@@ -116,7 +116,7 @@ extension LPPhotoBrowserAnimatedTransitioning {
                                       iv: nil)
         }
         
-        let toFrame = LPPhotoBrowserCellVM.calculateImage(containerSize: containerView.bounds.size, image: image).imageFrame
+        let toFrame = LPPhotoBrowser_CellVM.calculateImage(containerSize: containerView.bounds.size, image: image).imageFrame
         
         iv.image = image
         iv.frame = toFrame
@@ -220,10 +220,10 @@ extension LPPhotoBrowserAnimatedTransitioning {
         if let iv = iv {
             isPresenting ? (iv.isHidden = true) : iv.removeFromSuperview()
         }
-        
-        if isPresenting && !LPPhotoBrowser.isControllerPreferredForStatusBar {
-            UIApplication.shared.isStatusBarHidden = LPPhotoBrowser.isHideStatusBar
-        }
+//        
+//        if isPresenting && !LPPhotoBrowser.isControllerPreferredForStatusBar {
+//            UIApplication.shared.isStatusBarHidden = LPPhotoBrowser.isHideStatusBar
+//        }
         
         transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
     }
@@ -284,15 +284,15 @@ extension LPPhotoBrowserAnimatedTransitioning {
     private var showInfoForPresenting: (fromFrame: CGRect, image: UIImage?)? {
         guard let delegate = delegate else { return nil }
         
-        let models = delegate.dataModels
-        let index = delegate.currentIndex
-        if let models = models, models.count > index {
-            let model = models[index]
-            let frame = frameInWindow(for: model.sourceImageView)
-            let image = posterImage(with: model, preview: false)
-            
-            return (frame, image)
-        }
+//        let models = delegate.dataModels
+//        let index = delegate.currentIndex
+//        if let models = models, models.count > index {
+//            let model = models[index]
+//            let frame = frameInWindow(for: model.sourceImageView)
+//            let image = posterImage(with: model, preview: false)
+//            
+//            return (frame, image)
+//        }
         //    } else if (browser.dataSource) {
         //        //用户使用了数据源代理
         //        UIImageView *tempImageView = [browser.dataSource respondsToSelector:@selector(imageViewOfTouchForImageBrowser:)] ? [browser.dataSource imageViewOfTouchForImageBrowser:browser] : nil;
@@ -313,7 +313,7 @@ extension LPPhotoBrowserAnimatedTransitioning {
         let indexPath = IndexPath(item: currentIndex, section: 0)
         let browserView = delegate.browserView
        
-        guard let cell = browserView.cellForItem(at: indexPath) as? LPPhotoBrowserCell
+        guard let cell = browserView.cellForItem(at: indexPath) as? LPPhotoBrowser_Cell
             , let model = cell.vm.model else { return nil }
         
         let browserAnimateIv = cell.animateImageView

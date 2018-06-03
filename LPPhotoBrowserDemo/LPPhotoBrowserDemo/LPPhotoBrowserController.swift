@@ -23,16 +23,6 @@ class LPPhotoBrowserController: UICollectionViewController {
         navigationItem.rightBarButtonItem = right
     }
     
-    @objc func clearCacheButtonClicked(_ sender: UIBarButtonItem) {
-        KingfisherManager.shared.cache.clearMemoryCache()
-        KingfisherManager.shared.cache.clearDiskCache()
-    }
-}
-
-extension LPPhotoBrowserController: UICollectionViewDelegateFlowLayout {
-    
-    // MARK: - UICollectionViewDelegateFlowLayout
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard let collectionView = collectionView
@@ -47,6 +37,14 @@ extension LPPhotoBrowserController: UICollectionViewDelegateFlowLayout {
                                            right: 6)
         collectionView.collectionViewLayout = layout
     }
+    
+    @objc func clearCacheButtonClicked(_ sender: UIBarButtonItem) {
+        KingfisherManager.shared.cache.clearMemoryCache()
+        KingfisherManager.shared.cache.clearDiskCache()
+    }
+}
+
+extension LPPhotoBrowserController {
     
     // MARK: UICollectionViewDataSource
     
@@ -76,33 +74,38 @@ extension LPPhotoBrowserController: UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         currentTouchIndexPath = indexPath
         if indexPath.section == 0 {
-            browserLocalImages(at: indexPath)
+            let browser = LPPhotoBrowser(type: .image, index: indexPath.row)
+            browser.dataSource = self
+            browser.delegate = self
+//            browser.dataModels = vm.dataModels(in: collectionView)
+            browser.show(from: self, completion: nil)
         } else {
-            browserNetworkImages(at: indexPath)
+            let browser = LPPhotoBrowser(type: .network, index: indexPath.row)
+            browser.dataSource = self
+            browser.delegate = self
+            browser.show(from: self, completion: nil)
         }
     }
 }
 
-//<, , YBImageBrowserDataSource>
-extension LPPhotoBrowserController {
+extension LPPhotoBrowserController: LPPhotoBrowserDataSource, LPPhotoBrowserDelegate {
     
-    private func browserLocalImages(at indexPath: IndexPath) {
-        guard let collectionView = collectionView else { return }
-        
-        let browser = LPPhotoBrowser()
-        browser.dataModels = vm.dataModels(in: collectionView)
-        browser.currentIndex = indexPath.row
-        
-        browser.show(from: self, completion: nil)
+    func photoBrowser(_ browser: LPPhotoBrowser, numberOf type: LPPhotoBrowserType) -> Int {
+        switch type {
+        case .image: return vm.imageNames.count
+        case .album: return 0
+        case .network: return vm.URLStrings.count
+        }
     }
     
-    private func browserNetworkImages(at indexPath: IndexPath) {
-        let browser = LPPhotoBrowser()
-        
-        //    browser.dataSource = self;
-        //    browser.currentIndex = indexPath.row;
-        
-        browser.show(from: self, completion: nil)
+    func photoBrowser(_ browser: LPPhotoBrowser,
+                      sourceAt index: Int,
+                      of type: LPPhotoBrowserType) -> LPPhotoBrowserSource {
+        switch type {
+        case .image: return .image(UIImage(named: vm.imageNames[index]))
+        case .album: return .image(UIImage(named: vm.imageNames[index]))
+        case .network: return .image(UIImage(named: vm.imageNames[index]))
+        }
     }
 }
 
