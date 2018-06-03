@@ -1,5 +1,5 @@
 //
-//  LPPhotoBrowserCell.swift
+//  LPVideoBrowserCell.swift
 //  LPPhotoBrowser
 //
 //  Created by 李鹏 on 2018/6/1.
@@ -8,6 +8,6 @@
 
 import UIKit
 
-class LPPhotoBrowserCell: UICollectionViewCell {
+class LPVideoBrowserCell: UICollectionViewCell {
     
 }

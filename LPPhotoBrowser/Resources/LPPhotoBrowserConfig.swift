@@ -23,12 +23,6 @@ class LPPhotoBrowserConfig {
         return LPPhotoBrowserConfig()
     }()
     
-    /// 纵屏时候图片填充类型
-    var verticalScreenImageViewFillType: LPPhotoBrowserViewFillType = .fullWidth
-    
-    /// 横屏时候图片填充类型
-    var horizontalScreenImageViewFillType: LPPhotoBrowserViewFillType = .fullWidth
-    
     /// 取消拖拽图片的动画效果
     var cancelDragImageViewAnimation: Bool = false
     

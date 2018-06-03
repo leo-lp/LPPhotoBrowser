@@ -1,5 +1,5 @@
 //
-//  LPPhotoBrowserCellVM..swift
+//  LPPhotoBrowser_CellVM..swift
 //  LPPhotoBrowser
 //
 //  Created by pengli on 2018/5/30.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LPPhotoBrowserCellVM {
+class LPPhotoBrowser_CellVM {
     var model: LPPhotoBrowserModel?
     
     var startScaleWidthInAnimationView: CGFloat = 0.0 // 开始拖动时比例
@@ -40,10 +40,10 @@ class LPPhotoBrowserCellVM {
 
 // MARK: - Drag Animation funcs
 
-extension LPPhotoBrowserCellVM {
+extension LPPhotoBrowser_CellVM {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView,
-                                     cell: LPPhotoBrowserCell) {
+                                     cell: LPPhotoBrowser_Cell) {
         let config = LPPhotoBrowserConfig.shared
         guard !config.cancelDragImageViewAnimation else { return }
         
@@ -59,7 +59,7 @@ extension LPPhotoBrowserCellVM {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView,
-                             cell: LPPhotoBrowserCell) {
+                             cell: LPPhotoBrowser_Cell) {
         let config = LPPhotoBrowserConfig.shared
         guard !config.cancelDragImageViewAnimation
             && !isZooming else { return }
@@ -83,7 +83,7 @@ extension LPPhotoBrowserCellVM {
         lastPoint = point
     }
     
-    private func addAnimationIv(_ iv: UIImageView, point: CGPoint, cell: LPPhotoBrowserCell) {
+    private func addAnimationIv(_ iv: UIImageView, point: CGPoint, cell: LPPhotoBrowser_Cell) {
         let zoomView = cell.imageView
         guard zoomView.frame.width > 0
             && zoomView.frame.height > 0 else { return }
@@ -106,7 +106,7 @@ extension LPPhotoBrowserCellVM {
         UIApplication.shared.lp_currWindow?.addSubview(iv)
     }
     
-    private func animate(for iv: UIImageView, point: CGPoint, cell: LPPhotoBrowserCell) {
+    private func animate(for iv: UIImageView, point: CGPoint, cell: LPPhotoBrowser_Cell) {
         let maxHeight = cell.bounds.height
         guard maxHeight > 0 else { return }
         
@@ -136,7 +136,7 @@ extension LPPhotoBrowserCellVM {
         cell.delegate?.photoBrowserCell(cell, changeAlphaWhenDragging: scale)
     }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, cell: LPPhotoBrowserCell) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, cell: LPPhotoBrowser_Cell) {
         isZooming = false
         let animateImageView = cell.animateImageView
         
@@ -187,7 +187,7 @@ extension LPPhotoBrowserCellVM {
     }
 }
 
-extension LPPhotoBrowserCellVM {
+extension LPPhotoBrowser_CellVM {
     
     /// 计算图片大小
     typealias LPCalculateResult =
