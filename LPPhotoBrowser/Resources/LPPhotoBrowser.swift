@@ -12,13 +12,13 @@ public class LPPhotoBrowser: UIViewController {
     
     // MARK: - Static Propertys
    
-//    /// 状态栏是否是控制器优先
-//    static var isControllerPreferredForStatusBar: Bool = true
-//    static var maxDisplaySize: CGFloat = 3500
-//    static var isHideStatusBar: Bool = true
-//    /// 状态栏在模态切换之前是否隐藏
-//    static var isHideStatusBarBefore: Bool = false
+    /// 状态栏是否是控制器优先
+    static var isControllerPreferredForStatusBar: Bool = true
+    static var isHideStatusBar: Bool = true
+    static var isHiddenOfStatusBarBefore: Bool = false
     
+//    static var maxDisplaySize: CGFloat = 3500
+
     // MARK: - Custom Propertys
     
     public weak var dataSource: LPPhotoBrowserDataSource?
@@ -31,7 +31,7 @@ public class LPPhotoBrowser: UIViewController {
     public var isLongPressGestureEnabled: Bool = true
     
     private var isViewDidAppear: Bool = false
-    private var backgroundColor: UIColor = UIColor.black
+    private var backgroundColor: UIColor = UIColor.white
     
     private(set) var browserView: LPPhotoBrowserView = {
         let layout = LPPhotoBrowserViewLayout()
@@ -62,18 +62,17 @@ public class LPPhotoBrowser: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = backgroundColor
         
-//        if LPPhotoBrowser.isControllerPreferredForStatusBar
-//            && LPPhotoBrowser.isHideStatusBar
-//            && !LPPhotoBrowser.isHideStatusBarBefore {
-//            configStatusBarHide(true)
-//        }
+        if LPPhotoBrowser.isControllerPreferredForStatusBar
+            && LPPhotoBrowser.isHideStatusBar
+            && !LPPhotoBrowser.isHiddenOfStatusBarBefore {
+            configStatusBarHide(true)
+        }
     }
-    
-//    open override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        let isHidden = UIApplication.shared.isStatusBarHidden
-//        LPPhotoBrowser.isHideStatusBarBefore = isHidden
-//    }
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let isHidden = UIApplication.shared.isStatusBarHidden
+        LPPhotoBrowser.isHiddenOfStatusBarBefore = isHidden
+    }
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -92,16 +91,16 @@ public class LPPhotoBrowser: UIViewController {
         browserView.layer.borderWidth = 1
     }
     
-//    open override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        if LPPhotoBrowser.isControllerPreferredForStatusBar
-//            && LPPhotoBrowser.isHideStatusBar
-//            && !LPPhotoBrowser.isHideStatusBarBefore {
-//            configStatusBarHide(false)
-//        }
-//    }
-//
-//    open override var prefersStatusBarHidden: Bool {
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if LPPhotoBrowser.isControllerPreferredForStatusBar
+            && LPPhotoBrowser.isHideStatusBar
+            && !LPPhotoBrowser.isHiddenOfStatusBarBefore {
+            configStatusBarHide(false)
+        }
+    }
+    
+//    public override var prefersStatusBarHidden: Bool {
 //        return LPPhotoBrowser.isHideStatusBar
 //    }
     
@@ -137,9 +136,10 @@ extension LPPhotoBrowser {
     }
     
     public func hide(_ completion: (() -> Void)?) {
-//        if !LPPhotoBrowser.isControllerPreferredForStatusBar {
-//            UIApplication.shared.isStatusBarHidden = LPPhotoBrowser.isHideStatusBarBefore
-//        }
+        if !LPPhotoBrowser.isControllerPreferredForStatusBar {
+            let isHidden = LPPhotoBrowser.isHiddenOfStatusBarBefore
+            UIApplication.shared.isStatusBarHidden = isHidden
+        }
         dismiss(animated: true, completion: completion)
     }
 }
@@ -309,22 +309,24 @@ extension LPPhotoBrowser {
     }
     
     private func statusBarConfigByInfoPlist() {
-//        guard let path = Bundle.main.path(forResource: "Info", ofType: "plist")
-//            , let data = FileManager.default.contents(atPath: path) else { return }
-//        var format = PropertyListSerialization.PropertyListFormat.xml
-//        do {
-//            let objc = try PropertyListSerialization.propertyList(from: data, options: .mutableContainersAndLeaves, format: &format)
-//            guard let dict = objc as? [String: AnyObject] else { return }
-//            let flag = dict["UIViewControllerBasedStatusBarAppearance"]?.boolValue
-//            LPPhotoBrowser.isControllerPreferredForStatusBar = flag ?? true
-//        } catch {
-//            print(error)
-//        }
+        guard let path = Bundle.main.path(forResource: "Info", ofType: "plist")
+            , let data = FileManager.default.contents(atPath: path) else { return }
+        var format = PropertyListSerialization.PropertyListFormat.xml
+        do {
+            let objc = try PropertyListSerialization.propertyList(from: data, options: .mutableContainersAndLeaves, format: &format)
+            guard let dict = objc as? [String: AnyObject] else { return }
+            let flag = dict["UIViewControllerBasedStatusBarAppearance"]?.boolValue
+            LPPhotoBrowser.isControllerPreferredForStatusBar = flag ?? true
+        } catch {
+            print(error)
+        }
     }
     
     private func configStatusBarHide( _ hide: Bool) {
         guard let statusBarWindow = UIApplication.shared.value(forKey: "statusBarWindow") as? NSObject
+            
             , let statusBar = statusBarWindow.value(forKey: "statusBar") as? UIView else { return }
+        
         statusBar.alpha = hide ? 0 : 1
     }
     

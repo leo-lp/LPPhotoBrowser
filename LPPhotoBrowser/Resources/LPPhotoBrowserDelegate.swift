@@ -48,8 +48,6 @@ extension LPPhotoBrowserDelegate {
                              of type: LPPhotoBrowserType) {}
 }
 
-//#pragma mark 缩放相关 (scale)
-
 //#pragma mark 性能和内存相关 (performance and memory)
 //
 ///**
@@ -74,17 +72,3 @@ extension LPPhotoBrowserDelegate {
 // 显示状态栏
 // */
 //@property (class, assign) BOOL showStatusBar;
-//
-///**
-// 进入图片浏览器之前状态栏是否隐藏（进入框架内部会判断，若在图片浏览器生命周期之间外部的状态栏显示与否发生改变，你需要改变该属性的值）
-// */
-//@property (class, assign) BOOL statusBarIsHideBefore;
-//
-///**
-// 状态栏是否是控制器优先
-// */
-//@property (class, assign, readonly) BOOL isControllerPreferredForStatusBar;
-//
-//@end
-//
-//NS_ASSUME_NONNULL_END

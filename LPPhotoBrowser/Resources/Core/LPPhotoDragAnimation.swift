@@ -75,13 +75,10 @@ class LPPhotoDragAnimation {
         guard zoomView.frame.width > 0
             && zoomView.frame.height > 0 else { return }
         
-        //        if !LPPhotoBrowser.isControllerPreferredForStatusBar {
-        //            let isStatusBarHidden = UIApplication.shared.isStatusBarHidden
-        //            let isHideBefore = LPPhotoBrowser.isHideStatusBarBefore
-        //            if isStatusBarHidden != isHideBefore {
-        //                UIApplication.shared.isStatusBarHidden = isHideBefore
-        //            }
-        //        }
+        if !LPPhotoBrowser.isControllerPreferredForStatusBar {
+            let isHidden = LPPhotoBrowser.isHiddenOfStatusBarBefore
+            UIApplication.shared.isStatusBarHidden = isHidden
+        }
         
         containerView.delegate?.hideWhenStartDragging()
         
@@ -157,13 +154,13 @@ class LPPhotoDragAnimation {
             UIView.animate(withDuration: duration, animations: {
                 animateImageView.frame = self.frameOfOriginalImageView
             }) { [weak self](finished) in
-                //                if !LPPhotoBrowser.isControllerPreferredForStatusBar {
-                //                    let isStatusBarHidden = UIApplication.shared.isStatusBarHidden
-                //                    let isHide = LPPhotoBrowser.isHideStatusBar
-                //                    if isStatusBarHidden != isHide {
-                //                        UIApplication.shared.isStatusBarHidden = isHide
-                //                    }
-                //                }
+                if !LPPhotoBrowser.isControllerPreferredForStatusBar {
+                    let status = UIApplication.shared.isStatusBarHidden
+                    let isHide = LPPhotoBrowser.isHideStatusBar
+                    if status != isHide {
+                        UIApplication.shared.isStatusBarHidden = isHide
+                    }
+                }
                 
                 guard let `self` = self else { return }
                 scrollView.contentOffset = self.startOffsetOfScrollView

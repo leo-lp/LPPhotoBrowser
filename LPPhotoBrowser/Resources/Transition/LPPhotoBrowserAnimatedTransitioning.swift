@@ -155,10 +155,10 @@ extension LPPhotoBrowserAnimatedTransitioning {
         if let iv = iv {
             isPresenting ? (iv.isHidden = true) : iv.removeFromSuperview()
         }
-//        
-//        if isPresenting && !LPPhotoBrowser.isControllerPreferredForStatusBar {
-//            UIApplication.shared.isStatusBarHidden = LPPhotoBrowser.isHideStatusBar
-//        }
+        
+        if isPresenting && !LPPhotoBrowser.isControllerPreferredForStatusBar {
+            UIApplication.shared.isStatusBarHidden = LPPhotoBrowser.isHideStatusBar
+        }
         
         transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
     }
