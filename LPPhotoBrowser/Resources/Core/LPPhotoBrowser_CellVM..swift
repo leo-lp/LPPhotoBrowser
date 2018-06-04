@@ -1,13 +1,13 @@
+////
+////  LPPhotoBrowser_CellVM..swift
+////  LPPhotoBrowser
+////
+////  Created by pengli on 2018/5/30.
+////  Copyright © 2018年 pengli. All rights reserved.
+////
 //
-//  LPPhotoBrowser_CellVM..swift
-//  LPPhotoBrowser
+//import UIKit
 //
-//  Created by pengli on 2018/5/30.
-//  Copyright © 2018年 pengli. All rights reserved.
-//
-
-import UIKit
-
 //class LPPhotoBrowser_CellVM {
 //    var model: LPPhotoBrowserModel?
 //

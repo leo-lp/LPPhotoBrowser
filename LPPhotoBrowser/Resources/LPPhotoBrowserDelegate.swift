@@ -9,8 +9,7 @@
 import UIKit
 
 public enum LPPhotoBrowserType {
-    case image
-    case album
+    case local
     case network
 }
 
@@ -29,28 +28,18 @@ public protocol LPPhotoBrowserDataSource: class {
                       sourceAt index: Int,
                       of type: LPPhotoBrowserType) -> LPPhotoBrowserSource
     
-    //    /// 返回点击的那个 UIImageView（用于做 LPImageBrowserAnimationMove 类型动效）
-    //    func imageViewOfTouch(in browser: LPPhotoBrowser) -> UIImageView?
-    
-    
+    func photoBrowser(_ browser: LPPhotoBrowser,
+                      imageViewOfClickedAt index: Int,
+                      of type: LPPhotoBrowserType) -> UIImageView?
 }
 
 public protocol LPPhotoBrowserDelegate: class {
     /// NOTE: optional
-    
 //    func photoBrowser(_ browser: LPPhotoBrowser, didScrollTo index: Int)
-    
     ///**
     // 点击功能栏的回调
     //- (void) clickFunctionBarWithModel:(YBImageBrowserFunctionModel *)model;
-    
 }
-
-
-
-
-
-
 
 //@interface YBImageBrowser : UIViewController <YBImageBrowserScreenOrientationProtocol>
 //

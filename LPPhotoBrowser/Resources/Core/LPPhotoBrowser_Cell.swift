@@ -5,24 +5,7 @@
 //  Created by pengli on 2018/5/29.
 //  Copyright © 2018年 pengli. All rights reserved.
 //
-
 //class LPPhotoBrowser_Cell: UICollectionViewCell {
-//    // MARK: - Public Propertys
-//
-//    weak var delegate: LPPhotoBrowser_CellDelegate?
-//
-//
-//
-//    // MARK: - Private Propertys
-//
-//    private(set) var scrollView = UIScrollView()
-//    private(set) var animateImageView = UIImageView() // 做动画的图片
-//    private(set) var imageView = UIImageView() // FLAnimatedImageView // 显示的图片
-//    private(set) var localImageView = UIImageView() // 用于显示大图的局部图片
-//
-//
-//    // MARK: - Override funcs
-//
 //    deinit {
 //        NotificationCenter.default.removeObserver(self)
 //        log.warning("release memory.")

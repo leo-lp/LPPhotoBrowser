@@ -26,7 +26,7 @@ public class LPPhotoBrowser: UIViewController {
     
     public private(set) var currentIndex: Int = 0
     
-    public private(set) var type: LPPhotoBrowserType = .image
+    public private(set) var type: LPPhotoBrowserType = .local
     
 //    open var isCancelLongPressGesture: Bool = false /// 取消长按手势的响应
     

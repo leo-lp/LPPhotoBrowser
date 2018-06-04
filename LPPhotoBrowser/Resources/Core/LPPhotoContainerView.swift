@@ -14,7 +14,7 @@ class LPPhotoContainerView: UIView {
     private(set) var scrollView = UIScrollView()
     private(set) var imageView = UIImageView() // FLAnimatedImageView // 显示的图片
     //private(set) var localImageView = UIImageView() // 用于显示大图的局部图片
-    //private(set) var animateImageView = UIImageView() // 做动画的图片
+    private(set) var animateImageView = UIImageView() // 做动画的图片
     
     //TZProgressView *progressView;
     //id asset;
@@ -69,7 +69,6 @@ class LPPhotoContainerView: UIView {
         case .image(let image): imageView.image = image
         case .URL(let placeholder, let thumbnail, let original):
             imageView.image = placeholder
-            
         }
         
         //    if (model.type == TZAssetModelMediaTypePhotoGif) {
@@ -215,31 +214,12 @@ extension LPPhotoContainerView {
     }
     
     private func resizeSubviews() {
-        imageView.frame.origin = .zero
-        imageView.frame.size.width = scrollView.frame.width
+        let containerSize = scrollView.frame.size
+        let imgFrame = LPPhotoContainerView.calculateImageSize(containerSize, image: imageView.image)
+        imageView.frame = imgFrame
         
-        let imgSize = imageView.image?.size ?? .zero
-        if imgSize.height / imgSize.width > frame.height / frame.width {
-            imageView.frame.size.height = floor(imgSize.height / (imgSize.width / scrollView.frame.width))
-        } else {
-            var height = imgSize.height / imgSize.width * scrollView.frame.width
-            if height < 1 || height.isNaN {
-                height = frame.height
-            }
-            height = floor(height)
-            
-            imageView.frame.size.height = height
-            imageView.center.y = frame.height / 2
-        }
-        
-        if imageView.frame.height > frame.height
-            && imageView.frame.height - frame.height <= 1 {
-            imageView.frame.size.height = frame.height
-        }
-        
-        let contentSizeH = max(imageView.frame.height, frame.height)
-        
-        scrollView.contentSize = CGSize(width: scrollView.frame.width,
+        let contentSizeH = max(imgFrame.height, frame.height)
+        scrollView.contentSize = CGSize(width: containerSize.width,
                                         height: contentSizeH)
         
         scrollView.scrollRectToVisible(bounds, animated: false)
@@ -282,3 +262,104 @@ extension LPPhotoContainerView {
 //        }
 //    } networkAccessAllowed:YES];
 //}
+
+extension LPPhotoContainerView {
+    
+    static func calculateImageSize(_ containerSize: CGSize, image: UIImage?) -> CGRect {
+        let containerW = containerSize.width
+        let containerH = containerSize.height
+        
+        var imageFrame: CGRect = .zero
+        imageFrame.size.width = containerW
+        
+        let imgSize = image?.size ?? .zero
+        if imgSize.height / imgSize.width > containerH / containerW {
+            let h = floor(imgSize.height / (imgSize.width / containerW))
+            imageFrame.size.height = h
+        } else {
+            var height = imgSize.height / imgSize.width * containerW
+            if height < 1 || height.isNaN {
+                height = containerH
+            }
+            height = floor(height)
+            
+            imageFrame.size.height = height
+            imageFrame.origin.y = (containerH - height) / 2
+        }
+        
+        if imageFrame.height > containerH
+            && imageFrame.height - containerH <= 1 {
+            imageFrame.size.height = containerH
+        }
+        
+        return imageFrame
+    }
+}
+
+//    static func calculateImage(containerSize: CGSize, image: UIImage) -> LPCalculateResult {
+//        //    CGSize imageSize = [FLAnimatedImage sizeForImage:image];
+//        let imageSize = image.size
+//        let containerScale = containerWidth / containerHeight
+//
+//        var width: CGFloat = 0.0
+//        var height: CGFloat = 0.0
+//        var x: CGFloat = 0.0
+//        var y: CGFloat = 0.0
+//        var minimumZoomScale: CGFloat = 1.0
+//        var maximumZoomScale: CGFloat = 1.0
+//
+//        var contentSize: CGSize = .zero
+//
+//        /// 计算最大缩放比例
+//        let widthScale = imageSize.width / containerWidth
+//        let heightScale = imageSize.height / containerHeight
+//        let maxScale = widthScale > heightScale ? widthScale : heightScale
+//
+//        maximumZoomScale = maxScale > 1.0 ? maxScale : 1.0
+//
+//        let config = LPPhotoBrowserConfig.shared
+//
+////        let fillType: LPPhotoBrowserViewFillType
+////        if UIApplication.shared.isOrientationVertical {
+////            fillType = config.verticalScreenImageViewFillType
+////        } else {
+////            fillType = config.horizontalScreenImageViewFillType
+////        }
+////
+////        switch fillType {
+////        case .fullWidth:
+//            width = containerWidth
+//            height = containerWidth * (imageSize.height / imageSize.width)
+//            if imageSize.width / imageSize.height >= containerScale {
+//                x = 0
+//                y = (containerHeight - height) / 2.0
+//                contentSize = CGSize(width: containerWidth,
+//                                     height: containerHeight)
+//                minimumZoomScale = 1
+//            } else {
+//                x = 0
+//                y = 0
+//                contentSize = CGSize(width: containerWidth,
+//                                     height: height)
+//                minimumZoomScale = containerHeight / height
+//            }
+////        case .completely:
+////            if imageSize.width / imageSize.height >= containerScale {
+////                width = containerWidth
+////                height = containerWidth * (imageSize.height / imageSize.width)
+////                x = 0
+////                y = (containerHeight - height) / 2.0
+////            } else {
+////                height = containerHeight
+////                width = containerHeight * (imageSize.width / imageSize.height)
+////                x = (containerWidth - width) / 2.0
+////                y = 0
+////            }
+////            contentSize = CGSize(width: containerWidth,
+////                                 height: containerHeight)
+////            minimumZoomScale = 1
+////        }
+//
+//        let frame = CGRect(x: x, y: y, width: width, height: height)
+//        return (frame, contentSize, minimumZoomScale, maximumZoomScale)
+//    }

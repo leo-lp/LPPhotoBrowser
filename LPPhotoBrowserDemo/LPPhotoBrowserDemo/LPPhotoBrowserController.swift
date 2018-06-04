@@ -10,8 +10,6 @@ import UIKit
 import LPPhotoBrowser
 
 class LPPhotoBrowserController: UICollectionViewController {
-    var currentTouchIndexPath: IndexPath?
-    
     let vm = LPPhotoBrowserVM()
     
     override func viewDidLoad() {
@@ -72,9 +70,9 @@ extension LPPhotoBrowserController {
     // MARK: UICollectionViewDelegate
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        currentTouchIndexPath = indexPath
+        let type: LPPhotoBrowserType = indexPath.section == 0 ? .local : .network
         
-        let browser = LPPhotoBrowser(type: .image, index: indexPath.row)
+        let browser = LPPhotoBrowser(type: type, index: indexPath.row)
         browser.dataSource = self
         browser.delegate = self
         browser.show(from: self, completion: nil)
@@ -85,8 +83,7 @@ extension LPPhotoBrowserController: LPPhotoBrowserDataSource, LPPhotoBrowserDele
     
     func photoBrowser(_ browser: LPPhotoBrowser, numberOf type: LPPhotoBrowserType) -> Int {
         switch type {
-        case .image: return vm.imageNames.count
-        case .album: return 0
+        case .local: return vm.imageNames.count
         case .network: return vm.URLStrings.count
         }
     }
@@ -95,23 +92,16 @@ extension LPPhotoBrowserController: LPPhotoBrowserDataSource, LPPhotoBrowserDele
                       sourceAt index: Int,
                       of type: LPPhotoBrowserType) -> LPPhotoBrowserSource {
         switch type {
-        case .image: return .image(UIImage(named: vm.imageNames[index]))
-        case .album: return .image(UIImage(named: vm.imageNames[index]))
+        case .local: return .image(UIImage(named: vm.imageNames[index]))
         case .network: return .image(UIImage(named: vm.imageNames[index]))
         }
     }
+    
+    func photoBrowser(_ browser: LPPhotoBrowser,
+                      imageViewOfClickedAt index: Int,
+                      of type: LPPhotoBrowserType) -> UIImageView? {
+        guard let collectionView = collectionView else { return nil }
+        let indexPath = IndexPath(item: index, section: 0)
+        return vm.imageView(in: collectionView, at: indexPath)
+    }
 }
-
-////YBImageBrowserDataSource 代理实现赋值数据
-//- (NSInteger)numberInYBImageBrowser:(YBImageBrowser *)imageBrowser {
-//    return self.dataArray1.count;
-//}
-//- (YBImageBrowserModel *)yBImageBrowser:(YBImageBrowser *)imageBrowser modelForCellAtIndex:(NSInteger)index {
-//    YBImageBrowserModel *model = [YBImageBrowserModel new];
-//    model.url = [NSURL URLWithString:self.dataArray1[index]];
-//    model.sourceImageView = [self getImageViewOfCellByIndexPath:[NSIndexPath indexPathForRow:index inSection:1]];
-//    return model;
-//}
-//- (UIImageView *)imageViewOfTouchForImageBrowser:(YBImageBrowser *)imageBrowser {
-//    return [self getImageViewOfCellByIndexPath:currentTouchIndexPath];
-//}

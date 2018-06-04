@@ -68,11 +68,11 @@ class LPPhotoBrowserVM {
 //        }
 //        return models
 //    }
-//
-//    func imageView(in collectionView: UICollectionView,
-//                   at indexPath: IndexPath) -> UIImageView? {
-//        let cell = collectionView.cellForItem(at: indexPath)
-//        guard let photoCell = cell as? LPPhotoBrowserCell else { return nil }
-//        return photoCell.imageView
-//    }
+    
+    func imageView(in collectionView: UICollectionView,
+                   at indexPath: IndexPath) -> UIImageView? {
+        let cell = collectionView.cellForItem(at: indexPath)
+        guard let photoCell = cell as? LPPhotoBrowserCell else { return nil }
+        return photoCell.imageView
+    }
 }

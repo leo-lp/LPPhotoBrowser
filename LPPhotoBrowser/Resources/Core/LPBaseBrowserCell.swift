@@ -11,7 +11,7 @@ import UIKit
 protocol LPBrowserCellDelegate: class {
     func imageViewClicked()
 //    func imageViewLongPressBegin()
-//    
+//
 //    func dismissWhenEndDragging()
 //    func hideWhenStartDragging()
 //    func showWhenEndDragging()
