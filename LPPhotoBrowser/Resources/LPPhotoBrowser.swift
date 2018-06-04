@@ -100,15 +100,13 @@ public class LPPhotoBrowser: UIViewController {
         }
     }
     
-//    public override var prefersStatusBarHidden: Bool {
-//        return LPPhotoBrowser.isHideStatusBar
-//    }
+    public override var prefersStatusBarHidden: Bool {
+        return LPPhotoBrowser.isHideStatusBar
+    }
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         browserView.frame = view.bounds
-//        browserView.reloadData()
-//        browserView.layoutIfNeeded()
         browserView.scrollToIndex(currentIndex)
     }
 }
@@ -121,17 +119,6 @@ extension LPPhotoBrowser {
                    completion: (() -> Void)?) {
         guard let vc = controller ?? UIViewController.topController()
             else { return }
-        
-        //    if (self.dataArray) {
-        //    } else if (_dataSource && [_dataSource respondsToSelector:@selector(numberInYBImageBrowser:)]) {
-        //        if (![_dataSource numberInYBImageBrowser:self]) {
-        //            YBLOG_ERROR(@"numberInYBImageBrowser: is invalid");
-        //            return;
-        //        }
-        //    } else {
-        //        YBLOG_ERROR(@"the data source is invalid");
-        //        return;
-        //    }
         vc.present(self, animated: true, completion: completion)
     }
     
