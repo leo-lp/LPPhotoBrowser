@@ -12,10 +12,9 @@ public class LPPhotoBrowser: UIViewController {
     
     // MARK: - Static Propertys
    
-    /// 状态栏是否是控制器优先
-    static var isControllerPreferredForStatusBar: Bool = true
-    static var isHideStatusBar: Bool = true
-    static var isHiddenOfStatusBarBefore: Bool = false
+    static private(set) var isControllerPreferredForStatusBar: Bool = true
+    static private(set) var isHiddenOfStatusBarBefore: Bool = false
+    static public var isHideStatusBar: Bool = true
     
 //    static var maxDisplaySize: CGFloat = 3500
 
@@ -68,6 +67,7 @@ public class LPPhotoBrowser: UIViewController {
             configStatusBarHide(true)
         }
     }
+    
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let isHidden = UIApplication.shared.isStatusBarHidden
