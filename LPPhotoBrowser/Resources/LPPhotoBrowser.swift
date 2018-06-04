@@ -28,7 +28,7 @@ public class LPPhotoBrowser: UIViewController {
     
     public private(set) var type: LPPhotoBrowserType = .local
     
-//    open var isCancelLongPressGesture: Bool = false /// 取消长按手势的响应
+    public var isLongPressGestureEnabled: Bool = true
     
     private var isViewDidAppear: Bool = false
     private var backgroundColor: UIColor = UIColor.black
@@ -187,7 +187,13 @@ extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate, 
                                            numberOfItemsInSection: 0)
         guard index < numberOfItems && currentIndex != index else { return }
         
+        let oldIndex = currentIndex
         currentIndex = index
+        delegate?.photoBrowser(self,
+                               indexDidChange: oldIndex,
+                               newIndex: currentIndex,
+                               of: type)
+        
         //[self setTooBarNumberCountWithCurrentIndex:index+1];
     }
     
@@ -205,12 +211,8 @@ extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func imageViewLongPressBegin() {
-        //        guard !isCancelLongPressGesture else { return }
+        guard isLongPressGestureEnabled else { return }
         
-        //    if (self.fuctionDataArray.count > 1) {
-        //        //弹出功能栏
-        //        if (_functionBar) { [_functionBar show]; }
-        //    }
     }
     
     func dismissWhenEndDragging() {
@@ -249,22 +251,6 @@ extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserA
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return LPPhotoBrowserAnimatedTransitioning(delegate: self)
-    }
-    
-    // MARK: - LPPhotoBrowserViewDataSource
-    
-    func numberOfPhotos(in browserView: LPPhotoBrowserView) -> Int {
-//        if let models = dataModels {
-//            let count = models.count
-//            //        [self setTooBarHideWithDataSourceCount:count];
-//            return count
-//        }
-//        //    } else if (_dataSource && [_dataSource respondsToSelector:@selector(numberInYBImageBrowser:)]) {
-//        //        NSUInteger count = [_dataSource numberInYBImageBrowser:self];
-//        //        [self setTooBarHideWithDataSourceCount:count];
-//        //        return count;
-//        //    }
-        return 0
     }
 }
 

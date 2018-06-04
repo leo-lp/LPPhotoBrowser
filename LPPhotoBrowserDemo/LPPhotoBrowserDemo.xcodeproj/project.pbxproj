@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181F332E20C53FB200B4D1AC /* girl01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 181F332D20C53FB200B4D1AC /* girl01.jpg */; };
 		18983C0120BBDE8E009141F4 /* LPAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C0020BBDE8E009141F4 /* LPAppDelegate.swift */; };
 		18983C0320BBDE8E009141F4 /* LPMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C0220BBDE8E009141F4 /* LPMainViewController.swift */; };
 		18983C0620BBDE8E009141F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18983C0420BBDE8E009141F4 /* Main.storyboard */; };
@@ -76,6 +77,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		181F332D20C53FB200B4D1AC /* girl01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = girl01.jpg; sourceTree = "<group>"; };
 		18983BFD20BBDE8E009141F4 /* LPPhotoBrowserDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LPPhotoBrowserDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18983C0020BBDE8E009141F4 /* LPAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPAppDelegate.swift; sourceTree = "<group>"; };
 		18983C0220BBDE8E009141F4 /* LPMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPMainViewController.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 		18983C6420BBE730009141F4 /* LocalImages */ = {
 			isa = PBXGroup;
 			children = (
+				181F332D20C53FB200B4D1AC /* girl01.jpg */,
 				18983C6520BBE767009141F4 /* girl02.jpg */,
 				18983C7520BBE7B1009141F4 /* girl03.jpg */,
 				18983C7720BBE7B1009141F4 /* girl04.jpg */,
@@ -295,6 +298,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				181F332E20C53FB200B4D1AC /* girl01.jpg in Resources */,
 				18983C8820BBE7C0009141F4 /* girl07.jpg in Resources */,
 				18983C7E20BBE7B1009141F4 /* girl12.jpg in Resources */,
 				18983C7B20BBE7B1009141F4 /* girl03.jpg in Resources */,

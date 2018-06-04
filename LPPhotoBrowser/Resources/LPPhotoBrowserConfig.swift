@@ -8,16 +8,6 @@
 
 import UIKit
 
-//@interface YBImageBrowser ()
-//<YBImageBrowserViewDelegate, YBImageBrowserViewDataSource, YBImageBrowserToolBarDelegate, YBImageBrowserFunctionBarDelegate> {
-//    UIInterfaceOrientationMask supportAutorotateTypes;
-//    UIWindow *window;
-//}
-//@property (nonatomic, strong) YBImageBrowserView *browserView;
-//@property (nonatomic, strong) YBImageBrowserToolBar *toolBar;
-//@property (nonatomic, strong) YBImageBrowserFunctionBar *functionBar;
-//@end
-
 class LPPhotoBrowserConfig {
     static let shared: LPPhotoBrowserConfig = {
         return LPPhotoBrowserConfig()
@@ -32,20 +22,4 @@ class LPPhotoBrowserConfig {
     /// 页与页之间的间距
     var distanceBetweenPages: CGFloat = 18.0
     
-    
 }
-
-//extension Notification.Name {
-//    static let LPHideBrowerView = Notification.Name(rawValue: "com.lp.photoBrowser.notification.hideBrowerView")
-//    //NSString * const YBImageBrowser_notification_hideBrowerView = @"YBImageBrowser_notification_hideBrowerView";
-//}
-
-//NSString * const YBImageBrowser_KVCKey_browserView = @"browserView";
-//NSString * const YBImageBrowser_notification_willToRespondsDeviceOrientation = @"YBImageBrowser_notification_willToRespondsDeviceOrientation";
-//NSString * const YBImageBrowser_notification_changeAlpha = @"YBImageBrowser_notification_changeAlpha";
-//NSString * const YBImageBrowser_notificationKey_changeAlpha = @"YBImageBrowser_notificationKey_changeAlpha";
-
-//NSString * const YBImageBrowser_notification_showBrowerView = @"YBImageBrowser_notification_showBrowerView";
-//NSString * const YBImageBrowser_notification_willShowBrowerViewWithTimeInterval = @"YBImageBrowser_notification_willShowBrowerViewWithTimeInterval";
-//NSString * const YBImageBrowser_notificationKey_willShowBrowerViewWithTimeInterval = @"YBImageBrowser_notification_willShowBrowerViewWithTimeInterval";
-

@@ -193,8 +193,8 @@ extension LPPhotoContainerView {
         tap2.numberOfTapsRequired = 2
         tap1.require(toFail: tap2)
         scrollView.addGestureRecognizer(tap2)
-        //let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGesture))
-        //scrollView.addGestureRecognizer(longPress)
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGesture))
+        scrollView.addGestureRecognizer(longPress)
     }
     
     @objc private func singleTap(_ tap: UITapGestureRecognizer) {
@@ -216,6 +216,11 @@ extension LPPhotoContainerView {
                               height: height)
             scrollView.zoom(to: rect, animated: true)
         }
+    }
+    
+    @objc private func longPressGesture(_ press: UILongPressGestureRecognizer) {
+        guard press.state == .began else { return }
+        delegate?.imageViewLongPressBegin()
     }
     
     private func resizeSubviews() {

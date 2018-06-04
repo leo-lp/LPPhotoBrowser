@@ -35,64 +35,19 @@ public protocol LPPhotoBrowserDataSource: class {
 
 public protocol LPPhotoBrowserDelegate: class {
     /// NOTE: optional
-//    func photoBrowser(_ browser: LPPhotoBrowser, didScrollTo index: Int)
-    ///**
-    // 点击功能栏的回调
-    //- (void) clickFunctionBarWithModel:(YBImageBrowserFunctionModel *)model;
+    func photoBrowser(_ browser: LPPhotoBrowser,
+                      indexDidChange oldIndex: Int,
+                      newIndex: Int,
+                      of type: LPPhotoBrowserType)
 }
 
-//@interface YBImageBrowser : UIViewController <YBImageBrowserScreenOrientationProtocol>
-//
-///**
-// 数据源代理
-// （请在设置 dataArray 和实现 dataSource 代理中选其一，注意 dataArray 优先级高于代理）
-// */
-//@property (nonatomic, weak) id <YBImageBrowserDataSource> dataSource;
+extension LPPhotoBrowserDelegate {
+    public func photoBrowser(_ browser: LPPhotoBrowser,
+                             indexDidChange oldIndex: Int,
+                             newIndex: Int,
+                             of type: LPPhotoBrowserType) {}
+}
 
-///**
-// 代理回调
-// */
-//@property (nonatomic, weak) id <YBImageBrowserDelegate> delegate;
-//
-//#pragma mark 功能栏操作 (function bar operation)
-//
-///**
-// 弹出功能栏的数据源
-// （默认有图片保存功能）
-// */
-//@property (nonatomic, copy, nullable) NSArray<YBImageBrowserFunctionModel *> *fuctionDataArray;
-//
-///**
-// 弹出功能栏
-// */
-//@property (nonatomic, strong, readonly) YBImageBrowserFunctionBar *functionBar;
-//
-///**
-// 工具栏
-// */
-//@property (nonatomic, strong, readonly) YBImageBrowserToolBar *toolBar;
-//
-//#pragma mark 动画相关 (animation)
-///**
-// 入场动画类型
-// */
-//@property (nonatomic, assign) YBImageBrowserAnimation inAnimation;
-//
-///**
-// 出场动画类型
-// */
-//@property (nonatomic, assign) YBImageBrowserAnimation outAnimation;
-//
-
-//
-//#pragma mark 屏幕方向相关 (screen direction)
-//
-///**
-// 支持旋转的方向
-// （请保证在 general -> deployment info -> Device Orientation 有对应的配置，目前不支持强制旋转）
-// */
-//@property (nonatomic, assign) UIInterfaceOrientationMask yb_supportedInterfaceOrientations;
-//
 //#pragma mark 缩放相关 (scale)
 
 //#pragma mark 性能和内存相关 (performance and memory)

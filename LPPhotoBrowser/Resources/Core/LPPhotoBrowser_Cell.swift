@@ -68,12 +68,6 @@
 //        //        }];
 //        //    }
 //    }
-
-//
-//    @objc private func longPressGesture(_ press: UILongPressGestureRecognizer) {
-//        guard press.state == .began else { return }
-//        delegate?.photoBrowserCell(self, longPressBegin: press)
-//    }
 //}
 //
 //// MARK: - cutImage
