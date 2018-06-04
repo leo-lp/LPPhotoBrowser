@@ -16,6 +16,8 @@ class LPPhotoContainerView: UIView {
     //private(set) var localImageView = UIImageView() // 用于显示大图的局部图片
     private(set) var animateImageView = UIImageView() // 做动画的图片
     
+    private(set) var dragAnimate = LPPhotoDragAnimation()
+    
     //TZProgressView *progressView;
     //id asset;
     //void (^singleTapGestureBlock)(void);
@@ -111,25 +113,28 @@ extension LPPhotoContainerView: UIScrollViewDelegate {
     
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
         scrollView.contentInset = .zero
-        //vm.isZooming = true
+        dragAnimate.isZooming = true
         //[self hideLocalImageView];
     }
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        vm.scrollViewDidScroll(scrollView, cell: self)
-//
-//    //    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(cutImage) object:nil];
-//    //    [self performSelector:@selector(cutImage) withObject:nil afterDelay:0.25];
-//    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        dragAnimate.scrollViewDidScroll(scrollView,
+                                        containerView: self)
+        //    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(cutImage) object:nil];
+        //    [self performSelector:@selector(cutImage) withObject:nil afterDelay:0.25];
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        //[self hideLocalImageView];
+        dragAnimate.scrollViewWillBeginDragging(scrollView,
+                                                containerView: self)
+    }
 
-//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        //[self hideLocalImageView];
-//        vm.scrollViewWillBeginDragging(scrollView, cell: self)
-//    }
-//
-//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        vm.scrollViewDidEndDragging(scrollView, cell: self)
-//    }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView,
+                                  willDecelerate decelerate: Bool) {
+        dragAnimate.scrollViewDidEndDragging(scrollView,
+                                             containerView: self)
+    }
 }
 
 // MARK: - Private funcs
@@ -224,7 +229,15 @@ extension LPPhotoContainerView {
         
         scrollView.scrollRectToVisible(bounds, animated: false)
         
-        //scrollView.alwaysBounceVertical = imageView.frame.height <= frame.height ? false : true
+        let config = LPPhotoBrowserConfig.shared
+        let cancelDrag = config.cancelDragImageViewAnimation
+        if cancelDrag {
+            scrollView.alwaysBounceVertical = imageView.frame.height > frame.height
+            scrollView.alwaysBounceHorizontal = false
+        } else {
+            scrollView.alwaysBounceVertical = true
+            scrollView.alwaysBounceHorizontal = true
+        }
     }
 }
 
@@ -295,71 +308,3 @@ extension LPPhotoContainerView {
         return imageFrame
     }
 }
-
-//    static func calculateImage(containerSize: CGSize, image: UIImage) -> LPCalculateResult {
-//        //    CGSize imageSize = [FLAnimatedImage sizeForImage:image];
-//        let imageSize = image.size
-//        let containerScale = containerWidth / containerHeight
-//
-//        var width: CGFloat = 0.0
-//        var height: CGFloat = 0.0
-//        var x: CGFloat = 0.0
-//        var y: CGFloat = 0.0
-//        var minimumZoomScale: CGFloat = 1.0
-//        var maximumZoomScale: CGFloat = 1.0
-//
-//        var contentSize: CGSize = .zero
-//
-//        /// 计算最大缩放比例
-//        let widthScale = imageSize.width / containerWidth
-//        let heightScale = imageSize.height / containerHeight
-//        let maxScale = widthScale > heightScale ? widthScale : heightScale
-//
-//        maximumZoomScale = maxScale > 1.0 ? maxScale : 1.0
-//
-//        let config = LPPhotoBrowserConfig.shared
-//
-////        let fillType: LPPhotoBrowserViewFillType
-////        if UIApplication.shared.isOrientationVertical {
-////            fillType = config.verticalScreenImageViewFillType
-////        } else {
-////            fillType = config.horizontalScreenImageViewFillType
-////        }
-////
-////        switch fillType {
-////        case .fullWidth:
-//            width = containerWidth
-//            height = containerWidth * (imageSize.height / imageSize.width)
-//            if imageSize.width / imageSize.height >= containerScale {
-//                x = 0
-//                y = (containerHeight - height) / 2.0
-//                contentSize = CGSize(width: containerWidth,
-//                                     height: containerHeight)
-//                minimumZoomScale = 1
-//            } else {
-//                x = 0
-//                y = 0
-//                contentSize = CGSize(width: containerWidth,
-//                                     height: height)
-//                minimumZoomScale = containerHeight / height
-//            }
-////        case .completely:
-////            if imageSize.width / imageSize.height >= containerScale {
-////                width = containerWidth
-////                height = containerWidth * (imageSize.height / imageSize.width)
-////                x = 0
-////                y = (containerHeight - height) / 2.0
-////            } else {
-////                height = containerHeight
-////                width = containerHeight * (imageSize.width / imageSize.height)
-////                x = (containerWidth - width) / 2.0
-////                y = 0
-////            }
-////            contentSize = CGSize(width: containerWidth,
-////                                 height: containerHeight)
-////            minimumZoomScale = 1
-////        }
-//
-//        let frame = CGRect(x: x, y: y, width: width, height: height)
-//        return (frame, contentSize, minimumZoomScale, maximumZoomScale)
-//    }

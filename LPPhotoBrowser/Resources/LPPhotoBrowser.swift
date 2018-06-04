@@ -204,26 +204,39 @@ extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate, 
         hide(nil)
     }
     
-    //    func photoBrowserCell(_ cell: LPPhotoBrowser_Cell, longPressBegin press: UILongPressGestureRecognizer) {
-    ////        pb_delegate?.photoBrowserView(self, longPressBegin: press)
-    //    }
-    //
-    //    func hideBrowerViewWhenStartDragging(in cell: LPPhotoBrowser_Cell) {
-    //        guard !isHidden else { return }
-    //        isHidden = true
-    //    }
-    //
-    //    func showBrowerViewWhenEndDragging(in cell: LPPhotoBrowser_Cell) {
-    ////        pb_delegate?.showBrowerViewWhenEndDragging(in: self)
-    //    }
-    //
-    //    func photoBrowserCell(_ cell: LPPhotoBrowser_Cell, changeAlphaWhenDragging alpha: CGFloat) {
-    ////        pb_delegate?.photoBrowserView(self, changeAlphaWhenDragging: alpha)
-    //    }
-    //
-    //    func photoBrowserCell(_ cell: LPPhotoBrowser_Cell, willShowBrowerViewWith timeInterval: TimeInterval) {
-    ////        pb_delegate?.photoBrowserView(self, willShowBrowerViewWith: timeInterval)
-    //    }
+    func imageViewLongPressBegin() {
+        //        guard !isCancelLongPressGesture else { return }
+        
+        //    if (self.fuctionDataArray.count > 1) {
+        //        //弹出功能栏
+        //        if (_functionBar) { [_functionBar show]; }
+        //    }
+    }
+    
+    func dismissWhenEndDragging() {
+        hide(nil)
+    }
+    
+    func hideWhenStartDragging() {
+        guard !browserView.isHidden else { return }
+        browserView.isHidden = true
+    }
+    
+    func showWhenEndDragging() {
+        view.backgroundColor = backgroundColor.withAlphaComponent(1)
+        guard browserView.isHidden else { return }
+        browserView.isHidden = false
+    }
+    
+    func show(with duration: TimeInterval) {
+        UIView.animate(withDuration: duration) {
+            self.view.backgroundColor = self.backgroundColor.withAlphaComponent(1)
+        }
+    }
+    
+    func changeAlphaWhenDragging(_ alpha: CGFloat) {
+        view.backgroundColor = backgroundColor.withAlphaComponent(alpha)
+    }
 }
 
 extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserAnimatedDelegate {
@@ -236,33 +249,6 @@ extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserA
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return LPPhotoBrowserAnimatedTransitioning(delegate: self)
-    }
-    
-    // MARK: - LPPhotoBrowserViewDelegate
-    
-    func photoBrowserView(_ browserView: LPPhotoBrowserView, longPressBegin press: UILongPressGestureRecognizer) {
-//        guard !isCancelLongPressGesture else { return }
-        
-        //    if (self.fuctionDataArray.count > 1) {
-        //        //弹出功能栏
-        //        if (_functionBar) { [_functionBar show]; }
-        //    }
-    }
-    
-    func photoBrowserView(_ browserView: LPPhotoBrowserView, changeAlphaWhenDragging alpha: CGFloat) {
-        view.backgroundColor = backgroundColor.withAlphaComponent(alpha)
-    }
-    
-    func photoBrowserView(_ browserView: LPPhotoBrowserView, willShowBrowerViewWith timeInterval: TimeInterval) {
-        UIView.animate(withDuration: timeInterval) {
-            self.view.backgroundColor = self.backgroundColor.withAlphaComponent(1)
-        }
-    }
-    
-    func showBrowerViewWhenEndDragging(in browserView: LPPhotoBrowserView) {
-        view.backgroundColor = backgroundColor.withAlphaComponent(1)
-        guard browserView.isHidden else { return }
-        browserView.isHidden = false
     }
     
     // MARK: - LPPhotoBrowserViewDataSource

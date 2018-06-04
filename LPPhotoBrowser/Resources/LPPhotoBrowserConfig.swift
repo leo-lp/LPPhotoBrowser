@@ -29,10 +29,6 @@ class LPPhotoBrowserConfig {
     /// 拖拽图片动效触发出场的比例（拖动距离/屏幕高度 默认0.15）
     var outScaleOfDragImageViewAnimation: CGFloat = 0.15
     
-    /// 是否需要自动计算缩放
-    /// 若改为false，可用LPPhotoBrowserModel的maximumZoomScale设置当前图片的最大缩放比例
-    var autoCountMaximumZoomScale: Bool = true
-    
     /// 页与页之间的间距
     var distanceBetweenPages: CGFloat = 18.0
     

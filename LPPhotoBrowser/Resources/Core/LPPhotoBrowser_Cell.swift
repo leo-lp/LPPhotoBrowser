@@ -255,33 +255,6 @@
 //    }
 //}
 //
-//// MARK: - Image calculate funcs
-//
-//extension LPPhotoBrowser_Cell {
-//
-//    @discardableResult
-//    private func calculateLayout(_ model: LPPhotoBrowserModel,
-//                                 image: UIImage) -> CGRect {
-//        let info = LPPhotoBrowser_CellVM.calculateImage(containerSize: scrollView.bounds.size, image: image)
-//
-//        scrollView.contentSize = info.contentSize
-//        scrollView.minimumZoomScale = info.minimumZoomScale
-//
-//        let config = LPPhotoBrowserConfig.shared
-//        if config.autoCountMaximumZoomScale {
-//            scrollView.maximumZoomScale = info.maximumZoomScale * 1.2
-//        } else {
-//            scrollView.maximumZoomScale = model.maximumZoomScale
-//        }
-//
-//        imageView.frame = info.imageFrame
-//
-//        print("2.imageView.frame=\(imageView.frame)")
-//
-//        return info.imageFrame
-//    }
-//}
-//
 //// MARK: - cutImage
 //
 //

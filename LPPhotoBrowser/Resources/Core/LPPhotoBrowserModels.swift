@@ -44,8 +44,6 @@
 //    
 //    open var sourceImageView: UIImageView?
 //    
-//    /// 最大缩放值 默认4
-//    ///（若LPPhotoBrowserConfig的autoCountMaximumZoomScale属性为false有效）
 //    var maximumZoomScale: CGFloat = 4
 //    
 //    /// 是否需要裁剪显示
@@ -93,7 +91,6 @@
 //        isLoading = NO;
 //        isLoadFailed = NO;
 //        isLoadSuccess = NO;
-//        _maximumZoomScale = 4;
 //        _needCutToShow = NO;
 //    }
 //    return self;

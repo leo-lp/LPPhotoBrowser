@@ -10,13 +10,13 @@ import UIKit
 
 protocol LPBrowserCellDelegate: class {
     func imageViewClicked()
-//    func imageViewLongPressBegin()
-//
-//    func dismissWhenEndDragging()
-//    func hideWhenStartDragging()
-//    func showWhenEndDragging()
-//    func show(with duration: TimeInterval)
-//    func changeAlphaWhenDragging(_ alpha: CGFloat)
+    func imageViewLongPressBegin()
+
+    func dismissWhenEndDragging()
+    func hideWhenStartDragging()
+    func showWhenEndDragging()
+    func show(with duration: TimeInterval)
+    func changeAlphaWhenDragging(_ alpha: CGFloat)
 }
 
 class LPBaseBrowserCell: UICollectionViewCell {
