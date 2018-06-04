@@ -129,7 +129,7 @@ extension LPPhotoContainerView: UIScrollViewDelegate {
         dragAnimate.scrollViewWillBeginDragging(scrollView,
                                                 containerView: self)
     }
-
+    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView,
                                   willDecelerate decelerate: Bool) {
         dragAnimate.scrollViewDidEndDragging(scrollView,
@@ -143,7 +143,7 @@ extension LPPhotoContainerView {
     
     private func setupSubviews() {
         let config = LPPhotoBrowserConfig.shared
-        let alwaysBounce = !config.cancelDragImageViewAnimation
+        let alwaysBounce = config.isDragAnimationEnabled
         
         scrollView.delegate = self
         scrollView.maximumZoomScale = 2.5
@@ -230,13 +230,14 @@ extension LPPhotoContainerView {
         scrollView.scrollRectToVisible(bounds, animated: false)
         
         let config = LPPhotoBrowserConfig.shared
-        let cancelDrag = config.cancelDragImageViewAnimation
-        if cancelDrag {
-            scrollView.alwaysBounceVertical = imageView.frame.height > frame.height
-            scrollView.alwaysBounceHorizontal = false
+        var isEnabled = config.isDragAnimationEnabled
+        if isEnabled {
+            scrollView.alwaysBounceVertical = isEnabled
+            scrollView.alwaysBounceHorizontal = isEnabled
         } else {
-            scrollView.alwaysBounceVertical = true
-            scrollView.alwaysBounceHorizontal = true
+            isEnabled = imageView.frame.height > frame.height
+            scrollView.alwaysBounceVertical = isEnabled
+            scrollView.alwaysBounceHorizontal = false
         }
     }
 }

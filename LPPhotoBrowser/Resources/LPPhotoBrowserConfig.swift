@@ -24,7 +24,7 @@ class LPPhotoBrowserConfig {
     }()
     
     /// 取消拖拽图片的动画效果
-    var cancelDragImageViewAnimation: Bool = false
+    open var isDragAnimationEnabled: Bool = true
     
     /// 拖拽图片动效触发出场的比例（拖动距离/屏幕高度 默认0.15）
     var outScaleOfDragImageViewAnimation: CGFloat = 0.15

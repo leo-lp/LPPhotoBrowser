@@ -24,7 +24,7 @@ class LPPhotoDragAnimation {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView,
                                      containerView: LPPhotoContainerView) {
         let config = LPPhotoBrowserConfig.shared
-        guard !config.cancelDragImageViewAnimation else { return }
+        guard config.isDragAnimationEnabled else { return }
         
         let zoomView = containerView.imageView
         let currWindow = UIApplication.shared.lp_currWindow
@@ -42,7 +42,7 @@ class LPPhotoDragAnimation {
     func scrollViewDidScroll(_ scrollView: UIScrollView,
                              containerView: LPPhotoContainerView) {
         let config = LPPhotoBrowserConfig.shared
-        guard !config.cancelDragImageViewAnimation
+        guard config.isDragAnimationEnabled
             && !isZooming else { return }
         
         let pan = scrollView.panGestureRecognizer

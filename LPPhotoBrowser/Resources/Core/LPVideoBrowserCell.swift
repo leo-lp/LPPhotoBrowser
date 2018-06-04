@@ -17,7 +17,6 @@ class LPVideoBrowserCell: LPBaseBrowserCell {
     //@property (strong, nonatomic) UIImage *cover;
     //- (void)pausePlayerAndShowNaviBar;
     //@end
-
 }
 //@implementation TZVideoPreviewCell
 //
