@@ -9,20 +9,19 @@
 import UIKit
 
 class LPPhotoContainerView: UIView {
+    weak var delegate: LPBrowserCellDelegate?
+    
     private(set) var scrollView = UIScrollView()
     private(set) var imageView = UIImageView() // FLAnimatedImageView // 显示的图片
     //private(set) var localImageView = UIImageView() // 用于显示大图的局部图片
     //private(set) var animateImageView = UIImageView() // 做动画的图片
     
     //TZProgressView *progressView;
-    
-    //@property (nonatomic, strong) id asset;
-    //@property (nonatomic, copy) void (^singleTapGestureBlock)(void);
-    //@property (nonatomic, copy) void (^imageProgressUpdateBlock)(double progress);
-    //@property (nonatomic, assign) int32_t imageRequestID;
-    
-    var source: LPPhotoBrowserSource? { didSet { bindData() } }
-    
+    //id asset;
+    //void (^singleTapGestureBlock)(void);
+    //void (^imageProgressUpdateBlock)(double progress);
+    //int32_t imageRequestID;
+        
     deinit {
         log.warning("release memory.")
     }
@@ -38,22 +37,57 @@ class LPPhotoContainerView: UIView {
         
         scrollView.layer.borderColor = UIColor.green.cgColor
         scrollView.layer.borderWidth = 2
+        
+        imageView.layer.borderColor = UIColor.magenta.cgColor
+        imageView.layer.borderWidth = 2
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         scrollView.frame = bounds
         
-        //    static CGFloat progressWH = 40;
-        //    CGFloat progressX = (self.tz_width - progressWH) / 2;
-        //    CGFloat progressY = (self.tz_height - progressWH) / 2;
-        //    _progressView.frame = CGRectMake(progressX, progressY, progressWH, progressWH)
+        //static CGFloat progressWH = 40;
+        //CGFloat progressX = (self.tz_width - progressWH) / 2;
+        //CGFloat progressY = (self.tz_height - progressWH) / 2;
+        //progressView.frame = CGRectMake(progressX, progressY, progressWH, progressWH)
         recoverSubviews()
     }
     
     func recoverSubviews() {
         scrollView.setZoomScale(1.0, animated: false)
         resizeSubviews()
+    }
+    
+    func bindData(_ source: LPPhotoBrowserSource?,
+                  delegate: LPBrowserCellDelegate?) {
+        self.delegate = delegate
+        
+        scrollView.setZoomScale(1.0, animated: false)
+        
+        guard let source = source else { return }
+        switch source {
+        case .image(let image): imageView.image = image
+        case .URL(let placeholder, let thumbnail, let original):
+            imageView.image = placeholder
+            
+        }
+        
+        //    if (model.type == TZAssetModelMediaTypePhotoGif) {
+        //        // 先显示缩略图
+        //        [[TZImageManager manager] getPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+        //            self.imageView.image = photo;
+        //            [self resizeSubviews];
+        //            // 再显示gif动图
+        //            [[TZImageManager manager] getOriginalPhotoDataWithAsset:model.asset completion:^(NSData *data, NSDictionary *info, BOOL isDegraded) {
+        //                if (!isDegraded) {
+        //                    self.imageView.image = [UIImage sd_tz_animatedGIFWithData:data];
+        //                    [self resizeSubviews];
+        //                }
+        //            }];
+        //        } progressHandler:nil networkAccessAllowed:NO];
+        //    } else {
+        //        self.asset = model.asset;
+        //    }
     }
 }
 
@@ -160,50 +194,24 @@ extension LPPhotoContainerView {
     }
     
     @objc private func singleTap(_ tap: UITapGestureRecognizer) {
-        //    if (self.singleTapGestureBlock) {
-        //        self.singleTapGestureBlock();
-        //    }
+        delegate?.imageViewClicked()
     }
     
     @objc private func doubleTap(_ tap: UITapGestureRecognizer) {
-        //    if (_scrollView.zoomScale > 1.0) {
-        //        _scrollView.contentInset = UIEdgeInsetsZero;
-        //        [_scrollView setZoomScale:1.0 animated:YES];
-        //    } else {
-        //        CGPoint touchPoint = [tap locationInView:self.imageView];
-        //        CGFloat newZoomScale = _scrollView.maximumZoomScale;
-        //        CGFloat xsize = self.frame.size.width / newZoomScale;
-        //        CGFloat ysize = self.frame.size.height / newZoomScale;
-        //        [_scrollView zoomToRect:CGRectMake(touchPoint.x - xsize/2, touchPoint.y - ysize/2, xsize, ysize) animated:YES];
-        //    }
-    }
-    
-    private func bindData() {
-        scrollView.setZoomScale(1.0, animated: false)
-        guard let source = source else { return }
-        switch source {
-        case .image(let image): imageView.image = image
-        case .URL(let placeholder, let thumbnail, let original):
-            imageView.image = placeholder
-            
+        if scrollView.zoomScale > 1.0 {
+            scrollView.contentInset = .zero
+            scrollView.setZoomScale(1.0, animated: true)
+        } else {
+            let point = tap.location(in: imageView)
+            let newScale = scrollView.maximumZoomScale
+            let width = frame.width / newScale
+            let height = frame.height / newScale
+            let rect = CGRect(x: point.x - width / 2,
+                              y: point.y - height / 2,
+                              width: width,
+                              height: height)
+            scrollView.zoom(to: rect, animated: true)
         }
-        
-        //    if (model.type == TZAssetModelMediaTypePhotoGif) {
-        //        // 先显示缩略图
-        //        [[TZImageManager manager] getPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
-        //            self.imageView.image = photo;
-        //            [self resizeSubviews];
-        //            // 再显示gif动图
-        //            [[TZImageManager manager] getOriginalPhotoDataWithAsset:model.asset completion:^(NSData *data, NSDictionary *info, BOOL isDegraded) {
-        //                if (!isDegraded) {
-        //                    self.imageView.image = [UIImage sd_tz_animatedGIFWithData:data];
-        //                    [self resizeSubviews];
-        //                }
-        //            }];
-        //        } progressHandler:nil networkAccessAllowed:NO];
-        //    } else {
-        //        self.asset = model.asset;
-        //    }
     }
     
     private func resizeSubviews() {
@@ -246,7 +254,6 @@ extension LPPhotoContainerView {
 //    if (_asset && self.imageRequestID) {
 //        [[PHImageManager defaultManager] cancelImageRequest:self.imageRequestID];
 //    }
-//
 //    _asset = asset;
 //    self.imageRequestID = [[TZImageManager manager] getPhotoWithAsset:asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
 //        if (![asset isEqual:self->_asset]) return;

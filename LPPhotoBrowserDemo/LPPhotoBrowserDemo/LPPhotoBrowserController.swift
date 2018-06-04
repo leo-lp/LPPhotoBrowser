@@ -58,8 +58,8 @@ extension LPPhotoBrowserController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LPPhotoBrowserCell", for: indexPath) as! LPPhotoBrowserCell
-        let name = vm.modelForConfigCell(at: indexPath)
-        cell.bindData(with: name, at: indexPath)
+        let source = vm.sourceForConfigCell(at: indexPath)
+        cell.bindData(with: source, at: indexPath)
         return cell
     }
     
@@ -73,18 +73,11 @@ extension LPPhotoBrowserController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         currentTouchIndexPath = indexPath
-        if indexPath.section == 0 {
-            let browser = LPPhotoBrowser(type: .image, index: indexPath.row)
-            browser.dataSource = self
-            browser.delegate = self
-//            browser.dataModels = vm.dataModels(in: collectionView)
-            browser.show(from: self, completion: nil)
-        } else {
-            let browser = LPPhotoBrowser(type: .network, index: indexPath.row)
-            browser.dataSource = self
-            browser.delegate = self
-            browser.show(from: self, completion: nil)
-        }
+        
+        let browser = LPPhotoBrowser(type: .image, index: indexPath.row)
+        browser.dataSource = self
+        browser.delegate = self
+        browser.show(from: self, completion: nil)
     }
 }
 

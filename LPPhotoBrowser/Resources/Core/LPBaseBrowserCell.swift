@@ -8,12 +8,19 @@
 
 import UIKit
 
-class LPBaseBrowserCell: UICollectionViewCell {
-    var source: LPPhotoBrowserSource?
-    
-    
-    //@property (nonatomic, copy) void (^singleTapGestureBlock)(void);
+protocol LPBrowserCellDelegate: class {
+    func imageViewClicked()
+//    func imageViewLongPressBegin()
+//    
+//    func dismissWhenEndDragging()
+//    func hideWhenStartDragging()
+//    func showWhenEndDragging()
+//    func show(with duration: TimeInterval)
+//    func changeAlphaWhenDragging(_ alpha: CGFloat)
+}
 
+class LPBaseBrowserCell: UICollectionViewCell {
+    
     deinit {
         log.warning("release memory.")
     }
@@ -26,7 +33,12 @@ class LPBaseBrowserCell: UICollectionViewCell {
         super.init(frame: frame)
         backgroundColor = UIColor.black
         setupSubviews()
+        
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoPreviewCollectionViewDidScroll) name:@"photoPreviewCollectionViewDidScroll" object:nil];
+    }
+    
+    func bindData(_ source: LPPhotoBrowserSource?,
+                  delegate: LPBrowserCellDelegate?) {
     }
     
     func setupSubviews() {

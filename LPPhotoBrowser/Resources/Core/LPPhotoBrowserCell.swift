@@ -13,8 +13,8 @@ class LPPhotoBrowserCell: LPBaseBrowserCell {
     
     let containerView = LPPhotoContainerView()
     
-    override var source: LPPhotoBrowserSource? {
-        didSet { containerView.source = source }
+    override func bindData(_ source: LPPhotoBrowserSource?, delegate: LPBrowserCellDelegate?) {
+        containerView.bindData(source, delegate: delegate)
     }
     
     override func setupSubviews() {

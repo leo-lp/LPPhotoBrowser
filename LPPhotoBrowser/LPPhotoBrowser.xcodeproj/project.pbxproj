@@ -78,13 +78,13 @@
 				186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModels.swift */,
 				186EDE3720BD300F0059A0A9 /* LPPhotoBrowserView.swift */,
 				186EDE3920BD30520059A0A9 /* LPPhotoBrowserViewLayout.swift */,
-				187B67B820BE83C7008E6E08 /* LPPhotoBrowser_CellVM..swift */,
 				E8EAE37C20C0F5530026A46C /* LPBaseBrowserCell.swift */,
 				E8EAE37820C0F3E70026A46C /* LPPhotoBrowserCell.swift */,
 				E8EAE37A20C0F4140026A46C /* LPGifBrowserCell.swift */,
 				E8EAE37620C0F3400026A46C /* LPVideoBrowserCell.swift */,
 				E8EAE37220C0F0230026A46C /* LPPhotoContainerView.swift */,
 				186EDE3B20BD30990059A0A9 /* LPPhotoBrowser_Cell.swift */,
+				187B67B820BE83C7008E6E08 /* LPPhotoBrowser_CellVM..swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";

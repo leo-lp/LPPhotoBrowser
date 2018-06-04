@@ -9,6 +9,9 @@
 import UIKit
 
 class LPPhotoBrowserViewLayout: UICollectionViewFlowLayout {
+    deinit {
+        log.warning("release memory.")
+    }
     
     override func prepare() {
         super.prepare()
@@ -21,7 +24,6 @@ class LPPhotoBrowserViewLayout: UICollectionViewFlowLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        print("rect=\(rect)")
         guard let layoutAttsArray = super.layoutAttributesForElements(in: rect)
             else { return nil }
         
@@ -45,36 +47,23 @@ class LPPhotoBrowserViewLayout: UICollectionViewFlowLayout {
         let rightIdx = currIdx + 1
         
         // 页间距
-        let distance = LPPhotoBrowserConfig.shared.distanceBetweenPages
+        var distance = LPPhotoBrowserConfig.shared.distanceBetweenPages
         
         /// 获取当前用户界面布局方向
         let attribute = UIView.appearance().semanticContentAttribute
         let direction = UIView.userInterfaceLayoutDirection(for: attribute)
-        let isLeftToRight = direction == .leftToRight
+        distance = direction == .leftToRight ? distance : -distance
         
         var attributes: [UICollectionViewLayoutAttributes] = []
         for (idx, atts) in layoutAttsArray.enumerated() {
             let attsCopy = atts.copy() as! UICollectionViewLayoutAttributes
-            
-            if leftIdx == idx {
-                let x: CGFloat
-                if isLeftToRight {
-                    x = attsCopy.center.x - distance
-                } else {
-                    x = attsCopy.center.x + distance
-                }
-                attsCopy.center = CGPoint(x: x, y: atts.center.y)
+            if idx == leftIdx {
+                let x = attsCopy.center.x - distance
+                attsCopy.center = CGPoint(x: x, y: attsCopy.center.y)
+            } else if idx == rightIdx {
+                let x = attsCopy.center.x + distance
+                attsCopy.center = CGPoint(x: x, y: attsCopy.center.y)
             }
-            if rightIdx == idx {
-                let x: CGFloat
-                if isLeftToRight {
-                    x = attsCopy.center.x + distance
-                } else {
-                    x = attsCopy.center.x - distance
-                }
-                attsCopy.center = CGPoint(x: x, y: atts.center.y)
-            }
-            
             attributes.append(attsCopy)
         }
         return attributes

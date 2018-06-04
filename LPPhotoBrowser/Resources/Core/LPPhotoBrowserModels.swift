@@ -6,12 +6,12 @@
 //  Copyright © 2018年 pengli. All rights reserved.
 //
 
-import UIKit
-
-enum LPPhotoBrowserViewFillType {
-    case fullWidth // 宽度抵满屏幕宽度，高度不定
-    case completely // 保证图片完整显示情况下最大限度填充
-}
+//import UIKit
+//
+//enum LPPhotoBrowserViewFillType {
+//    case fullWidth // 宽度抵满屏幕宽度，高度不定
+//    case completely // 保证图片完整显示情况下最大限度填充
+//}
 
 //@class YBImageBrowserModel;
 //
@@ -28,34 +28,34 @@ enum LPPhotoBrowserViewFillType {
 //FOUNDATION_EXTERN char * const YBImageBrowserModel_SELName_scaleImage;
 //FOUNDATION_EXPORT char * const YBImageBrowserModel_SELName_cutImage;
 
-open class LPPhotoBrowserModel {
-    open var image: UIImage?
-    open var URLString: String?
-    
-    ///**
-    // 本地 gif 名字
-    // */
-    //@property (nonatomic, copy, nullable) NSString *gifName;
-    //
-    ///**
-    // 本地或者网络 gif 最终转换类型
-    // */
-    // FLAnimatedImage *animatedImage;
-    
-    open var sourceImageView: UIImageView?
-    
-    /// 最大缩放值 默认4
-    ///（若LPPhotoBrowserConfig的autoCountMaximumZoomScale属性为false有效）
-    var maximumZoomScale: CGFloat = 4
-    
-    /// 是否需要裁剪显示
-    var needCutToShow: Bool = false
-    
-    /// 预览缩略图
-    //@property (nonatomic, strong, nullable) YBImageBrowserModel *previewModel;
-    
-    public init() { }
-}
+//open class LPPhotoBrowserModel {
+//    open var image: UIImage?
+//    open var URLString: String?
+//    
+//    ///**
+//    // 本地 gif 名字
+//    // */
+//    //@property (nonatomic, copy, nullable) NSString *gifName;
+//    //
+//    ///**
+//    // 本地或者网络 gif 最终转换类型
+//    // */
+//    // FLAnimatedImage *animatedImage;
+//    
+//    open var sourceImageView: UIImageView?
+//    
+//    /// 最大缩放值 默认4
+//    ///（若LPPhotoBrowserConfig的autoCountMaximumZoomScale属性为false有效）
+//    var maximumZoomScale: CGFloat = 4
+//    
+//    /// 是否需要裁剪显示
+//    var needCutToShow: Bool = false
+//    
+//    /// 预览缩略图
+//    //@property (nonatomic, strong, nullable) YBImageBrowserModel *previewModel;
+//    
+//    public init() { }
+//}
 
 //NSString * const YBImageBrowserModel_KVCKey_isLoading = @"isLoading";
 //NSString * const YBImageBrowserModel_KVCKey_isLoadFailed = @"isLoadFailed";

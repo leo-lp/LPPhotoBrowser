@@ -146,7 +146,7 @@ extension LPPhotoBrowser {
 
 // MARK: - Delegate funcs
 
-extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate {
+extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate, LPBrowserCellDelegate {
     
     // MARK: - UICollectionViewDataSource
     
@@ -163,41 +163,67 @@ extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate {
         let source = dataSource?.photoBrowser(self,
                                               sourceAt: indexPath.item,
                                               of: type)
-        return browserView.configCell(with: source, at: indexPath)
+        return browserView.configCell(with: source,
+                                      delegate: self,
+                                      at: indexPath)
     }
     
     // MARK: - UICollectionViewDelegate
     
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? LPPhotoBrowserCell {
-            cell.recoverSubviews()
-        }
+        (cell as? LPPhotoBrowserCell)?.recoverSubviews()
     }
     
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? LPPhotoBrowserCell {
-            cell.recoverSubviews()
-        }
+        (cell as? LPPhotoBrowserCell)?.recoverSubviews()
     }
     
-//    // MARK: - UIScrollViewDelegate
-//
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let indexRatio = scrollView.contentOffset.x / scrollView.bounds.width
-//        let index = Int(indexRatio + 0.5)
-//        let numberOfItems = collectionView(self, numberOfItemsInSection: 0)
-//        guard index < numberOfItems && currentIndex != index else { return }
-//
-//        currentIndex = index
-//        pb_delegate?.photoBrowserView(self, didScrollTo: index)
-//    }
-//
+    // MARK: - UIScrollViewDelegate
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let indexRatio = scrollView.contentOffset.x / scrollView.bounds.width
+        let index = Int(indexRatio + 0.5)
+        let numberOfItems = collectionView(browserView,
+                                           numberOfItemsInSection: 0)
+        guard index < numberOfItems && currentIndex != index else { return }
+        
+        currentIndex = index
+        //[self setTooBarNumberCountWithCurrentIndex:index+1];
+    }
+    
 //    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 //        guard let visible = visibleCells as? [LPPhotoBrowser_Cell] else { return }
 //        //    for (YBImageBrowserCell *cell in array) {
 //        //        [cell reDownloadImageUrl];
 //        //    }
 //    }
+    
+    // MARK: - LPBrowserCellDelegate
+    
+    func imageViewClicked() {
+        hide(nil)
+    }
+    
+    //    func photoBrowserCell(_ cell: LPPhotoBrowser_Cell, longPressBegin press: UILongPressGestureRecognizer) {
+    ////        pb_delegate?.photoBrowserView(self, longPressBegin: press)
+    //    }
+    //
+    //    func hideBrowerViewWhenStartDragging(in cell: LPPhotoBrowser_Cell) {
+    //        guard !isHidden else { return }
+    //        isHidden = true
+    //    }
+    //
+    //    func showBrowerViewWhenEndDragging(in cell: LPPhotoBrowser_Cell) {
+    ////        pb_delegate?.showBrowerViewWhenEndDragging(in: self)
+    //    }
+    //
+    //    func photoBrowserCell(_ cell: LPPhotoBrowser_Cell, changeAlphaWhenDragging alpha: CGFloat) {
+    ////        pb_delegate?.photoBrowserView(self, changeAlphaWhenDragging: alpha)
+    //    }
+    //
+    //    func photoBrowserCell(_ cell: LPPhotoBrowser_Cell, willShowBrowerViewWith timeInterval: TimeInterval) {
+    ////        pb_delegate?.photoBrowserView(self, willShowBrowerViewWith: timeInterval)
+    //    }
 }
 
 extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserAnimatedDelegate {
@@ -214,13 +240,6 @@ extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserA
     
     // MARK: - LPPhotoBrowserViewDelegate
     
-    func photoBrowserView(_ browserView: LPPhotoBrowserView, didScrollTo index: Int) {
-//        currentIndex = index
-        //    [self setTooBarNumberCountWithCurrentIndex:index+1];
-        
-        //delegate?.photoBrowser(self, didScrollTo: index)
-    }
-    
     func photoBrowserView(_ browserView: LPPhotoBrowserView, longPressBegin press: UILongPressGestureRecognizer) {
 //        guard !isCancelLongPressGesture else { return }
         
@@ -228,10 +247,6 @@ extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserA
         //        //弹出功能栏
         //        if (_functionBar) { [_functionBar show]; }
         //    }
-    }
-    
-    func applyHidden(in browserView: LPPhotoBrowserView) {
-        hide(nil)
     }
     
     func photoBrowserView(_ browserView: LPPhotoBrowserView, changeAlphaWhenDragging alpha: CGFloat) {
@@ -265,20 +280,8 @@ extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserA
 //        //    }
         return 0
     }
-    
-    func photoBrowserView(_ browserView: LPPhotoBrowserView, modelForCellAt index: Int) -> LPPhotoBrowserModel? {
-//        if let models = dataModels, models.count > index {
-//            return models[index]
-//        }
-//        else if (_dataSource && [_dataSource respondsToSelector:@selector(yBImageBrowser:modelForCellAtIndex:)]) {
-            //        return [_dataSource yBImageBrowser:self modelForCellAtIndex:index];
-            //    }
-        return nil
-    }
 }
 
-
-//
 //- (void)judgeAlbumAuthorizationStatusSuccess:(void(^)(void))success {
 //    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
 //    if (status == PHAuthorizationStatusDenied) {
@@ -327,9 +330,9 @@ extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserA
 extension LPPhotoBrowser {
     
     private func commonInit() {
-//        transitioningDelegate = self
-//        modalPresentationStyle = .custom
-//    self.fuctionDataArray = @[[YBImageBrowserFunctionModel functionModelForSavePictureToAlbum]];
+        transitioningDelegate = self
+        modalPresentationStyle = .custom
+//    fuctionDataArray = @[[YBImageBrowserFunctionModel functionModelForSavePictureToAlbum]];
         statusBarConfigByInfoPlist()
     }
     

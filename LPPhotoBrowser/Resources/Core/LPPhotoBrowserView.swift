@@ -37,46 +37,18 @@ class LPPhotoBrowserView: UICollectionView {
     }
     
     func scrollToIndex(_ index: Int) {
-        print("----> scrollToIndex=\(index, bounds.width * CGFloat(index), contentOffset)")
-        
-        contentOffset = CGPoint(x: bounds.width * CGFloat(index), y: 0)
+        let offset = CGPoint(x: bounds.width * CGFloat(index),
+                             y: 0)
+        contentOffset = offset
     }
     
-    func configCell(with source: LPPhotoBrowserSource?, at indexPath: IndexPath) -> LPPhotoBrowserCell {
-        let cell = dequeueReusableCell(withReuseIdentifier: LPCellID, for: indexPath) as! LPPhotoBrowserCell
-        cell.source = source
+    func configCell(with source: LPPhotoBrowserSource?,
+                    delegate: LPBrowserCellDelegate,
+                    at indexPath: IndexPath) -> LPPhotoBrowserCell {
+        let cell = dequeueReusableCell(withReuseIdentifier: LPCellID,
+                                       for: indexPath) as! LPPhotoBrowserCell
+        cell.bindData(source, delegate: delegate)
         return cell
-    }
-}
-
-// MARK: - Delegate funcs
-
-extension LPPhotoBrowserView: LPPhotoBrowser_CellDelegate {
-    // MARK: - LPPhotoBrowser_CellDelegate
-    
-    func photoBrowserCell(_ cell: LPPhotoBrowser_Cell, longPressBegin press: UILongPressGestureRecognizer) {
-//        pb_delegate?.photoBrowserView(self, longPressBegin: press)
-    }
-    
-    func applyHidden(by cell: LPPhotoBrowser_Cell) {
-//        pb_delegate?.applyHidden(in: self)
-    }
-    
-    func hideBrowerViewWhenStartDragging(in cell: LPPhotoBrowser_Cell) {
-        guard !isHidden else { return }
-        isHidden = true
-    }
-    
-    func showBrowerViewWhenEndDragging(in cell: LPPhotoBrowser_Cell) {
-//        pb_delegate?.showBrowerViewWhenEndDragging(in: self)
-    }
-    
-    func photoBrowserCell(_ cell: LPPhotoBrowser_Cell, changeAlphaWhenDragging alpha: CGFloat) {
-//        pb_delegate?.photoBrowserView(self, changeAlphaWhenDragging: alpha)
-    }
-    
-    func photoBrowserCell(_ cell: LPPhotoBrowser_Cell, willShowBrowerViewWith timeInterval: TimeInterval) {
-//        pb_delegate?.photoBrowserView(self, willShowBrowerViewWith: timeInterval)
     }
 }
 

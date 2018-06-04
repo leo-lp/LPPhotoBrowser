@@ -46,7 +46,7 @@ class LPPhotoBrowserVM {
         return section == 0 ? imageNames.count : URLStrings.count
     }
     
-    func modelForConfigCell(at indexPath: IndexPath) -> String {
+    func sourceForConfigCell(at indexPath: IndexPath) -> String {
         if indexPath.section == 0 {
             return imageNames[indexPath.row]
         } else {
@@ -54,25 +54,25 @@ class LPPhotoBrowserVM {
         }
     }
     
-    func dataModels(in collectionView: UICollectionView) -> [LPPhotoBrowserModel] {
-        var models: [LPPhotoBrowserModel] = []
-        
-        for (idx, named) in imageNames.enumerated() {
-            let model = LPPhotoBrowserModel()
-            model.image = UIImage(named: named)
-            
-            let indexPath = IndexPath(item: idx, section: 0)
-            model.sourceImageView = self.imageView(in: collectionView,
-                                                   at: indexPath)
-            models.append(model)
-        }
-        return models
-    }
-    
-    func imageView(in collectionView: UICollectionView,
-                   at indexPath: IndexPath) -> UIImageView? {
-        let cell = collectionView.cellForItem(at: indexPath)
-        guard let photoCell = cell as? LPPhotoBrowserCell else { return nil }
-        return photoCell.imageView
-    }
+//    func dataModels(in collectionView: UICollectionView) -> [LPPhotoBrowserModel] {
+//        var models: [LPPhotoBrowserModel] = []
+//
+//        for (idx, named) in imageNames.enumerated() {
+//            let model = LPPhotoBrowserModel()
+//            model.image = UIImage(named: named)
+//
+//            let indexPath = IndexPath(item: idx, section: 0)
+//            model.sourceImageView = self.imageView(in: collectionView,
+//                                                   at: indexPath)
+//            models.append(model)
+//        }
+//        return models
+//    }
+//
+//    func imageView(in collectionView: UICollectionView,
+//                   at indexPath: IndexPath) -> UIImageView? {
+//        let cell = collectionView.cellForItem(at: indexPath)
+//        guard let photoCell = cell as? LPPhotoBrowserCell else { return nil }
+//        return photoCell.imageView
+//    }
 }
