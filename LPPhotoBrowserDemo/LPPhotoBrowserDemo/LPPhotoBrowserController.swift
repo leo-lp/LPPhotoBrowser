@@ -90,11 +90,8 @@ extension LPPhotoBrowserController: LPPhotoBrowserDataSource, LPPhotoBrowserDele
     
     func photoBrowser(_ browser: LPPhotoBrowser,
                       sourceAt index: Int,
-                      of type: LPPhotoBrowserType) -> LPPhotoBrowserSource {
-        switch type {
-        case .local: return .image(UIImage(named: vm.imageNames[index]))
-        case .network: return .image(UIImage(named: vm.imageNames[index]))
-        }
+                      of type: LPPhotoBrowserType) -> LPPhotoBrowserSourceConvertible? {
+        return UIImage(named: vm.imageNames[index])
     }
     
     func photoBrowser(_ browser: LPPhotoBrowser,

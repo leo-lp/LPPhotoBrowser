@@ -60,17 +60,14 @@ class LPPhotoContainerView: UIView {
         resizeSubviews()
     }
     
-    func bindData(_ source: LPPhotoBrowserSource?,
+    func bindData(_ source: LPPhotoBrowserSourceConvertible?,
                   delegate: LPBrowserCellDelegate?) {
         self.delegate = delegate
         
         scrollView.setZoomScale(1.0, animated: false)
         
-        guard let source = source else { return }
-        switch source {
-        case .image(let image): imageView.image = image
-        case .URL(let placeholder, let thumbnail, let original):
-            imageView.image = placeholder
+        source?.asImage { [weak self](image) in
+            self?.imageView.image = image
         }
         
         //    if (model.type == TZAssetModelMediaTypePhotoGif) {

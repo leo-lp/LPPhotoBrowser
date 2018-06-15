@@ -8,16 +8,6 @@
 
 import UIKit
 
-public enum LPPhotoBrowserType {
-    case local
-    case network
-}
-
-public enum LPPhotoBrowserSource {
-    case image(UIImage?)
-    case URL(UIImage?, URL?, URL?)
-}
-
 public protocol LPPhotoBrowserDataSource: class {
     
     /// 配置图片的数量
@@ -26,7 +16,7 @@ public protocol LPPhotoBrowserDataSource: class {
     
     func photoBrowser(_ browser: LPPhotoBrowser,
                       sourceAt index: Int,
-                      of type: LPPhotoBrowserType) -> LPPhotoBrowserSource
+                      of type: LPPhotoBrowserType) -> LPPhotoBrowserSourceConvertible?
     
     func photoBrowser(_ browser: LPPhotoBrowser,
                       imageViewOfClickedAt index: Int,

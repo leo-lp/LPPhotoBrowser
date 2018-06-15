@@ -12,7 +12,7 @@ class LPPhotoBrowserCell: LPBaseBrowserCell {
     //@property (nonatomic, copy) void (^imageProgressUpdateBlock)(double progress);
     let containerView = LPPhotoContainerView()
     
-    override func bindData(_ source: LPPhotoBrowserSource?, delegate: LPBrowserCellDelegate?) {
+    override func bindData(_ source: LPPhotoBrowserSourceConvertible?, delegate: LPBrowserCellDelegate?) {
         containerView.bindData(source, delegate: delegate)
     }
     

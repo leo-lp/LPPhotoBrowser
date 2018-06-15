@@ -6,8 +6,39 @@
 //  Copyright © 2018年 pengli. All rights reserved.
 //
 
-//import UIKit
+import UIKit
+
+public enum LPPhotoBrowserType {
+    case local
+    case network
+}
+
+public protocol LPPhotoBrowserSourceConvertible {
+    var asImage: UIImage? { get }
+    func asImage(_ completion: (UIImage?) -> Void)
+}
+
+// Convertible
 //
+
+extension UIImage: LPPhotoBrowserSourceConvertible {
+    public var asImage: UIImage? { return self }
+    public func asImage(_ completion: (UIImage?) -> Void) {
+        return completion(self)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 //enum LPPhotoBrowserViewFillType {
 //    case fullWidth // 宽度抵满屏幕宽度，高度不定
 //    case completely // 保证图片完整显示情况下最大限度填充

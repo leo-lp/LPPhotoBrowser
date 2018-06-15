@@ -37,7 +37,7 @@ class LPBaseBrowserCell: UICollectionViewCell {
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoPreviewCollectionViewDidScroll) name:@"photoPreviewCollectionViewDidScroll" object:nil];
     }
     
-    func bindData(_ source: LPPhotoBrowserSource?,
+    func bindData(_ source: LPPhotoBrowserSourceConvertible?,
                   delegate: LPBrowserCellDelegate?) {
     }
     

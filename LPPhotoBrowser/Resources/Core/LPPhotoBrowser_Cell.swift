@@ -1,16 +1,4 @@
 
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        scrollView.setZoomScale(1, animated: true)
-//
-//        scrollView.frame = bounds
-//        scrollView.contentSize = bounds.size
-//        //self.progressBar.frame = self.bounds
-//
-//        print("scrollView.frame=\(scrollView.frame)")
-//    }
-//}
-
 ////- (void)reDownloadImageUrl {
 ////    if ([[self.model valueForKey:YBImageBrowserModel_KVCKey_isLoadFailed] boolValue] && ![[self.model valueForKey:YBImageBrowserModel_KVCKey_isLoading] boolValue]) {
 ////        [self downLoadImageWithModel:self.model];

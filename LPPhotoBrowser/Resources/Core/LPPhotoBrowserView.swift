@@ -42,12 +42,14 @@ class LPPhotoBrowserView: UICollectionView {
         contentOffset = offset
     }
     
-    func configCell(with source: LPPhotoBrowserSource?,
+    func configCell(with source: LPPhotoBrowserSourceConvertible?,
                     delegate: LPBrowserCellDelegate,
                     at indexPath: IndexPath) -> LPPhotoBrowserCell {
         let cell = dequeueReusableCell(withReuseIdentifier: LPCellID,
                                        for: indexPath) as! LPPhotoBrowserCell
-        cell.bindData(source, delegate: delegate)
+        if let source = source {
+            cell.bindData(source, delegate: delegate)
+        }
         return cell
     }
 }
