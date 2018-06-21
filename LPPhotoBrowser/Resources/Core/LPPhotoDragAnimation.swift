@@ -140,7 +140,7 @@ class LPPhotoDragAnimation {
         let outScale = config.outScaleOfDragImageViewAnimation
         
         if totalOffsetOfAnimateImageView.y > maxHeight * outScale {
-            // 移除图片浏览器
+            /// 移除图片浏览器
             containerView.delegate?.dismissWhenEndDragging()
         } else {
             /// 复位

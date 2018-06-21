@@ -54,21 +54,6 @@ class LPPhotoBrowserVM {
         }
     }
     
-//    func dataModels(in collectionView: UICollectionView) -> [LPPhotoBrowserModel] {
-//        var models: [LPPhotoBrowserModel] = []
-//
-//        for (idx, named) in imageNames.enumerated() {
-//            let model = LPPhotoBrowserModel()
-//            model.image = UIImage(named: named)
-//
-//            let indexPath = IndexPath(item: idx, section: 0)
-//            model.sourceImageView = self.imageView(in: collectionView,
-//                                                   at: indexPath)
-//            models.append(model)
-//        }
-//        return models
-//    }
-    
     func imageView(in collectionView: UICollectionView,
                    at indexPath: IndexPath) -> UIImageView? {
         let cell = collectionView.cellForItem(at: indexPath)

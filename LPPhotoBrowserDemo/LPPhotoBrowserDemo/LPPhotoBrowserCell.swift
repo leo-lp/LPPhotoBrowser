@@ -49,24 +49,19 @@ class LPPhotoBrowserCell: UICollectionViewCell {
     }
     
     private func bindNetworkImage(with URLString: String) {
-        let isGIF = URLString.hasSuffix(".gif")
-        bigPhotoFlagLabel.isHidden = !isGIF
-        if isGIF {
-            bigPhotoFlagLabel.text = "gif"
-        }
-        
-        let url = URL(string: URLString)!
-
+        let url = URL(string: URLString)
         imageView.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil) { (img, error, type, url) in
-            print("error=\(String(describing: error))")
+            if img?.images == nil {
+                self.bigPhotoFlagLabel.isHidden = true
+            } else {
+                self.bigPhotoFlagLabel.isHidden = false
+                self.bigPhotoFlagLabel.text = " 动态图 "
+            }
+            
+            if let error = error {
+                print("URLString=\(URLString)")
+                print("error=\(error)")
+            }
         }
-        
-//        let options: KingfisherOptionsInfo = [.preloadAllAnimationData]
-//        KingfisherManager.shared.retrieveImage(with: url, options: options, progressBlock: { (receivedSize, totalSize) in
-//        }) { (image, error, _, _) in
-//            DispatchQueue.main.safeAsync {
-//                self.imageView.image = image
-//            }
-//        }
     }
 }

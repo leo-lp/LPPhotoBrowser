@@ -26,15 +26,15 @@ class LPNetworkPhoto: LPPhotoBrowserSourceConvertible {
             completion(placeholder)
         }
         
-//        /// 设置缩略图
-//        if let url = thumbnailURL {
-//            retrieveThumbnailImage(url: url, progress: progress, completion: completion)
-//        }
-//
-//        /// 设置原图
-//        else if let url = originalURL {
-//            retrieveOriginalImage(url: url, progress: progress, completion: completion)
-//        }
+        /// 设置缩略图
+        if let url = thumbnailURL {
+            retrieveThumbnailImage(url: url, progress: progress, completion: completion)
+        }
+
+        /// 设置原图
+        else if let url = originalURL {
+            retrieveOriginalImage(url: url, progress: progress, completion: completion)
+        }
     }
     
     private func retrieveThumbnailImage(url: URL, progress: LPProgress?, completion: @escaping LPCompletion) {
@@ -56,15 +56,12 @@ class LPNetworkPhoto: LPPhotoBrowserSourceConvertible {
     
     private func retrieveOriginalImage(url: URL, progress: LPProgress?, completion: @escaping LPCompletion) {
         let options: KingfisherOptionsInfo = [.preloadAllAnimationData]
-        print(url.absoluteString)
         KingfisherManager.shared.retrieveImage(with: url, options: options, progressBlock: { (receivedSize, totalSize) in
             progress?(Float(receivedSize) / Float(totalSize))
         }) { (image, error, _, _) in
             
             if let originalImage = image {
                 completion(originalImage)
-//                let a = UIImage.animatedImage(with: originalImage.images!, duration: originalImage.duration)
-//                completion(a)
             }
         }
     }

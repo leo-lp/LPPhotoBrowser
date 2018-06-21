@@ -12,6 +12,17 @@ class LPPhotoBrowserCellHeader: UICollectionReusableView {
     @IBOutlet weak var titleLabel: UILabel!
     
     func bindData(at indexPath: IndexPath) {
-        titleLabel.text = indexPath.section == 0 ? "本地图片" : "网络图片"
+        var title: String
+        switch indexPath.section {
+        case 0:
+            title = "本地图片"
+        case 1:
+            title = "网络图片"
+        case 2:
+            title = "相册图片"
+        default:
+            title = "未知来源"
+        }
+        titleLabel.text = title
     }
 }
