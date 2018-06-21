@@ -66,9 +66,20 @@ class LPPhotoContainerView: UIView {
         
         scrollView.setZoomScale(1.0, animated: false)
         
-        source?.asImage { [weak self](image) in
-            self?.imageView.image = image
-        }
+        source?.asImage({ (percent) in
+        
+        }, completion: { [weak self](image) in
+            guard let `self` = self else { return }
+            
+            if let image = image, let images = image.images {
+                self.imageView.image = image
+                self.imageView.animationImages = images
+                self.imageView.animationDuration = image.duration
+                self.imageView.startAnimating()
+            } else {
+                self.imageView.image = image
+            }
+        })
         
         //    if (model.type == TZAssetModelMediaTypePhotoGif) {
         //        // 先显示缩略图

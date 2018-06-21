@@ -55,8 +55,18 @@ class LPPhotoBrowserCell: UICollectionViewCell {
             bigPhotoFlagLabel.text = "gif"
         }
         
-        imageView.kf.setImage(with: URL(string: URLString), placeholder: nil, options: nil, progressBlock: nil) { (img, error, type, url) in
-//            print("error=\(error)")
+        let url = URL(string: URLString)!
+
+        imageView.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil) { (img, error, type, url) in
+            print("error=\(String(describing: error))")
         }
+        
+//        let options: KingfisherOptionsInfo = [.preloadAllAnimationData]
+//        KingfisherManager.shared.retrieveImage(with: url, options: options, progressBlock: { (receivedSize, totalSize) in
+//        }) { (image, error, _, _) in
+//            DispatchQueue.main.safeAsync {
+//                self.imageView.image = image
+//            }
+//        }
     }
 }

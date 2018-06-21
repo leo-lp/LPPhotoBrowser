@@ -8,26 +8,33 @@
 
 import UIKit
 
-public enum LPPhotoBrowserType {
-    case local
-    case network
+public struct LPPhotoBrowserType: OptionSet, Hashable {
+    public let rawValue: Int
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+    
+    public static let `default` = LPPhotoBrowserType(rawValue: 1 << 1)
+    public static let network   = LPPhotoBrowserType(rawValue: 1 << 2)
+    public static let album     = LPPhotoBrowserType(rawValue: 1 << 3)
 }
+
+public typealias LPProgress = (_ percent: Float) -> Void
+public typealias LPCompletion = (_ image: UIImage?) -> Void
 
 public protocol LPPhotoBrowserSourceConvertible {
     var asImage: UIImage? { get }
-    func asImage(_ completion: (UIImage?) -> Void)
+    
+    func asImage(_ progress: LPProgress?, completion: @escaping LPCompletion)
 }
-
-// Convertible
-//
 
 extension UIImage: LPPhotoBrowserSourceConvertible {
     public var asImage: UIImage? { return self }
-    public func asImage(_ completion: (UIImage?) -> Void) {
+    
+    public func asImage(_ progress: LPProgress?, completion: @escaping LPCompletion) {
         return completion(self)
     }
 }
-
 
 
 
@@ -44,88 +51,6 @@ extension UIImage: LPPhotoBrowserSourceConvertible {
 //    case completely // 保证图片完整显示情况下最大限度填充
 //}
 
-//@class YBImageBrowserModel;
-//
-//typedef void(^YBImageBrowserModelDownloadProgressBlock)(YBImageBrowserModel *backModel, NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL);
-//typedef void(^YBImageBrowserModelDownloadSuccessBlock)(YBImageBrowserModel *backModel, UIImage * _Nullable image, NSData * _Nullable data, BOOL finished);
-//typedef void(^YBImageBrowserModelDownloadFailedBlock)(YBImageBrowserModel *backModel, NSError * _Nullable error, BOOL finished);
-//typedef void(^YBImageBrowserModelScaleImageSuccessBlock)(YBImageBrowserModel *backModel);
-//typedef void(^YBImageBrowserModelCutImageSuccessBlock)(YBImageBrowserModel *backModel, UIImage *targetImage);
-//
-//FOUNDATION_EXTERN NSString * const YBImageBrowserModel_KVCKey_isLoading;
-//FOUNDATION_EXTERN NSString * const YBImageBrowserModel_KVCKey_isLoadFailed;
-//FOUNDATION_EXTERN NSString * const YBImageBrowserModel_KVCKey_largeImage;
-//FOUNDATION_EXTERN char * const YBImageBrowserModel_SELName_download;
-//FOUNDATION_EXTERN char * const YBImageBrowserModel_SELName_scaleImage;
-//FOUNDATION_EXPORT char * const YBImageBrowserModel_SELName_cutImage;
-
-//open class LPPhotoBrowserModel {
-//    open var image: UIImage?
-//    open var URLString: String?
-//    
-//    ///**
-//    // 本地 gif 名字
-//    // */
-//    //@property (nonatomic, copy, nullable) NSString *gifName;
-//    //
-//    ///**
-//    // 本地或者网络 gif 最终转换类型
-//    // */
-//    // FLAnimatedImage *animatedImage;
-//    
-//    open var sourceImageView: UIImageView?
-//    
-//    var maximumZoomScale: CGFloat = 4
-//    
-//    /// 是否需要裁剪显示
-//    var needCutToShow: Bool = false
-//    
-//    /// 预览缩略图
-//    //@property (nonatomic, strong, nullable) YBImageBrowserModel *previewModel;
-//    
-//    public init() { }
-//}
-
-//NSString * const YBImageBrowserModel_KVCKey_isLoading = @"isLoading";
-//NSString * const YBImageBrowserModel_KVCKey_isLoadFailed = @"isLoadFailed";
-//NSString * const YBImageBrowserModel_KVCKey_largeImage = @"largeImage";
-//char * const YBImageBrowserModel_SELName_download = "downloadImageProgress:success:failed:";
-//char * const YBImageBrowserModel_SELName_scaleImage = "scaleImageWithCurrentImageFrame:complete:";
-//char * const YBImageBrowserModel_SELName_cutImage = "cutImageWithTargetRect:complete:";
-//
-//@interface YBImageBrowserModel () {
-//    BOOL isLoading;
-//    BOOL isLoadFailed;
-//    BOOL isLoadSuccess;
-//    __weak id downloadToken;
-//    UIImage *largeImage;    //存储需要压缩的高清图
-//    YBImageBrowserModelDownloadProgressBlock progressBlock;
-//    YBImageBrowserModelDownloadSuccessBlock successBlock;
-//    YBImageBrowserModelDownloadFailedBlock failedBlock;
-//}
-//
-//@end
-//
-//@implementation YBImageBrowserModel
-//
-//#pragma mark life cycle
-//
-//- (void)dealloc {
-//    if (downloadToken) {
-//        [YBImageBrowserDownloader cancelTaskWithDownloadToken:downloadToken];
-//    }
-//}
-//
-//- (instancetype)init {
-//    self = [super init];
-//    if (self) {
-//        isLoading = NO;
-//        isLoadFailed = NO;
-//        isLoadSuccess = NO;
-//        _needCutToShow = NO;
-//    }
-//    return self;
-//}
 //
 //#pragma mark download
 //

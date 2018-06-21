@@ -25,7 +25,7 @@ public class LPPhotoBrowser: UIViewController {
     
     public private(set) var currentIndex: Int = 0
     
-    public private(set) var type: LPPhotoBrowserType = .local
+    public private(set) var type: LPPhotoBrowserType = .default
     
     public var isLongPressGestureEnabled: Bool = true
     

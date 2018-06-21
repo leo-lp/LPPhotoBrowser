@@ -25,7 +25,7 @@ class LPPhotoBrowserController: UICollectionViewController {
         super.viewDidLayoutSubviews()
         guard let collectionView = collectionView
             , let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        let wh = (view.frame.width - 18.0) / 4.0
+        let wh = (view.frame.width - 18.0) / 3.0
         layout.itemSize = CGSize(width: wh, height: wh)
         layout.minimumLineSpacing = 2
         layout.minimumInteritemSpacing = 2
@@ -70,7 +70,7 @@ extension LPPhotoBrowserController {
     // MARK: UICollectionViewDelegate
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let type: LPPhotoBrowserType = indexPath.section == 0 ? .local : .network
+        let type: LPPhotoBrowserType = indexPath.section == 0 ? .default : .network
         
         let browser = LPPhotoBrowser(type: type, index: indexPath.row)
         browser.dataSource = self
@@ -83,22 +83,35 @@ extension LPPhotoBrowserController: LPPhotoBrowserDataSource, LPPhotoBrowserDele
     
     func photoBrowser(_ browser: LPPhotoBrowser, numberOf type: LPPhotoBrowserType) -> Int {
         switch type {
-        case .local: return vm.imageNames.count
+        case .default: return vm.imageNames.count
         case .network: return vm.URLStrings.count
+        default: return 0
         }
     }
     
     func photoBrowser(_ browser: LPPhotoBrowser,
                       sourceAt index: Int,
                       of type: LPPhotoBrowserType) -> LPPhotoBrowserSourceConvertible? {
-        return UIImage(named: vm.imageNames[index])
+        switch type {
+        case .default:
+            return UIImage(named: vm.imageNames[index])
+        case .network:
+            let photo = LPNetworkPhoto()
+            photo.placeholder = photoBrowser(browser, imageViewOfClickedAt: index, of: type)?.image
+            photo.originalURL = URL(string: vm.URLStrings[index])
+            return photo
+        default:
+            return nil
+        }
     }
     
     func photoBrowser(_ browser: LPPhotoBrowser,
                       imageViewOfClickedAt index: Int,
                       of type: LPPhotoBrowserType) -> UIImageView? {
         guard let collectionView = collectionView else { return nil }
-        let indexPath = IndexPath(item: index, section: 0)
+        
+        let section = type == .default ? 0 : 1
+        let indexPath = IndexPath(item: index, section: section)
         return vm.imageView(in: collectionView, at: indexPath)
     }
 }
