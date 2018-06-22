@@ -37,7 +37,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="LPPhotoBrowser" id="SoC-pk-RGD"/>
+                    <navigationItem key="navigationItem" title="LPPhotoBrowser" id="SoC-pk-RGD">
+                        <barButtonItem key="rightBarButtonItem" title="清空缓存" id="Fht-QS-W2p">
+                            <connections>
+                                <action selector="clearButtonClicked:" destination="BYZ-38-t0r" id="Vzd-bz-Ux2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

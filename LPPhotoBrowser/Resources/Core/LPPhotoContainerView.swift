@@ -36,12 +36,7 @@ class LPPhotoContainerView: UIView {
         super.init(frame: frame)
         setupSubviews()
         setupGestures()
-        
-        scrollView.layer.borderColor = UIColor.green.cgColor
-        scrollView.layer.borderWidth = 2
-        
-        imageView.layer.borderColor = UIColor.magenta.cgColor
-        imageView.layer.borderWidth = 2
+        setupNotifications()
     }
     
     override func layoutSubviews() {
@@ -204,6 +199,20 @@ extension LPPhotoContainerView {
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGesture))
         scrollView.addGestureRecognizer(longPress)
     }
+    
+    private func setupNotifications() {
+//        let center = NotificationCenter.default
+//        center.addObserver(self,
+//                           selector: #selector(deviceOrientationChanged),
+//                           name: NSNotification.Name.UIDeviceOrientationDidChange,
+//                           object: nil)
+    }
+    
+//    @objc private func deviceOrientationChanged(_ sender: Notification) {
+//        if animateImageView.superview != nil {
+//            animateImageView.removeFromSuperview()
+//        }
+//    }
     
     @objc private func singleTap(_ tap: UITapGestureRecognizer) {
         delegate?.imageViewClicked()

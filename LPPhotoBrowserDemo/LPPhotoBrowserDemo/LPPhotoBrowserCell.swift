@@ -27,30 +27,35 @@ class LPPhotoBrowserCell: UICollectionViewCell {
     }
     
     private func bindLocalImage(with imageNamed: String) {
-        imageView.image = UIImage(named: imageNamed)
+        guard let url = Bundle.main.url(forResource: imageNamed, withExtension: nil)
+            , let data = try? Data(contentsOf: url)
+            , let image = UIImage(data: data) else { return }
+        //guard let image = UIImage(named: imageNamed) else { return }
         
-//        if let url = Bundle.main.url(forResource: imageNamed, withExtension: nil)
-//            , let data = try? Data(contentsOf: url) {
-//            imageView.image = UIImage(data: data)
-//        }
-        
-        //        if (image.size.width > 3500 || image.size.height > 3500) {
-        //            label.hidden = NO;
-        //            label.text = @"大图";
-        //            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //                UIImage *result = [YBImageBrowserUtilities scaleToSizeWithImage:image size:CGSizeMake(800, image.size.height / image.size.width * 800)];
-        //                YB_MAINTHREAD_ASYNC(^{
-        //                    imgView.image = result;
-        //                })
-        //            });
-        //        } else {
-        //            imgView.image = image;
-        //        }
+        if image.size.width >= 3840 || image.size.height >= 3840 {
+            bigPhotoFlagLabel.isHidden = false
+            bigPhotoFlagLabel.text = " 4K大图 "
+            DispatchQueue.global().async {
+                let width: CGFloat = 375.0
+                let height: CGFloat = image.size.height / image.size.width * width
+                let scaledImage = image.lp_reSizeImage(CGSize(width: width, height: height))
+                DispatchQueue.main.async {
+                    self.imageView.image = scaledImage
+                }
+            }
+        } else {
+            bigPhotoFlagLabel.isHidden = true
+            imageView.image = image
+        }
     }
     
     private func bindNetworkImage(with URLString: String) {
         let url = URL(string: URLString)
-        imageView.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil) { (img, error, type, url) in
+        
+        imageView.kf.setImage(with: url,
+                              placeholder: nil,
+                              options: nil,
+                              progressBlock: nil) { (img, error, type, url) in
             if img?.images == nil {
                 self.bigPhotoFlagLabel.isHidden = true
             } else {

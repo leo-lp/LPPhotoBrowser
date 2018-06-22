@@ -17,6 +17,10 @@ class LPPhotoBrowserVM {
             let name = String(format: "girl%02d.jpg", idx)
             names.append(name)
         }
+        for idx in 1...9 {
+            let name = String(format: "4k-%02d.jpg", idx)
+            names.append(name)
+        }
         return names
     }()
     

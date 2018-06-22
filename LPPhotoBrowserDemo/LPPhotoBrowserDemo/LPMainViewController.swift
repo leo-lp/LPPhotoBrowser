@@ -15,5 +15,10 @@ class LPMainViewController: UIViewController {
         
     }
     
+    @IBAction func clearButtonClicked(_ sender: UIBarButtonItem) {
+        KingfisherManager.shared.cache.clearMemoryCache()
+        KingfisherManager.shared.cache.clearDiskCache()
+    }
+    
 }
 

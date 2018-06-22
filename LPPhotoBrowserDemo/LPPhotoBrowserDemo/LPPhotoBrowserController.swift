@@ -25,7 +25,7 @@ class LPPhotoBrowserController: UICollectionViewController {
         super.viewDidLayoutSubviews()
         guard let collectionView = collectionView
             , let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        let wh = (view.frame.width - 18.0) / 3.0
+        let wh = (view.frame.width - 18.0) / 4.0
         layout.itemSize = CGSize(width: wh, height: wh)
         layout.minimumLineSpacing = 2
         layout.minimumInteritemSpacing = 2

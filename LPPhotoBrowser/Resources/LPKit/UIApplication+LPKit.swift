@@ -24,26 +24,3 @@ public extension UIApplication {
         return window.safeAreaInsets
     }
 }
-
-public extension UIApplication {
-    
-    var isOrientationVertical: Bool {
-        let orientation = UIApplication.shared.statusBarOrientation
-        switch orientation {
-        case .portrait, .portraitUpsideDown:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    var isOrientationHorizontal: Bool {
-        let orientation = UIApplication.shared.statusBarOrientation
-        switch orientation {
-        case .landscapeLeft, .landscapeRight:
-            return true
-        default:
-            return false
-        }
-    }
-}

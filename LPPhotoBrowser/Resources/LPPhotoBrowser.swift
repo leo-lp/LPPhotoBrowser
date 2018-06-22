@@ -30,7 +30,7 @@ public class LPPhotoBrowser: UIViewController {
     public var isLongPressGestureEnabled: Bool = true
     
     private var isViewDidAppear: Bool = false
-    private var backgroundColor: UIColor = UIColor.white
+    private var backgroundColor: UIColor = UIColor.black
     
     private(set) var browserView: LPPhotoBrowserView = {
         let layout = LPPhotoBrowserViewLayout()
@@ -311,38 +311,11 @@ extension LPPhotoBrowser {
     
     private func configStatusBarHide( _ hide: Bool) {
         guard let statusBarWindow = UIApplication.shared.value(forKey: "statusBarWindow") as? NSObject
-            
             , let statusBar = statusBarWindow.value(forKey: "statusBar") as? UIView else { return }
-        
         statusBar.alpha = hide ? 0 : 1
     }
-    
-    ////获取屏幕展示的方向
-    //- (YBImageBrowserScreenOrientation)getScreenOrientationByStatusBar {
-    //    UIInterfaceOrientation obr = [UIApplication sharedApplication].statusBarOrientation;
-    //    if ((obr == UIInterfaceOrientationPortrait) || (obr == UIInterfaceOrientationPortraitUpsideDown)) {
-    //        return YBImageBrowserScreenOrientationVertical;
-    //    } else if ((obr == UIInterfaceOrientationLandscapeLeft) || (obr == UIInterfaceOrientationLandscapeRight)) {
-    //        return YBImageBrowserScreenOrientationHorizontal;
-    //    } else {
-    //        return YBImageBrowserScreenOrientationUnknown;
-    //    }
-    //}
-    
-    ////根据 device 方向改变 UI
-    //- (void)resetUserInterfaceLayoutByDeviceOrientation {
-    //
-    //    YBImageBrowserScreenOrientation so;
-    //    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-    //    BOOL isVertical = (deviceOrientation == UIDeviceOrientationPortrait && (supportAutorotateTypes & UIInterfaceOrientationMaskPortrait)) || (deviceOrientation == UIInterfaceOrientationPortraitUpsideDown && (supportAutorotateTypes & UIInterfaceOrientationMaskPortraitUpsideDown));
-    //    BOOL isHorizontal = (deviceOrientation == UIDeviceOrientationLandscapeRight && (supportAutorotateTypes & UIInterfaceOrientationMaskLandscapeLeft)) || (deviceOrientation == UIDeviceOrientationLandscapeLeft && (supportAutorotateTypes & UIInterfaceOrientationMaskLandscapeRight));
-    //    if (isVertical) {
-    //        so = YBImageBrowserScreenOrientationVertical;
-    //    } else if(isHorizontal) {
-    //        so = YBImageBrowserScreenOrientationHorizontal;
-    //    } else {
-    //        return;
-    //    }
+
+
     //
     //    //发送将要转屏更新 UI 的广播
     //    [[NSNotificationCenter defaultCenter] postNotificationName:YBImageBrowser_notification_willToRespondsDeviceOrientation object:nil];
