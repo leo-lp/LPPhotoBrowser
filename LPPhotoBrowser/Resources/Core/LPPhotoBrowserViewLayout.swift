@@ -10,7 +10,9 @@ import UIKit
 
 class LPPhotoBrowserViewLayout: UICollectionViewFlowLayout {
     deinit {
-        log.warning("release memory.")
+        #if DEBUG
+        print("LPPhotoBrowserViewLayout: -> release memory.")
+        #endif
     }
     
     override func prepare() {

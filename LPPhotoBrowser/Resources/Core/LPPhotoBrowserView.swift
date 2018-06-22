@@ -12,7 +12,9 @@ private let LPCellID = "LPPhotoBrowserCellID"
 class LPPhotoBrowserView: UICollectionView {
     
     deinit {
-        log.warning("release memory.")
+        #if DEBUG
+        print("LPPhotoBrowserView: -> release memory.")
+        #endif
     }
     
     required init?(coder aDecoder: NSCoder) {

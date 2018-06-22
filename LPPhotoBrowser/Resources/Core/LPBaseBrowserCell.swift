@@ -22,7 +22,9 @@ protocol LPBrowserCellDelegate: class {
 class LPBaseBrowserCell: UICollectionViewCell {
     
     deinit {
-        log.warning("release memory.")
+        #if DEBUG
+        print("LPBaseBrowserCell: -> release memory.")
+        #endif
     }
     
     required init?(coder aDecoder: NSCoder) {

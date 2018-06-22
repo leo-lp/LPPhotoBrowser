@@ -14,7 +14,9 @@ class LPPhotoBrowserAnimatedTransitioning: NSObject {
     private weak var delegate: (LPPhotoBrowser & LPPhotoBrowserAnimatedDelegate)?
     
     deinit {
-        log.warning("release memory.")
+        #if DEBUG
+        print("LPPhotoBrowserAnimatedTransitioning: -> release memory.")
+        #endif
     }
     
     init(delegate: (LPPhotoBrowser & LPPhotoBrowserAnimatedDelegate)) {

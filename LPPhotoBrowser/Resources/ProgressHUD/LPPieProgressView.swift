@@ -11,7 +11,9 @@ import UIKit
 class LPPieProgressView: LPBaseProgressView {
 
     deinit {
-        log.warning("release memory.")
+        #if DEBUG
+        print("LPPieProgressView: -> release memory.")
+        #endif
     }
 
     override class var layerClass: AnyClass {

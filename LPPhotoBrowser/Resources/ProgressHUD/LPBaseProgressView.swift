@@ -52,7 +52,9 @@ class LPBaseProgressView: UIView {
     // MARK: - override Func
     
     deinit {
-        log.warning("release memory.")
+        #if DEBUG
+        print("LPBaseProgressView: -> release memory.")
+        #endif
     }
     
     override class var layerClass: AnyClass {

@@ -39,8 +39,9 @@ public class LPPhotoBrowser: UIViewController {
     // MARK: - Override Funcs
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
-        log.warning("release memory.")
+        #if DEBUG
+        print("LPPhotoBrowser: -> release memory.")
+        #endif
     }
     
     public init(type: LPPhotoBrowserType, index: Int) {

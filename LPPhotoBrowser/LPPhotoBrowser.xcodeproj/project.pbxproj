@@ -10,8 +10,6 @@
 		181F332C20C5349B00B4D1AC /* LPPhotoDragAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */; };
 		186EDE2820BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE2720BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift */; };
 		186EDE2A20BD0C550059A0A9 /* LPPhotoBrowserModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModels.swift */; };
-		186EDE2C20BD22D70059A0A9 /* LPPhotoBrowserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE2B20BD22D70059A0A9 /* LPPhotoBrowserUtils.swift */; };
-		186EDE2F20BD22E70059A0A9 /* LPLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186EDE2E20BD22E70059A0A9 /* LPLogger.framework */; };
 		186EDE3120BD2B900059A0A9 /* UIApplication+LPKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3020BD2B900059A0A9 /* UIApplication+LPKit.swift */; };
 		186EDE3620BD2F840059A0A9 /* LPPhotoBrowserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3520BD2F840059A0A9 /* LPPhotoBrowserConfig.swift */; };
 		186EDE3820BD300F0059A0A9 /* LPPhotoBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3720BD300F0059A0A9 /* LPPhotoBrowserView.swift */; };
@@ -34,8 +32,6 @@
 		181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoDragAnimation.swift; sourceTree = "<group>"; };
 		186EDE2720BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserAnimatedOptions.swift; sourceTree = "<group>"; };
 		186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserModels.swift; sourceTree = "<group>"; };
-		186EDE2B20BD22D70059A0A9 /* LPPhotoBrowserUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserUtils.swift; sourceTree = "<group>"; };
-		186EDE2E20BD22E70059A0A9 /* LPLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LPLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		186EDE3020BD2B900059A0A9 /* UIApplication+LPKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+LPKit.swift"; sourceTree = "<group>"; };
 		186EDE3520BD2F840059A0A9 /* LPPhotoBrowserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserConfig.swift; sourceTree = "<group>"; };
 		186EDE3720BD300F0059A0A9 /* LPPhotoBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserView.swift; sourceTree = "<group>"; };
@@ -61,21 +57,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				186EDE2F20BD22E70059A0A9 /* LPLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		186EDE2D20BD22E70059A0A9 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				186EDE2E20BD22E70059A0A9 /* LPLogger.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		186EDE3320BD2EB10059A0A9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,20 +78,11 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		186EDE3420BD2F190059A0A9 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				186EDE2B20BD22D70059A0A9 /* LPPhotoBrowserUtils.swift */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
 		18983C1220BBDE9D009141F4 = {
 			isa = PBXGroup;
 			children = (
 				18983C1E20BBDE9D009141F4 /* Resources */,
 				18983C1D20BBDE9D009141F4 /* Products */,
-				186EDE2D20BD22E70059A0A9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,7 +103,6 @@
 				18983C2720BBE4BD009141F4 /* LPPhotoBrowser.swift */,
 				18BE3A8420DCF4AF005AEB7E /* ProgressHUD */,
 				186EDE3320BD2EB10059A0A9 /* Core */,
-				186EDE3420BD2F190059A0A9 /* Utilities */,
 				18983C2920BBE517009141F4 /* Transition */,
 				18983C2020BBDE9D009141F4 /* Info.plist */,
 			);
@@ -257,7 +234,6 @@
 				E8EAE37920C0F3E70026A46C /* LPPhotoBrowserCell.swift in Sources */,
 				186EDE2A20BD0C550059A0A9 /* LPPhotoBrowserModels.swift in Sources */,
 				E8EAE37720C0F3400026A46C /* LPVideoBrowserCell.swift in Sources */,
-				186EDE2C20BD22D70059A0A9 /* LPPhotoBrowserUtils.swift in Sources */,
 				186EDE3620BD2F840059A0A9 /* LPPhotoBrowserConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,11 +374,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lp.waowang.LPPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -425,11 +397,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lp.waowang.LPPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

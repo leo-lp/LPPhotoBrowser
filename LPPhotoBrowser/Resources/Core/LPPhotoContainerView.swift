@@ -19,7 +19,9 @@ class LPPhotoContainerView: UIView {
     private(set) var progressView = LPPieProgressView()
         
     deinit {
-        log.warning("release memory.")
+        #if DEBUG
+        print("LPPhotoContainerView: -> release memory.")
+        #endif
     }
     
     required init?(coder aDecoder: NSCoder) {
