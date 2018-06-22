@@ -45,6 +45,7 @@ class LPNetworkPhoto: LPPhotoBrowserSourceConvertible {
             guard let `self` = self else { return }
             
             if let thumbnailImage = image {
+                self.currImage = thumbnailImage
                 completion(thumbnailImage)
             }
             
@@ -58,9 +59,12 @@ class LPNetworkPhoto: LPPhotoBrowserSourceConvertible {
         let options: KingfisherOptionsInfo = [.preloadAllAnimationData]
         KingfisherManager.shared.retrieveImage(with: url, options: options, progressBlock: { (receivedSize, totalSize) in
             progress?(Float(receivedSize) / Float(totalSize))
-        }) { (image, error, _, _) in
+        }) { [weak self](image, error, cacheType, url) in
+            
+            print("cacheType=\(cacheType)")
             
             if let originalImage = image {
+                self?.currImage = originalImage
                 completion(originalImage)
             }
         }

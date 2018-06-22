@@ -12,17 +12,11 @@ class LPPhotoContainerView: UIView {
     weak var delegate: LPBrowserCellDelegate?
     
     private(set) var scrollView = UIScrollView()
-    private(set) var imageView = UIImageView() // FLAnimatedImageView // 显示的图片
-    //private(set) var localImageView = UIImageView() // 用于显示大图的局部图片
+    private(set) var imageView = UIImageView() // 显示的图片
     private(set) var animateImageView = UIImageView() // 做动画的图片
     
     private(set) var dragAnimate = LPPhotoDragAnimation()
-    
-    //TZProgressView *progressView;
-    //id asset;
-    //void (^singleTapGestureBlock)(void);
-    //void (^imageProgressUpdateBlock)(double progress);
-    //int32_t imageRequestID;
+    private(set) var progressView = LPPieProgressView()
         
     deinit {
         log.warning("release memory.")
@@ -42,12 +36,13 @@ class LPPhotoContainerView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         scrollView.frame = bounds
-        
-        //static CGFloat progressWH = 40;
-        //CGFloat progressX = (self.tz_width - progressWH) / 2;
-        //CGFloat progressY = (self.tz_height - progressWH) / 2;
-        //progressView.frame = CGRectMake(progressX, progressY, progressWH, progressWH)
         recoverSubviews()
+        
+        let progressWH: CGFloat = 40.0
+        progressView.frame = CGRect(x: (frame.width - progressWH) / 2.0,
+                                    y: (frame.height - progressWH) / 2.0,
+                                    width: progressWH,
+                                    height: progressWH)
     }
     
     func recoverSubviews() {
@@ -61,10 +56,17 @@ class LPPhotoContainerView: UIView {
         
         scrollView.setZoomScale(1.0, animated: false)
         
-        source?.asImage({ (percent) in
-        
+        source?.asImage({ [weak self](percent) in
+            guard let `self` = self else { return }
+            self.progressView.setProgress(percent, animated: false)
+            
+            let progress = self.progressView.progress
+            let isHidden = progress.isNaN || progress <= 0.0 || progress >= 1.0
+            self.progressView.isHidden = isHidden
         }, completion: { [weak self](image) in
             guard let `self` = self else { return }
+            
+            let shouldResizeSubviews = self.imageView.image?.size != image?.size
             
             if let image = image, let images = image.images {
                 self.imageView.image = image
@@ -74,24 +76,11 @@ class LPPhotoContainerView: UIView {
             } else {
                 self.imageView.image = image
             }
+            
+            if shouldResizeSubviews {
+                self.resizeSubviews()
+            }
         })
-        
-        //    if (model.type == TZAssetModelMediaTypePhotoGif) {
-        //        // 先显示缩略图
-        //        [[TZImageManager manager] getPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
-        //            self.imageView.image = photo;
-        //            [self resizeSubviews];
-        //            // 再显示gif动图
-        //            [[TZImageManager manager] getOriginalPhotoDataWithAsset:model.asset completion:^(NSData *data, NSDictionary *info, BOOL isDegraded) {
-        //                if (!isDegraded) {
-        //                    self.imageView.image = [UIImage sd_tz_animatedGIFWithData:data];
-        //                    [self resizeSubviews];
-        //                }
-        //            }];
-        //        } progressHandler:nil networkAccessAllowed:NO];
-        //    } else {
-        //        self.asset = model.asset;
-        //    }
     }
 }
 
@@ -110,33 +99,24 @@ extension LPPhotoContainerView: UIScrollViewDelegate {
         let offsetX = (frameSize.width > contentSize.width) ? ((frameSize.width - contentSize.width) * 0.5) : 0.0
         let offsetY = (frameSize.height > contentSize.height) ? ((frameSize.height - contentSize.height) * 0.5) : 0.0
         
-        imageView.center = CGPoint(x: contentSize.width * 0.5 + offsetX,
-                                   y: contentSize.height * 0.5 + offsetY)
+        imageView.center = CGPoint(x: contentSize.width * 0.5 + offsetX, y: contentSize.height * 0.5 + offsetY)
     }
     
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
         scrollView.contentInset = .zero
         dragAnimate.isZooming = true
-        //[self hideLocalImageView];
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        dragAnimate.scrollViewDidScroll(scrollView,
-                                        containerView: self)
-        //    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(cutImage) object:nil];
-        //    [self performSelector:@selector(cutImage) withObject:nil afterDelay:0.25];
+        dragAnimate.scrollViewDidScroll(scrollView, containerView: self)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        //[self hideLocalImageView];
-        dragAnimate.scrollViewWillBeginDragging(scrollView,
-                                                containerView: self)
+        dragAnimate.scrollViewWillBeginDragging(scrollView, containerView: self)
     }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView,
-                                  willDecelerate decelerate: Bool) {
-        dragAnimate.scrollViewDidEndDragging(scrollView,
-                                             containerView: self)
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        dragAnimate.scrollViewDidEndDragging(scrollView, containerView: self)
     }
 }
 
@@ -169,23 +149,13 @@ extension LPPhotoContainerView {
         scrollView.frame = bounds
         addSubview(scrollView)
         
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         scrollView.addSubview(imageView)
         
-        //animateImageView.contentMode = .scaleAspectFill
-        //animateImageView.layer.masksToBounds = true
-
-        //localImageView.contentMode = .scaleAspectFill
-        //localImageView.isHidden = true
-        //addSubview(localImageView)
+        animateImageView.contentMode = .scaleAspectFill
         
-        //[self configProgressView];
-        //- (void)configProgressView {
-        //    _progressView = [[TZProgressView alloc] init];
-        //    _progressView.hidden = YES;
-        //    [self addSubview:_progressView];
-        //}
+        progressView.isHidden = true
+        addSubview(progressView)
     }
     
     private func setupGestures() {

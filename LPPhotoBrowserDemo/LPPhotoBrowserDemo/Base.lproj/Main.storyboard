@@ -93,6 +93,7 @@
                                     <constraint firstItem="KfM-GG-Sok" firstAttribute="top" secondItem="PpR-or-nmc" secondAttribute="top" id="UNY-A8-SXO"/>
                                     <constraint firstAttribute="bottom" secondItem="KfM-GG-Sok" secondAttribute="bottom" id="fAr-xl-6pD"/>
                                     <constraint firstAttribute="trailing" secondItem="h0Z-mi-wHE" secondAttribute="trailing" id="n8t-aO-rj3"/>
+                                    <constraint firstItem="h0Z-mi-wHE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PpR-or-nmc" secondAttribute="leading" id="r7z-vc-qkh"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="bigPhotoFlagLabel" destination="h0Z-mi-wHE" id="0Xt-dr-Z5g"/>

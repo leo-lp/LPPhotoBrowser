@@ -52,9 +52,11 @@ class LPPhotoBrowserCell: UICollectionViewCell {
     private func bindNetworkImage(with URLString: String) {
         let url = URL(string: URLString)
         
+        let resizing = ResizingImageProcessor(referenceSize: CGSize(width: 200, height: 200), mode: .aspectFill)
+        let options: KingfisherOptionsInfo = [.processor(resizing), .preloadAllAnimationData]
         imageView.kf.setImage(with: url,
                               placeholder: nil,
-                              options: nil,
+                              options: options,
                               progressBlock: nil) { (img, error, type, url) in
             if img?.images == nil {
                 self.bigPhotoFlagLabel.isHidden = true

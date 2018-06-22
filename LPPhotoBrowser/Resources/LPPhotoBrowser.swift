@@ -16,8 +16,6 @@ public class LPPhotoBrowser: UIViewController {
     static private(set) var isHiddenOfStatusBarBefore: Bool = false
     static public var isHideStatusBar: Bool = true
     
-//    static var maxDisplaySize: CGFloat = 3500
-
     // MARK: - Custom Propertys
     
     public weak var dataSource: LPPhotoBrowserDataSource?
@@ -86,9 +84,6 @@ public class LPPhotoBrowser: UIViewController {
 //        [self setTooBarNumberCountWithCurrentIndex:_currentIndex+1];
         
         isViewDidAppear = true
-        
-        browserView.layer.borderColor = UIColor.red.cgColor
-        browserView.layer.borderWidth = 1
     }
     
     public override func viewWillDisappear(_ animated: Bool) {
@@ -183,13 +178,6 @@ extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate, 
         
         //[self setTooBarNumberCountWithCurrentIndex:index+1];
     }
-    
-//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        guard let visible = visibleCells as? [LPPhotoBrowser_Cell] else { return }
-//        //    for (YBImageBrowserCell *cell in array) {
-//        //        [cell reDownloadImageUrl];
-//        //    }
-//    }
     
     // MARK: - LPBrowserCellDelegate
     
@@ -315,24 +303,6 @@ extension LPPhotoBrowser {
         statusBar.alpha = hide ? 0 : 1
     }
 
-
-    //
-    //    //发送将要转屏更新 UI 的广播
-    //    [[NSNotificationCenter defaultCenter] postNotificationName:YBImageBrowser_notification_willToRespondsDeviceOrientation object:nil];
-    //
-    //    //将正在执行的拖拽动画取消
-    //    [self yBImageBrowser_notification_showBrowerView];
-    //
-    //    //隐藏弹出功能栏、隐藏提示框
-    //    if (_functionBar && _functionBar.superview) {
-    //        [_functionBar hideWithAnimate:NO];
-    //    }
-    //    [self.view yb_hidePromptImmediately];
-    //
-    //    //更新UI
-    //    [self so_updateFrameWithScreenOrientation:so];
-    //}
-    //
     //- (void)setTooBarNumberCountWithCurrentIndex:(NSInteger)index {
     //    NSInteger totalCount = 0;
     //    if (self.dataArray) {
@@ -386,23 +356,6 @@ extension LPPhotoBrowser {
 //    [YBImageBrowserDownloader shouldDecompressImages:downloaderShouldDecompressImages];
 //}
 
-
-//- (YBImageBrowserToolBar *)toolBar {
-//    if (!_toolBar) {
-//        _toolBar = [YBImageBrowserToolBar new];
-//        _toolBar.delegate = self;
-//    }
-//    return _toolBar;
-//}
-//
-//- (YBImageBrowserFunctionBar *)functionBar {
-//    if (!_functionBar) {
-//        _functionBar = [YBImageBrowserFunctionBar new];
-//        _functionBar.delegate = self;
-//    }
-//    return _functionBar;
-//}
-//
 //- (YBImageBrowserCopywriter *)copywriter {
 //    if (!_copywriter) {
 //        _copywriter = [YBImageBrowserCopywriter new];

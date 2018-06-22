@@ -53,13 +53,3 @@ class LPPhotoBrowserView: UICollectionView {
         return cell
     }
 }
-
-// MARK: - Private funcs
-
-extension LPPhotoBrowserView {
-    @objc private func deviceOrientationDidChange() {
-//        reloadData()
-//        layoutIfNeeded()
-//        scrollToPageIndex(currentIndex)
-    }
-}

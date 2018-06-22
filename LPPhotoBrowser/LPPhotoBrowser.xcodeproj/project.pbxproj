@@ -16,12 +16,14 @@
 		186EDE3620BD2F840059A0A9 /* LPPhotoBrowserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3520BD2F840059A0A9 /* LPPhotoBrowserConfig.swift */; };
 		186EDE3820BD300F0059A0A9 /* LPPhotoBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3720BD300F0059A0A9 /* LPPhotoBrowserView.swift */; };
 		186EDE3A20BD30520059A0A9 /* LPPhotoBrowserViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3920BD30520059A0A9 /* LPPhotoBrowserViewLayout.swift */; };
-		186EDE3C20BD30990059A0A9 /* LPPhotoBrowser_Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3B20BD30990059A0A9 /* LPPhotoBrowser_Cell.swift */; };
 		18983C2820BBE4BD009141F4 /* LPPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C2720BBE4BD009141F4 /* LPPhotoBrowser.swift */; };
 		18983C2B20BBE549009141F4 /* LPPhotoBrowserAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C2A20BBE549009141F4 /* LPPhotoBrowserAnimatedTransitioning.swift */; };
 		18983C9220BC0754009141F4 /* LPPhotoBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C9120BC0754009141F4 /* LPPhotoBrowserDelegate.swift */; };
 		18983C9B20BC0CD7009141F4 /* UIViewController+LPKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C9A20BC0CD7009141F4 /* UIViewController+LPKit.swift */; };
 		18A4B04420DC9E5C00274E09 /* UIImage+LPKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4B04320DC9E5C00274E09 /* UIImage+LPKit.swift */; };
+		18BE3A8620DCF4CD005AEB7E /* LPBaseProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE3A8520DCF4CD005AEB7E /* LPBaseProgressView.swift */; };
+		18BE3A8820DCF4DD005AEB7E /* LPRingProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE3A8720DCF4DD005AEB7E /* LPRingProgressView.swift */; };
+		18BE3A8A20DCF4EE005AEB7E /* LPPieProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE3A8920DCF4EE005AEB7E /* LPPieProgressView.swift */; };
 		E8EAE37320C0F0230026A46C /* LPPhotoContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EAE37220C0F0230026A46C /* LPPhotoContainerView.swift */; };
 		E8EAE37720C0F3400026A46C /* LPVideoBrowserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EAE37620C0F3400026A46C /* LPVideoBrowserCell.swift */; };
 		E8EAE37920C0F3E70026A46C /* LPPhotoBrowserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EAE37820C0F3E70026A46C /* LPPhotoBrowserCell.swift */; };
@@ -38,7 +40,6 @@
 		186EDE3520BD2F840059A0A9 /* LPPhotoBrowserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserConfig.swift; sourceTree = "<group>"; };
 		186EDE3720BD300F0059A0A9 /* LPPhotoBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserView.swift; sourceTree = "<group>"; };
 		186EDE3920BD30520059A0A9 /* LPPhotoBrowserViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserViewLayout.swift; sourceTree = "<group>"; };
-		186EDE3B20BD30990059A0A9 /* LPPhotoBrowser_Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowser_Cell.swift; sourceTree = "<group>"; };
 		18983C1C20BBDE9D009141F4 /* LPPhotoBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LPPhotoBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18983C2020BBDE9D009141F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18983C2720BBE4BD009141F4 /* LPPhotoBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowser.swift; sourceTree = "<group>"; };
@@ -46,6 +47,9 @@
 		18983C9120BC0754009141F4 /* LPPhotoBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserDelegate.swift; sourceTree = "<group>"; };
 		18983C9A20BC0CD7009141F4 /* UIViewController+LPKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LPKit.swift"; sourceTree = "<group>"; };
 		18A4B04320DC9E5C00274E09 /* UIImage+LPKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+LPKit.swift"; sourceTree = "<group>"; };
+		18BE3A8520DCF4CD005AEB7E /* LPBaseProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPBaseProgressView.swift; sourceTree = "<group>"; };
+		18BE3A8720DCF4DD005AEB7E /* LPRingProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPRingProgressView.swift; sourceTree = "<group>"; };
+		18BE3A8920DCF4EE005AEB7E /* LPPieProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPieProgressView.swift; sourceTree = "<group>"; };
 		E8EAE37220C0F0230026A46C /* LPPhotoContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoContainerView.swift; sourceTree = "<group>"; };
 		E8EAE37620C0F3400026A46C /* LPVideoBrowserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPVideoBrowserCell.swift; sourceTree = "<group>"; };
 		E8EAE37820C0F3E70026A46C /* LPPhotoBrowserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserCell.swift; sourceTree = "<group>"; };
@@ -83,7 +87,6 @@
 				E8EAE37620C0F3400026A46C /* LPVideoBrowserCell.swift */,
 				E8EAE37220C0F0230026A46C /* LPPhotoContainerView.swift */,
 				181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */,
-				186EDE3B20BD30990059A0A9 /* LPPhotoBrowser_Cell.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -120,6 +123,7 @@
 				186EDE3520BD2F840059A0A9 /* LPPhotoBrowserConfig.swift */,
 				18983C9120BC0754009141F4 /* LPPhotoBrowserDelegate.swift */,
 				18983C2720BBE4BD009141F4 /* LPPhotoBrowser.swift */,
+				18BE3A8420DCF4AF005AEB7E /* ProgressHUD */,
 				186EDE3320BD2EB10059A0A9 /* Core */,
 				186EDE3420BD2F190059A0A9 /* Utilities */,
 				18983C2920BBE517009141F4 /* Transition */,
@@ -145,6 +149,16 @@
 				18983C9A20BC0CD7009141F4 /* UIViewController+LPKit.swift */,
 			);
 			path = LPKit;
+			sourceTree = "<group>";
+		};
+		18BE3A8420DCF4AF005AEB7E /* ProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				18BE3A8520DCF4CD005AEB7E /* LPBaseProgressView.swift */,
+				18BE3A8720DCF4DD005AEB7E /* LPRingProgressView.swift */,
+				18BE3A8920DCF4EE005AEB7E /* LPPieProgressView.swift */,
+			);
+			path = ProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,12 +241,14 @@
 			files = (
 				186EDE3820BD300F0059A0A9 /* LPPhotoBrowserView.swift in Sources */,
 				18983C2B20BBE549009141F4 /* LPPhotoBrowserAnimatedTransitioning.swift in Sources */,
+				18BE3A8820DCF4DD005AEB7E /* LPRingProgressView.swift in Sources */,
 				18983C2820BBE4BD009141F4 /* LPPhotoBrowser.swift in Sources */,
 				18983C9220BC0754009141F4 /* LPPhotoBrowserDelegate.swift in Sources */,
+				18BE3A8620DCF4CD005AEB7E /* LPBaseProgressView.swift in Sources */,
 				18A4B04420DC9E5C00274E09 /* UIImage+LPKit.swift in Sources */,
 				18983C9B20BC0CD7009141F4 /* UIViewController+LPKit.swift in Sources */,
+				18BE3A8A20DCF4EE005AEB7E /* LPPieProgressView.swift in Sources */,
 				181F332C20C5349B00B4D1AC /* LPPhotoDragAnimation.swift in Sources */,
-				186EDE3C20BD30990059A0A9 /* LPPhotoBrowser_Cell.swift in Sources */,
 				186EDE2820BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift in Sources */,
 				E8EAE37320C0F0230026A46C /* LPPhotoContainerView.swift in Sources */,
 				186EDE3A20BD30520059A0A9 /* LPPhotoBrowserViewLayout.swift in Sources */,
