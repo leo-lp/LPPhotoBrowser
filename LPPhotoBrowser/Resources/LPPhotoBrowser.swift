@@ -36,6 +36,8 @@ public class LPPhotoBrowser: UIViewController {
                                   collectionViewLayout: layout)
     }()
     
+    private(set) weak var navigationBar: (UIView & LPNavigationBarDataSource)?
+    
     // MARK: - Override Funcs
     
     deinit {
@@ -76,6 +78,7 @@ public class LPPhotoBrowser: UIViewController {
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard !isViewDidAppear else { return }
+        
         browserView.dataSource = self
         browserView.delegate = self
         view.addSubview(browserView)
@@ -83,6 +86,13 @@ public class LPPhotoBrowser: UIViewController {
         browserView.scrollToIndex(currentIndex)
         
 //        [self setTooBarNumberCountWithCurrentIndex:_currentIndex+1];
+        
+        if let navigation = dataSource?.navigationBar(in: self) {
+            view.addSubview(navigation)
+            navigation.totalCount = dataSource?.photoBrowser(self, numberOf: type) ?? 0
+            navigation.currentIndex = currentIndex
+            navigationBar = navigation
+        }
         
         isViewDidAppear = true
     }
@@ -172,6 +182,8 @@ extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate, 
         
         let oldIndex = currentIndex
         currentIndex = index
+        navigationBar?.currentIndex = currentIndex
+        
         delegate?.photoBrowser(self,
                                indexDidChange: oldIndex,
                                newIndex: currentIndex,
@@ -280,7 +292,6 @@ extension LPPhotoBrowser {
     private func commonInit() {
         transitioningDelegate = self
         modalPresentationStyle = .custom
-//    fuctionDataArray = @[[YBImageBrowserFunctionModel functionModelForSavePictureToAlbum]];
         statusBarConfigByInfoPlist()
     }
     

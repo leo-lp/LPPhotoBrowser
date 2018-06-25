@@ -1,5 +1,5 @@
 //
-//  LPPhotoBrowserDelegate.swift
+//  LPPhotoBrowserProtocol.swift
 //  LPPhotoBrowser
 //
 //  Created by pengli on 2018/5/28.
@@ -21,6 +21,20 @@ public protocol LPPhotoBrowserDataSource: class {
     func photoBrowser(_ browser: LPPhotoBrowser,
                       imageViewOfClickedAt index: Int,
                       of type: LPPhotoBrowserType) -> UIImageView?
+    
+    /// NOTE: optional
+    func navigationBar(in browser: LPPhotoBrowser) -> (UIView & LPNavigationBarDataSource)?
+    
+}
+
+extension LPPhotoBrowserDataSource {
+    
+    public func navigationBar(in browser: LPPhotoBrowser) -> (UIView & LPNavigationBarDataSource)? {
+        let top = UIApplication.shared.lp_safeAreaInsets.top
+        let width = UIScreen.main.bounds.width
+        let height = (top == 0.0 ? 20.0 : top) + 44.0
+        return LPNavigationBar(frame: CGRect(x: 0, y: 0, width: width, height: height))
+    }
 }
 
 public protocol LPPhotoBrowserDelegate: class {

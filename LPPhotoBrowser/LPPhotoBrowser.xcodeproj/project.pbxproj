@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1819CFBF20E08EE90021ABBA /* LPNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819CFBE20E08EE90021ABBA /* LPNavigationBar.swift */; };
+		1819CFC120E08EFD0021ABBA /* LPToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819CFC020E08EFD0021ABBA /* LPToolBar.swift */; };
 		181F332C20C5349B00B4D1AC /* LPPhotoDragAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */; };
 		186EDE2820BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE2720BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift */; };
 		186EDE2A20BD0C550059A0A9 /* LPPhotoBrowserModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModels.swift */; };
@@ -16,7 +18,7 @@
 		186EDE3A20BD30520059A0A9 /* LPPhotoBrowserViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3920BD30520059A0A9 /* LPPhotoBrowserViewLayout.swift */; };
 		18983C2820BBE4BD009141F4 /* LPPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C2720BBE4BD009141F4 /* LPPhotoBrowser.swift */; };
 		18983C2B20BBE549009141F4 /* LPPhotoBrowserAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C2A20BBE549009141F4 /* LPPhotoBrowserAnimatedTransitioning.swift */; };
-		18983C9220BC0754009141F4 /* LPPhotoBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C9120BC0754009141F4 /* LPPhotoBrowserDelegate.swift */; };
+		18983C9220BC0754009141F4 /* LPPhotoBrowserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C9120BC0754009141F4 /* LPPhotoBrowserProtocol.swift */; };
 		18983C9B20BC0CD7009141F4 /* UIViewController+LPKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C9A20BC0CD7009141F4 /* UIViewController+LPKit.swift */; };
 		18A4B04420DC9E5C00274E09 /* UIImage+LPKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4B04320DC9E5C00274E09 /* UIImage+LPKit.swift */; };
 		18BE3A8620DCF4CD005AEB7E /* LPBaseProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE3A8520DCF4CD005AEB7E /* LPBaseProgressView.swift */; };
@@ -29,6 +31,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1819CFBE20E08EE90021ABBA /* LPNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPNavigationBar.swift; sourceTree = "<group>"; };
+		1819CFC020E08EFD0021ABBA /* LPToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPToolBar.swift; sourceTree = "<group>"; };
 		181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoDragAnimation.swift; sourceTree = "<group>"; };
 		186EDE2720BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserAnimatedOptions.swift; sourceTree = "<group>"; };
 		186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserModels.swift; sourceTree = "<group>"; };
@@ -40,7 +44,7 @@
 		18983C2020BBDE9D009141F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18983C2720BBE4BD009141F4 /* LPPhotoBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowser.swift; sourceTree = "<group>"; };
 		18983C2A20BBE549009141F4 /* LPPhotoBrowserAnimatedTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserAnimatedTransitioning.swift; sourceTree = "<group>"; };
-		18983C9120BC0754009141F4 /* LPPhotoBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserDelegate.swift; sourceTree = "<group>"; };
+		18983C9120BC0754009141F4 /* LPPhotoBrowserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserProtocol.swift; sourceTree = "<group>"; };
 		18983C9A20BC0CD7009141F4 /* UIViewController+LPKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LPKit.swift"; sourceTree = "<group>"; };
 		18A4B04320DC9E5C00274E09 /* UIImage+LPKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+LPKit.swift"; sourceTree = "<group>"; };
 		18BE3A8520DCF4CD005AEB7E /* LPBaseProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPBaseProgressView.swift; sourceTree = "<group>"; };
@@ -63,6 +67,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1819CFBB20E08D820021ABBA /* ToolBar */ = {
+			isa = PBXGroup;
+			children = (
+				1819CFBE20E08EE90021ABBA /* LPNavigationBar.swift */,
+				1819CFC020E08EFD0021ABBA /* LPToolBar.swift */,
+			);
+			path = ToolBar;
+			sourceTree = "<group>";
+		};
 		186EDE3320BD2EB10059A0A9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,8 +112,9 @@
 			children = (
 				18983C9920BC0CCE009141F4 /* LPKit */,
 				186EDE3520BD2F840059A0A9 /* LPPhotoBrowserConfig.swift */,
-				18983C9120BC0754009141F4 /* LPPhotoBrowserDelegate.swift */,
+				18983C9120BC0754009141F4 /* LPPhotoBrowserProtocol.swift */,
 				18983C2720BBE4BD009141F4 /* LPPhotoBrowser.swift */,
+				1819CFBB20E08D820021ABBA /* ToolBar */,
 				18BE3A8420DCF4AF005AEB7E /* ProgressHUD */,
 				186EDE3320BD2EB10059A0A9 /* Core */,
 				18983C2920BBE517009141F4 /* Transition */,
@@ -218,11 +232,13 @@
 			files = (
 				186EDE3820BD300F0059A0A9 /* LPPhotoBrowserView.swift in Sources */,
 				18983C2B20BBE549009141F4 /* LPPhotoBrowserAnimatedTransitioning.swift in Sources */,
+				1819CFC120E08EFD0021ABBA /* LPToolBar.swift in Sources */,
 				18BE3A8820DCF4DD005AEB7E /* LPRingProgressView.swift in Sources */,
 				18983C2820BBE4BD009141F4 /* LPPhotoBrowser.swift in Sources */,
-				18983C9220BC0754009141F4 /* LPPhotoBrowserDelegate.swift in Sources */,
+				18983C9220BC0754009141F4 /* LPPhotoBrowserProtocol.swift in Sources */,
 				18BE3A8620DCF4CD005AEB7E /* LPBaseProgressView.swift in Sources */,
 				18A4B04420DC9E5C00274E09 /* UIImage+LPKit.swift in Sources */,
+				1819CFBF20E08EE90021ABBA /* LPNavigationBar.swift in Sources */,
 				18983C9B20BC0CD7009141F4 /* UIViewController+LPKit.swift in Sources */,
 				18BE3A8A20DCF4EE005AEB7E /* LPPieProgressView.swift in Sources */,
 				181F332C20C5349B00B4D1AC /* LPPhotoDragAnimation.swift in Sources */,
