@@ -13,12 +13,16 @@ class LPPhotoBrowserVM {
     
     var imageNames: [String] = {
         var names: [String] = []
-        for idx in 1...18 {
-            let name = String(format: "girl%02d.jpg", idx)
+        for idx in 1...10 {
+            let name = String(format: "girl-%02d.jpg", idx)
             names.append(name)
         }
         for idx in 1...9 {
             let name = String(format: "4k-%02d.jpg", idx)
+            names.append(name)
+        }
+        for idx in 1...11 {
+            let name = String(format: "GIF-%02d.gif", idx)
             names.append(name)
         }
         return names

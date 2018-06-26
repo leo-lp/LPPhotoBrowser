@@ -53,6 +53,7 @@ extension LPNavigationBar: LPNavigationBarDataSource {
         set {
             total = newValue
             titleLabel.text = "\(index+1)/\(total)"
+            isHidden = total <= 1
         }
     }
     
@@ -61,11 +62,15 @@ extension LPNavigationBar: LPNavigationBarDataSource {
         set {
             index = newValue
             titleLabel.text = "\(index+1)/\(total)"
+            isHidden = total <= 1
         }
     }
     
     public var title: String? {
         get { return titleLabel.text }
-        set { titleLabel.text = newValue }
+        set {
+            titleLabel.text = newValue
+            isHidden = (newValue == nil || newValue == "")
+        }
     }
 }

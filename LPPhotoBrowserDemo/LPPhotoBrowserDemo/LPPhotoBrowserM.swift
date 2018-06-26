@@ -16,57 +16,65 @@ class LPNetworkPhoto: LPPhotoBrowserSourceConvertible {
     
     private var currImage: UIImage? // 当前Image
     
-    public var asImage: UIImage? {
-        return currImage ?? placeholder
-    }
+    var asCurrentImage: UIImage? { return currImage ?? placeholder }
+    var asPlaceholder: UIImage? { return placeholder }
     
-    public func asImage(_ progress: LPProgress?, completion: @escaping LPCompletion) {
-        /// 设置占位符
-        if let placeholder = placeholder {
-            completion(placeholder)
-        }
+    func asThumbnail(_ progress: LPProgress?, completion: @escaping LPCompletion) {
+        guard let url = thumbnailURL else { return completion(nil) }
         
-        /// 设置缩略图
-        if let url = thumbnailURL {
-            retrieveThumbnailImage(url: url, progress: progress, completion: completion)
-        }
-
-        /// 设置原图
-        else if let url = originalURL {
-            retrieveOriginalImage(url: url, progress: progress, completion: completion)
-        }
-    }
-    
-    private func retrieveThumbnailImage(url: URL, progress: LPProgress?, completion: @escaping LPCompletion) {
         let options: KingfisherOptionsInfo = [.preloadAllAnimationData]
         KingfisherManager.shared.retrieveImage(with: url, options: options, progressBlock: { (receivedSize, totalSize) in
             progress?(Float(receivedSize) / Float(totalSize))
-        }) { [weak self](image, error, _, _) in
-            guard let `self` = self else { return }
+        }) { [weak self](image, error, cacheType, url) in
+            print("thumbnail cacheType=\(cacheType)")
             
-            if let thumbnailImage = image {
-                self.currImage = thumbnailImage
-                completion(thumbnailImage)
+            if let thumbnail = image {
+                self?.currImage = thumbnail
             }
-            
-            if let url = self.originalURL {
-                self.retrieveOriginalImage(url: url, progress: progress, completion: completion)
-            }
+            completion(image)
         }
     }
     
-    private func retrieveOriginalImage(url: URL, progress: LPProgress?, completion: @escaping LPCompletion) {
+    func asOriginal(_ progress: LPProgress?, completion: @escaping LPCompletion) {
+        guard let url = originalURL else { return completion(nil) }
+        
         let options: KingfisherOptionsInfo = [.preloadAllAnimationData]
         KingfisherManager.shared.retrieveImage(with: url, options: options, progressBlock: { (receivedSize, totalSize) in
             progress?(Float(receivedSize) / Float(totalSize))
         }) { [weak self](image, error, cacheType, url) in
             
-            print("cacheType=\(cacheType)")
+            print("original cacheType=\(cacheType)")
             
             if let originalImage = image {
                 self?.currImage = originalImage
+                
                 completion(originalImage)
             }
         }
+    }
+    
+    func asData(_ progress: LPProgress?, completion: @escaping LPCompletion2) {
+        let completionBlock: (UIImage) -> Void = { (image) in
+            if let data = image.kf.animatedImageData {
+                completion(data)
+            } else {
+                completion(UIImagePNGRepresentation(image) ?? UIImageJPEGRepresentation(image, 1.0))
+            }
+        }
+        asOriginal(nil, completion: { (original) in
+            if let original = original {
+                completionBlock(original)
+            } else {
+                self.asThumbnail(nil, completion: { (thumbnail) in
+                    if let thumbnail = thumbnail {
+                        completionBlock(thumbnail)
+                    } else {
+                        if let placeholder = self.asPlaceholder {
+                            completionBlock(placeholder)
+                        }
+                    }
+                })
+            }
+        })
     }
 }

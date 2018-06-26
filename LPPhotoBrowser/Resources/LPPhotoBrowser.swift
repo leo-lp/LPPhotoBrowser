@@ -25,8 +25,6 @@ public class LPPhotoBrowser: UIViewController {
     
     public private(set) var type: LPPhotoBrowserType = .default
     
-    public var isLongPressGestureEnabled: Bool = true
-    
     private var isViewDidAppear: Bool = false
     private var backgroundColor: UIColor = UIColor.black
     
@@ -84,8 +82,6 @@ public class LPPhotoBrowser: UIViewController {
         view.addSubview(browserView)
         
         browserView.scrollToIndex(currentIndex)
-        
-//        [self setTooBarNumberCountWithCurrentIndex:_currentIndex+1];
         
         if let navigation = dataSource?.navigationBar(in: self) {
             view.addSubview(navigation)
@@ -188,8 +184,6 @@ extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate, 
                                indexDidChange: oldIndex,
                                newIndex: currentIndex,
                                of: type)
-        
-        //[self setTooBarNumberCountWithCurrentIndex:index+1];
     }
     
     // MARK: - LPBrowserCellDelegate
@@ -199,8 +193,24 @@ extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func imageViewLongPressBegin() {
-        guard isLongPressGestureEnabled else { return }
+        if let delegate = delegate, !delegate.shouldLongPressGestureHandle() {
+            return
+        }
         
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "保存到相册", style: .default, handler: { (_) in
+            guard let source = self.dataSource?.photoBrowser(self,
+                                                             sourceAt: self.currentIndex,
+                                                             of: self.type) else { return }
+            source.asData(nil, completion: { (data) in
+                guard let data = data else { return }
+                LPPhotoManager.shared.savePhoto(data, location: nil, completion: { (error) in
+                    
+                })
+            })
+        }))
+        actionSheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        present(actionSheet, animated: true, completion: nil)
     }
     
     func dismissWhenEndDragging() {
@@ -242,49 +252,6 @@ extension LPPhotoBrowser: UIViewControllerTransitioningDelegate, LPPhotoBrowserA
     }
 }
 
-//- (void)judgeAlbumAuthorizationStatusSuccess:(void(^)(void))success {
-//    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
-//    if (status == PHAuthorizationStatusDenied) {
-//        [YB_NORMALWINDOW yb_showForkPromptWithText:self.copywriter.albumAuthorizationDenied];
-//    } else if(status == PHAuthorizationStatusNotDetermined){
-//        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status){
-//            if (status == PHAuthorizationStatusAuthorized) {
-//                if (success) success();
-//            } else {
-//                YBLOG_WARNING(@"user is not Authorized");
-//            }
-//        }];
-//    } else if (status == PHAuthorizationStatusAuthorized){
-//        if (success) success();
-//    }
-//}
-//
-//- (void)saveGifToAlbumWithData:(NSData *)data {
-//    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-//    [library writeImageDataToSavedPhotosAlbum:data metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
-//        if (!error) {
-//            [YB_NORMALWINDOW yb_showHookPromptWithText:self.copywriter.saveImageDataToAlbumSuccessful];
-//        } else {
-//            [YB_NORMALWINDOW yb_showForkPromptWithText:self.copywriter.saveImageDataToAlbumFailed];
-//        }
-//    }];
-//}
-//
-//- (void)savePhotoToAlbumWithImage:(UIImage *)image {
-//    UIImageWriteToSavedPhotosAlbum(image, self.class, @selector(completedWithImage:error:context:), (__bridge void *)self);
-//}
-//
-//+ (void)completedWithImage:(UIImage *)image error:(NSError *)error context:(void *)context {
-//    id obj = (__bridge id)context;
-//    if (!obj || ![obj isKindOfClass:[YBImageBrowser class]]) return;
-//    YBImageBrowserCopywriter *copywriter = ((YBImageBrowser *)obj).copywriter;
-//    if (!error) {
-//        [YB_NORMALWINDOW yb_showHookPromptWithText:copywriter.saveImageDataToAlbumSuccessful];
-//    } else {
-//        [YB_NORMALWINDOW yb_showForkPromptWithText:copywriter.saveImageDataToAlbumFailed];
-//    }
-//}
-
 // MARK: - Private Funcs
 
 extension LPPhotoBrowser {
@@ -314,130 +281,4 @@ extension LPPhotoBrowser {
             , let statusBar = statusBarWindow.value(forKey: "statusBar") as? UIView else { return }
         statusBar.alpha = hide ? 0 : 1
     }
-
-    //- (void)setTooBarNumberCountWithCurrentIndex:(NSInteger)index {
-    //    NSInteger totalCount = 0;
-    //    if (self.dataArray) {
-    //        totalCount = self.dataArray.count;
-    //    } else if (_dataSource && [_dataSource respondsToSelector:@selector(numberInYBImageBrowser:)]) {
-    //        totalCount = [_dataSource numberInYBImageBrowser:self];
-    //    }
-    //    [self.toolBar setTitleLabelWithCurrentIndex:index totalCount:totalCount];
-    //}
-    //
-    //- (void)setTooBarHideWithDataSourceCount:(NSInteger)count {
-    //    if (count <= 1) {
-    //        if(!self.toolBar.titleLabel.isHidden) self.toolBar.titleLabel.hidden = YES;
-    //    } else {
-    //        if (self.toolBar.titleLabel.isHidden) self.toolBar.titleLabel.hidden = NO;
-    //    }
-    //}
 }
-
-
-
-
-
-//- (void)setFuctionDataArray:(NSArray<YBImageBrowserFunctionModel *> *)fuctionDataArray {
-//    _fuctionDataArray = fuctionDataArray;
-//    if (fuctionDataArray.count == 0) {
-//        [self.toolBar setRightButtonHide:YES];
-//    } else if (fuctionDataArray.count == 1) {
-//        YBImageBrowserFunctionModel *model = fuctionDataArray[0];
-//        if (model.image) {
-//            [self.toolBar setRightButtonImage:model.image];
-//            [self.toolBar setRightButtonTitle:nil];
-//        } else if (model.name) {
-//            [self.toolBar setRightButtonImage:nil];
-//            [self.toolBar setRightButtonTitle:model.name];
-//        } else {
-//            [self.toolBar setRightButtonImage:nil];
-//            [self.toolBar setRightButtonTitle:nil];
-//            YBLOG_WARNING(@"the only model in fuctionDataArray is invalid");
-//        }
-//    } else {
-//        [self.toolBar setRightButtonImage:[UIImage imageWithContentsOfFile:[[NSBundle yBImageBrowserBundle] pathForResource:@"ybImageBrowser_more" ofType:@"png"]]];
-//        [self.toolBar setRightButtonTitle:nil];
-//        //functionBar 方法仅在此处调用其它地方均用实例变量方式访问
-//        self.functionBar.dataArray = fuctionDataArray;
-//    }
-//}
-//
-//- (void)setDownloaderShouldDecompressImages:(BOOL)downloaderShouldDecompressImages {
-//    _downloaderShouldDecompressImages = downloaderShouldDecompressImages;
-//    [YBImageBrowserDownloader shouldDecompressImages:downloaderShouldDecompressImages];
-//}
-
-//- (YBImageBrowserCopywriter *)copywriter {
-//    if (!_copywriter) {
-//        _copywriter = [YBImageBrowserCopywriter new];
-//    }
-//    return _copywriter;
-//}
-
-//#pragma mark save photo to album
-//
-//- (void)savePhotoToAlbumWithCurrentIndex {
-//    YBImageBrowserView *browserView = self.browserView;
-//    if (!browserView) return;
-//    YBImageBrowserCell *cell = (YBImageBrowserCell *)[browserView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:browserView.currentIndex inSection:0]];
-//    if (!cell) return;
-//    if (cell.model) [self savePhotoToAlbumWithModel:cell.model preview:NO];
-//}
-//
-//- (void)savePhotoToAlbumWithModel:(YBImageBrowserModel *)model preview:(BOOL)preview {
-//    if (model.needCutToShow) {
-//        [self judgeAlbumAuthorizationStatusSuccess:^{
-//            UIImage *largeImage = [model valueForKey:YBImageBrowserModel_KVCKey_largeImage];
-//            if (largeImage) [self savePhotoToAlbumWithImage:largeImage];
-//        }];
-//    } if (model.image) {
-//        [self judgeAlbumAuthorizationStatusSuccess:^{
-//            [self savePhotoToAlbumWithImage:model.image];
-//        }];
-//    } else if (model.animatedImage) {
-//        if (model.animatedImage.data) {
-//            [self judgeAlbumAuthorizationStatusSuccess:^{
-//                [self saveGifToAlbumWithData:model.animatedImage.data];
-//            }];
-//        } else {
-//            YBLOG_WARNING(@"instance of FLAnimatedImage is exist, but it's key-data is not exist, this maybe the BUG of the framework of FLAnimatedImage");
-//        }
-//    } else {
-//        if (!preview) {
-//            [self savePhotoToAlbumWithModel:model.previewModel preview:YES];
-//        } else {
-//            [YB_NORMALWINDOW yb_showForkPromptWithText:self.copywriter.noImageDataToSave];
-//        }
-//    }
-//}
-
-//#pragma mark YBImageBrowserToolBarDelegate
-//
-//- (void)yBImageBrowserToolBar:(YBImageBrowserToolBar *)imageBrowserToolBar didClickRightButton:(UIButton *)button {
-//    if (!self.fuctionDataArray.count) return;
-//    if (self.fuctionDataArray.count == 1 && [self.fuctionDataArray[0].ID isEqualToString:YBImageBrowserFunctionModel_ID_savePictureToAlbum]) {
-//        //直接保存图片
-//        [self savePhotoToAlbumWithCurrentIndex];
-//    } else {
-//        //弹出功能栏
-//        if (_functionBar) {
-//            [_functionBar show];
-//        }
-//    }
-//}
-//
-//#pragma mark YBImageBrowserFunctionBarDelegate
-//
-//- (void)ybImageBrowserFunctionBar:(YBImageBrowserFunctionBar *)functionBar clickCellWithModel:(YBImageBrowserFunctionModel *)model {
-//
-//    if ([model.ID isEqualToString:YBImageBrowserFunctionModel_ID_savePictureToAlbum]) {
-//        [self savePhotoToAlbumWithCurrentIndex];
-//    } else {
-//        if (_delegate && [_delegate respondsToSelector:@selector(yBImageBrowser:clickFunctionBarWithModel:)]) {
-//            [_delegate yBImageBrowser:self clickFunctionBarWithModel:model];
-//        } else {
-//            YBLOG_WARNING(@"you are not handle events of functionBar");
-//        }
-//    }
-//}

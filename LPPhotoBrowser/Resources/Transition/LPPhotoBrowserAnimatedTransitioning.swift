@@ -204,7 +204,7 @@ extension LPPhotoBrowserAnimatedTransitioning {
         let fromIv = dataSource.photoBrowser(browser,
                                              imageViewOfClickedAt: index,
                                              of: type)
-        return (fromIv, source?.asImage)
+        return (fromIv, source?.asCurrentImage)
     }
     
     var outInfo: (fromIv: UIImageView?, toIv: UIImageView?, image: UIImage?)? {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1819CFBF20E08EE90021ABBA /* LPNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819CFBE20E08EE90021ABBA /* LPNavigationBar.swift */; };
 		1819CFC120E08EFD0021ABBA /* LPToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819CFC020E08EFD0021ABBA /* LPToolBar.swift */; };
+		1819CFFD20E1000A0021ABBA /* LPPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819CFFC20E1000A0021ABBA /* LPPhotoManager.swift */; };
 		181F332C20C5349B00B4D1AC /* LPPhotoDragAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */; };
 		186EDE2820BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE2720BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift */; };
 		186EDE2A20BD0C550059A0A9 /* LPPhotoBrowserModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModels.swift */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		1819CFBE20E08EE90021ABBA /* LPNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPNavigationBar.swift; sourceTree = "<group>"; };
 		1819CFC020E08EFD0021ABBA /* LPToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPToolBar.swift; sourceTree = "<group>"; };
+		1819CFFC20E1000A0021ABBA /* LPPhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoManager.swift; sourceTree = "<group>"; };
 		181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoDragAnimation.swift; sourceTree = "<group>"; };
 		186EDE2720BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserAnimatedOptions.swift; sourceTree = "<group>"; };
 		186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserModels.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				E8EAE37620C0F3400026A46C /* LPVideoBrowserCell.swift */,
 				E8EAE37220C0F0230026A46C /* LPPhotoContainerView.swift */,
 				181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */,
+				1819CFFC20E1000A0021ABBA /* LPPhotoManager.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				18983C9220BC0754009141F4 /* LPPhotoBrowserProtocol.swift in Sources */,
 				18BE3A8620DCF4CD005AEB7E /* LPBaseProgressView.swift in Sources */,
 				18A4B04420DC9E5C00274E09 /* UIImage+LPKit.swift in Sources */,
+				1819CFFD20E1000A0021ABBA /* LPPhotoManager.swift in Sources */,
 				1819CFBF20E08EE90021ABBA /* LPNavigationBar.swift in Sources */,
 				18983C9B20BC0CD7009141F4 /* UIViewController+LPKit.swift in Sources */,
 				18BE3A8A20DCF4EE005AEB7E /* LPPieProgressView.swift in Sources */,

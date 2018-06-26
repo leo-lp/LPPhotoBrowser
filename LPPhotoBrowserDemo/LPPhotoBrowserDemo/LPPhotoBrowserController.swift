@@ -94,7 +94,14 @@ extension LPPhotoBrowserController: LPPhotoBrowserDataSource, LPPhotoBrowserDele
                       of type: LPPhotoBrowserType) -> LPPhotoBrowserSourceConvertible? {
         switch type {
         case .default:
-            return UIImage(named: vm.imageNames[index])
+            let imageName = vm.imageNames[index]
+            let photo = LPNetworkPhoto()
+            photo.placeholder = UIImage(named: imageName)
+            
+            if let url = Bundle.main.url(forResource: imageName, withExtension: nil) {
+                photo.originalURL = url
+            }
+            return photo
         case .network:
             let photo = LPNetworkPhoto()
             photo.placeholder = photoBrowser(browser, imageViewOfClickedAt: index, of: type)?.image

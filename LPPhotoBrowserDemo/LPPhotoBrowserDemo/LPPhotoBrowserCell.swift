@@ -27,33 +27,46 @@ class LPPhotoBrowserCell: UICollectionViewCell {
     }
     
     private func bindLocalImage(with imageNamed: String) {
-        guard let url = Bundle.main.url(forResource: imageNamed, withExtension: nil)
-            , let data = try? Data(contentsOf: url)
-            , let image = UIImage(data: data) else { return }
+//        guard let url = Bundle.main.url(forResource: imageNamed, withExtension: nil)
+//            , let data = try? Data(contentsOf: url)
+//            , let image = UIImage(data: data) else { return }
         //guard let image = UIImage(named: imageNamed) else { return }
         
-        if image.size.width >= 3840 || image.size.height >= 3840 {
-            bigPhotoFlagLabel.isHidden = false
-            bigPhotoFlagLabel.text = " 4K大图 "
-            DispatchQueue.global().async {
-                let width: CGFloat = 375.0
-                let height: CGFloat = image.size.height / image.size.width * width
-                let scaledImage = image.lp_reSizeImage(CGSize(width: width, height: height))
-                DispatchQueue.main.async {
-                    self.imageView.image = scaledImage
+        guard let url = Bundle.main.url(forResource: imageNamed, withExtension: nil) else { return }
+        
+        let options: KingfisherOptionsInfo = [.cacheMemoryOnly]
+        imageView.kf.setImage(with: url, placeholder: nil, options: options, progressBlock: nil) { (image, error, cacheType, url) in
+            
+            print("cacheType=\(cacheType)")
+            guard let image = image else { return }
+            
+            if image.size.width >= 3840 || image.size.height >= 3840 {
+                self.bigPhotoFlagLabel.isHidden = false
+                self.bigPhotoFlagLabel.text = " 4K大图 "
+                DispatchQueue.global().async {
+                    let width: CGFloat = 375.0
+                    let height: CGFloat = image.size.height / image.size.width * width
+                    let scaledImage = image.lp_reSizeImage(CGSize(width: width, height: height))
+                    DispatchQueue.main.async {
+                        self.imageView.image = scaledImage
+                    }
                 }
+            } else if image.images != nil {
+                self.bigPhotoFlagLabel.isHidden = false
+                self.bigPhotoFlagLabel.text = " 动态图 "
+                self.imageView.image = image
+            } else {
+                self.bigPhotoFlagLabel.isHidden = true
+                self.imageView.image = image
             }
-        } else {
-            bigPhotoFlagLabel.isHidden = true
-            imageView.image = image
         }
     }
     
     private func bindNetworkImage(with URLString: String) {
         let url = URL(string: URLString)
         
-        let resizing = ResizingImageProcessor(referenceSize: CGSize(width: 200, height: 200), mode: .aspectFill)
-        let options: KingfisherOptionsInfo = [.processor(resizing), .preloadAllAnimationData]
+//        let resizing = ResizingImageProcessor(referenceSize: CGSize(width: 200, height: 200), mode: .aspectFill)
+        let options: KingfisherOptionsInfo = [/*.processor(resizing),*/ .preloadAllAnimationData]
         imageView.kf.setImage(with: url,
                               placeholder: nil,
                               options: options,

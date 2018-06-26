@@ -58,19 +58,27 @@ class LPPhotoContainerView: UIView {
         
         scrollView.setZoomScale(1.0, animated: false)
         
-        source?.asImage({ [weak self](percent) in
+        guard let source = source else { return }
+        
+        /// 设置占位符
+        if imageView.image == nil, let placeholder = source.asPlaceholder {
+            imageView.image = placeholder
+        }
+        
+        let progressBlock: LPProgress = { [weak self](percent) in
             guard let `self` = self else { return }
             self.progressView.setProgress(percent, animated: false)
             
             let progress = self.progressView.progress
             let isHidden = progress.isNaN || progress <= 0.0 || progress >= 1.0
             self.progressView.isHidden = isHidden
-        }, completion: { [weak self](image) in
-            guard let `self` = self else { return }
+        }
+        
+        let completionBlock: LPCompletion = { [weak self](image) in
+            guard let `self` = self, let image = image else { return }
+            let shouldResizeSubviews = self.imageView.image?.size != image.size
             
-            let shouldResizeSubviews = self.imageView.image?.size != image?.size
-            
-            if let image = image, let images = image.images {
+            if let images = image.images {
                 self.imageView.image = image
                 self.imageView.animationImages = images
                 self.imageView.animationDuration = image.duration
@@ -82,7 +90,12 @@ class LPPhotoContainerView: UIView {
             if shouldResizeSubviews {
                 self.resizeSubviews()
             }
-        })
+        }
+        
+        source.asThumbnail(progressBlock) {(thumbnail) in
+            completionBlock(thumbnail)
+            source.asOriginal(progressBlock, completion: completionBlock)
+        }
     }
 }
 

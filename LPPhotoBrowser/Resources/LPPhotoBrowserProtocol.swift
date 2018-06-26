@@ -43,6 +43,8 @@ public protocol LPPhotoBrowserDelegate: class {
                       indexDidChange oldIndex: Int,
                       newIndex: Int,
                       of type: LPPhotoBrowserType)
+    
+    func shouldLongPressGestureHandle() -> Bool
 }
 
 extension LPPhotoBrowserDelegate {
@@ -50,4 +52,8 @@ extension LPPhotoBrowserDelegate {
                              indexDidChange oldIndex: Int,
                              newIndex: Int,
                              of type: LPPhotoBrowserType) {}
+    
+    public func shouldLongPressGestureHandle() -> Bool {
+        return true
+    }
 }

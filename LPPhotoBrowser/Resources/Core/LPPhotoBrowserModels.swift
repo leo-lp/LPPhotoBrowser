@@ -13,7 +13,6 @@ public struct LPPhotoBrowserType: OptionSet, Hashable {
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
-    
     public static let `default` = LPPhotoBrowserType(rawValue: 1 << 1)
     public static let network   = LPPhotoBrowserType(rawValue: 1 << 2)
     public static let album     = LPPhotoBrowserType(rawValue: 1 << 3)
@@ -21,17 +20,38 @@ public struct LPPhotoBrowserType: OptionSet, Hashable {
 
 public typealias LPProgress = (_ percent: Float) -> Void
 public typealias LPCompletion = (_ image: UIImage?) -> Void
+public typealias LPCompletion2 = (_ data: Data?) -> Void
 
 public protocol LPPhotoBrowserSourceConvertible {
-    var asImage: UIImage? { get }
+    /// 获取当前显示图片，用于视图控制器过渡动画
+    var asCurrentImage: UIImage? { get }
     
-    func asImage(_ progress: LPProgress?, completion: @escaping LPCompletion)
+    /// 图片占位符
+    var asPlaceholder: UIImage? { get }
+    
+    /// 获取缩略图
+    func asThumbnail(_ progress: LPProgress?, completion: @escaping LPCompletion)
+    
+    /// 获取原图
+    func asOriginal(_ progress: LPProgress?, completion: @escaping LPCompletion)
+    
+    /// 获取数据
+    func asData(_ progress: LPProgress?, completion: @escaping LPCompletion2)
 }
 
 extension UIImage: LPPhotoBrowserSourceConvertible {
-    public var asImage: UIImage? { return self }
+    public var asCurrentImage: UIImage? { return self }
+    public var asPlaceholder: UIImage? { return nil }
     
-    public func asImage(_ progress: LPProgress?, completion: @escaping LPCompletion) {
-        return completion(self)
+    public func asThumbnail(_ progress: LPProgress?, completion: @escaping LPCompletion) {
+        completion(nil)
+    }
+    
+    public func asOriginal(_ progress: LPProgress?, completion: @escaping LPCompletion) {
+        completion(self)
+    }
+    
+    public func asData(_ progress: LPProgress?, completion: @escaping LPCompletion2) {
+        return completion(UIImagePNGRepresentation(self) ?? UIImageJPEGRepresentation(self, 1.0))
     }
 }
