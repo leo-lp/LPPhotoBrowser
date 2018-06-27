@@ -12,10 +12,13 @@ import LPPhotoBrowser
 class LPPhotoBrowserController: UICollectionViewController {
     let vm = LPPhotoBrowserVM()
     
+    deinit {
+        print("LPPhotoBrowserController: -> release memory.")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let right = UIBarButtonItem(title: "清除缓存",
-                                    style: .plain,
+        let right = UIBarButtonItem(barButtonSystemItem: .trash,
                                     target: self,
                                     action: #selector(clearCacheButtonClicked))
         navigationItem.rightBarButtonItem = right
@@ -96,7 +99,7 @@ extension LPPhotoBrowserController: LPPhotoBrowserDataSource, LPPhotoBrowserDele
         case .default:
             let imageName = vm.imageNames[index]
             let photo = LPNetworkPhoto()
-            photo.placeholder = UIImage(named: imageName)
+            photo.placeholder = photoBrowser(browser, imageViewOfClickedAt: index, of: type)?.image
             
             if let url = Bundle.main.url(forResource: imageName, withExtension: nil) {
                 photo.originalURL = url

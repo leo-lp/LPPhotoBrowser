@@ -26,9 +26,10 @@ class LPNetworkPhoto: LPPhotoBrowserSourceConvertible {
         KingfisherManager.shared.retrieveImage(with: url, options: options, progressBlock: { (receivedSize, totalSize) in
             progress?(Float(receivedSize) / Float(totalSize))
         }) { [weak self](image, error, cacheType, url) in
-            print("thumbnail cacheType=\(cacheType)")
             
             if let thumbnail = image {
+                print("thumbnail cacheType=\(cacheType, thumbnail.size)")
+                
                 self?.currImage = thumbnail
             }
             completion(image)
@@ -43,9 +44,9 @@ class LPNetworkPhoto: LPPhotoBrowserSourceConvertible {
             progress?(Float(receivedSize) / Float(totalSize))
         }) { [weak self](image, error, cacheType, url) in
             
-            print("original cacheType=\(cacheType)")
-            
             if let originalImage = image {
+                print("original cacheType=\(cacheType, originalImage.size)")
+                
                 self?.currImage = originalImage
                 
                 completion(originalImage)

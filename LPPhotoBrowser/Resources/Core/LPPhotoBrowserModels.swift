@@ -35,7 +35,7 @@ public protocol LPPhotoBrowserSourceConvertible {
     /// 获取原图
     func asOriginal(_ progress: LPProgress?, completion: @escaping LPCompletion)
     
-    /// 获取数据
+    /// 获取数据，用于将图片存储到相册
     func asData(_ progress: LPProgress?, completion: @escaping LPCompletion2)
 }
 

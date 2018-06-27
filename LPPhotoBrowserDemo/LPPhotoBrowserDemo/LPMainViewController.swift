@@ -20,5 +20,11 @@ class LPMainViewController: UIViewController {
         KingfisherManager.shared.cache.clearDiskCache()
     }
     
+    @IBAction func cameraButtonClicked(_ sender: UIBarButtonItem) {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "LPPhotoBrowserVCID")
+            , let browser = vc as? LPPhotoBrowserController else { return }
+        navigationController?.pushViewController(browser, animated: true)
+    }
+    
 }
 

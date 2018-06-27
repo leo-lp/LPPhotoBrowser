@@ -34,48 +34,38 @@ class LPPhotoBrowserCell: UICollectionViewCell {
         
         guard let url = Bundle.main.url(forResource: imageNamed, withExtension: nil) else { return }
         
-        let options: KingfisherOptionsInfo = [.cacheMemoryOnly]
+        let resizing = ResizingImageProcessor(referenceSize: CGSize(width: 200, height: 200), mode: .aspectFill)
+        let options: KingfisherOptionsInfo = [.processor(resizing), .cacheMemoryOnly]
         imageView.kf.setImage(with: url, placeholder: nil, options: options, progressBlock: nil) { (image, error, cacheType, url) in
-            
-            print("cacheType=\(cacheType)")
             guard let image = image else { return }
             
-            if image.size.width >= 3840 || image.size.height >= 3840 {
+            print("cacheType=\(cacheType, image.size)")
+            
+            if imageNamed.contains("4k") {
                 self.bigPhotoFlagLabel.isHidden = false
                 self.bigPhotoFlagLabel.text = " 4K大图 "
-                DispatchQueue.global().async {
-                    let width: CGFloat = 375.0
-                    let height: CGFloat = image.size.height / image.size.width * width
-                    let scaledImage = image.lp_reSizeImage(CGSize(width: width, height: height))
-                    DispatchQueue.main.async {
-                        self.imageView.image = scaledImage
-                    }
-                }
-            } else if image.images != nil {
+            } else if imageNamed.contains("GIF") {
                 self.bigPhotoFlagLabel.isHidden = false
                 self.bigPhotoFlagLabel.text = " 动态图 "
-                self.imageView.image = image
             } else {
                 self.bigPhotoFlagLabel.isHidden = true
-                self.imageView.image = image
             }
         }
     }
     
     private func bindNetworkImage(with URLString: String) {
         let url = URL(string: URLString)
-        
-//        let resizing = ResizingImageProcessor(referenceSize: CGSize(width: 200, height: 200), mode: .aspectFill)
-        let options: KingfisherOptionsInfo = [/*.processor(resizing),*/ .preloadAllAnimationData]
+        let resizing = ResizingImageProcessor(referenceSize: CGSize(width: 200, height: 200), mode: .aspectFill)
+        let options: KingfisherOptionsInfo = [.processor(resizing)]
         imageView.kf.setImage(with: url,
                               placeholder: nil,
                               options: options,
                               progressBlock: nil) { (img, error, type, url) in
-            if img?.images == nil {
-                self.bigPhotoFlagLabel.isHidden = true
-            } else {
+            if URLString.contains("gif") {
                 self.bigPhotoFlagLabel.isHidden = false
                 self.bigPhotoFlagLabel.text = " 动态图 "
+            } else {
+                self.bigPhotoFlagLabel.isHidden = true
             }
             
             if let error = error {
