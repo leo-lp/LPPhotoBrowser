@@ -9,20 +9,12 @@
 import UIKit
 
 class LPPhotoBrowserCellHeader: UICollectionReusableView {
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleButton: UIButton!
     
-    func bindData(at indexPath: IndexPath) {
-        var title: String
-        switch indexPath.section {
-        case 0:
-            title = "本地图片"
-        case 1:
-            title = "网络图片"
-        case 2:
-            title = "相册图片"
-        default:
-            title = "未知来源"
+    func bindData(with title: String?, at indexPath: IndexPath, target: Any?, action: Selector) {
+        titleButton.setTitle(title, for: .normal)
+        if indexPath.section == 2 {
+            titleButton.addTarget(target, action: action, for: .touchUpInside)
         }
-        titleLabel.text = title
     }
 }

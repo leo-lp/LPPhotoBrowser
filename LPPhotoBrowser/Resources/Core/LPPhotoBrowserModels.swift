@@ -13,9 +13,9 @@ public struct LPPhotoBrowserType: OptionSet, Hashable {
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
-    public static let `default` = LPPhotoBrowserType(rawValue: 1 << 1)
-    public static let network   = LPPhotoBrowserType(rawValue: 1 << 2)
-    public static let album     = LPPhotoBrowserType(rawValue: 1 << 3)
+    public static let local   = LPPhotoBrowserType(rawValue: 1 << 0)
+    public static let network = LPPhotoBrowserType(rawValue: 1 << 1)
+    public static let album   = LPPhotoBrowserType(rawValue: 1 << 2)
 }
 
 public typealias LPProgress = (_ percent: Float) -> Void

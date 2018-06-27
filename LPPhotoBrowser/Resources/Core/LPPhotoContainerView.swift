@@ -61,7 +61,7 @@ class LPPhotoContainerView: UIView {
         guard let source = source else { return }
         
         /// 设置占位符
-        if imageView.image == nil, let placeholder = source.asPlaceholder {
+        if let placeholder = source.asPlaceholder {
             imageView.image = placeholder
         }
         

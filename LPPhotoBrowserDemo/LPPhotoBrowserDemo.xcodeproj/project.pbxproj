@@ -202,10 +202,10 @@
 				18384CF320DA4A2200EB34D5 /* LPPhotoBrowserM.swift */,
 				18983C8D20BBF75D009141F4 /* LPPhotoBrowserCellHeader.swift */,
 				18983C8F20BBF77D009141F4 /* LPPhotoBrowserCell.swift */,
-				18983C6420BBE730009141F4 /* LocalImages */,
 				18983C0420BBDE8E009141F4 /* Main.storyboard */,
-				18983C0720BBDE8F009141F4 /* Assets.xcassets */,
 				18983C0920BBDE8F009141F4 /* LaunchScreen.storyboard */,
+				18983C0720BBDE8F009141F4 /* Assets.xcassets */,
+				18983C6420BBE730009141F4 /* LocalImages */,
 				18983C3020BBE6A1009141F4 /* Kingfisher */,
 				18983C0C20BBDE8F009141F4 /* Info.plist */,
 			);

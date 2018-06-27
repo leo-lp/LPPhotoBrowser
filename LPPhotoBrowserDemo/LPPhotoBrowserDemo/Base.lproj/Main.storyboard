@@ -93,21 +93,21 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="图片" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3m-io-rtD">
-                                    <rect key="frame" x="20" y="0.0" width="335" height="44"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                    <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q4c-vZ-heb">
+                                    <rect key="frame" x="10" y="0.0" width="355" height="44"/>
+                                    <state key="normal" title="头">
+                                        <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                </button>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="U3m-io-rtD" firstAttribute="top" secondItem="OAu-Ng-bZe" secondAttribute="top" id="AtK-MQ-lqg"/>
-                                <constraint firstItem="U3m-io-rtD" firstAttribute="leading" secondItem="OAu-Ng-bZe" secondAttribute="leading" constant="20" id="dtC-Uk-2Qk"/>
-                                <constraint firstAttribute="trailing" secondItem="U3m-io-rtD" secondAttribute="trailing" constant="20" id="e2l-Hm-RDa"/>
-                                <constraint firstAttribute="bottom" secondItem="U3m-io-rtD" secondAttribute="bottom" id="ybm-13-D4f"/>
+                                <constraint firstItem="Q4c-vZ-heb" firstAttribute="top" secondItem="OAu-Ng-bZe" secondAttribute="top" id="MgR-5h-1gU"/>
+                                <constraint firstAttribute="bottom" secondItem="Q4c-vZ-heb" secondAttribute="bottom" id="TPR-k4-w1g"/>
+                                <constraint firstItem="Q4c-vZ-heb" firstAttribute="leading" secondItem="OAu-Ng-bZe" secondAttribute="leading" constant="10" id="kMg-q3-lyU"/>
+                                <constraint firstAttribute="trailing" secondItem="Q4c-vZ-heb" secondAttribute="trailing" constant="10" id="tcP-Wu-vrK"/>
                             </constraints>
                             <connections>
-                                <outlet property="titleLabel" destination="U3m-io-rtD" id="hso-9E-xud"/>
+                                <outlet property="titleButton" destination="Q4c-vZ-heb" id="BCZ-IB-lis"/>
                             </connections>
                         </collectionReusableView>
                         <connections>

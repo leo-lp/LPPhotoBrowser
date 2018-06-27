@@ -58,70 +58,57 @@ extension LPPhotoBrowserController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LPPhotoBrowserCell", for: indexPath) as! LPPhotoBrowserCell
-        let source = vm.sourceForConfigCell(at: indexPath)
-        cell.bindData(with: source, at: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LPPhotoBrowserCell",
+                                                      for: indexPath) as! LPPhotoBrowserCell
+        cell.bindData(with: vm.modelOfCell(at: indexPath), at: indexPath)
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "LPPhotoBrowserCellHeader", for: indexPath) as! LPPhotoBrowserCellHeader
-        header.bindData(at: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                     withReuseIdentifier: "LPPhotoBrowserCellHeader",
+                                                                     for: indexPath) as! LPPhotoBrowserCellHeader
+        header.bindData(with: vm.headerTitleOfCell(at: indexPath.section),
+                        at: indexPath,
+                        target: self,
+                        action: #selector(headerButtonClicked))
         return header
     }
     
     // MARK: UICollectionViewDelegate
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let type: LPPhotoBrowserType = indexPath.section == 0 ? .default : .network
-        
+        let type: LPPhotoBrowserType = indexPath.section == 0 ? .local : .network
         let browser = LPPhotoBrowser(type: type, index: indexPath.row)
         browser.dataSource = self
         browser.delegate = self
         browser.show(from: self, completion: nil)
+    }
+    
+    /// Action
+    
+    @objc private func headerButtonClicked(_ sender: UIButton) {
+        
     }
 }
 
 extension LPPhotoBrowserController: LPPhotoBrowserDataSource, LPPhotoBrowserDelegate {
     
     func photoBrowser(_ browser: LPPhotoBrowser, numberOf type: LPPhotoBrowserType) -> Int {
-        switch type {
-        case .default: return vm.imageNames.count
-        case .network: return vm.URLStrings.count
-        default: return 0
-        }
+        return vm.number(of: type)
     }
     
     func photoBrowser(_ browser: LPPhotoBrowser,
                       sourceAt index: Int,
                       of type: LPPhotoBrowserType) -> LPPhotoBrowserSourceConvertible? {
-        switch type {
-        case .default:
-            let imageName = vm.imageNames[index]
-            let photo = LPNetworkPhoto()
-            photo.placeholder = photoBrowser(browser, imageViewOfClickedAt: index, of: type)?.image
-            
-            if let url = Bundle.main.url(forResource: imageName, withExtension: nil) {
-                photo.originalURL = url
-            }
-            return photo
-        case .network:
-            let photo = LPNetworkPhoto()
-            photo.placeholder = photoBrowser(browser, imageViewOfClickedAt: index, of: type)?.image
-            photo.originalURL = URL(string: vm.URLStrings[index])
-            return photo
-        default:
-            return nil
-        }
+        guard let collectionView = collectionView else { return nil }
+        return vm.sourceConvertible(at: index, of: type, collectionView: collectionView)
     }
     
     func photoBrowser(_ browser: LPPhotoBrowser,
                       imageViewOfClickedAt index: Int,
                       of type: LPPhotoBrowserType) -> UIImageView? {
         guard let collectionView = collectionView else { return nil }
-        
-        let section = type == .default ? 0 : 1
-        let indexPath = IndexPath(item: index, section: section)
-        return vm.imageView(in: collectionView, at: indexPath)
+        return vm.imageView(in: collectionView, at: index, of: type)
     }
 }

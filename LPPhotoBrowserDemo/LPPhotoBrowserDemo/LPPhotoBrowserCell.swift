@@ -17,12 +17,20 @@ class LPPhotoBrowserCell: UICollectionViewCell {
         bigPhotoFlagLabel.layer.cornerRadius = 4.0
     }
     
-    func bindData(with name: String, at indexPath: IndexPath) {
-        bigPhotoFlagLabel.isHidden = true
-        if indexPath.section == 0 {
-            bindLocalImage(with: name)
-        } else {
-            bindNetworkImage(with: name)
+    func bindData(with value: Any?, at indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            if let imageName = value as? String {
+                bindLocalImage(with: imageName)
+            }
+        case 1:
+            if let URLString = value as? String {
+                bindNetworkImage(with: URLString)
+            }
+        case 2:
+            break
+        default:
+            break
         }
     }
     

@@ -23,7 +23,7 @@ public class LPPhotoBrowser: UIViewController {
     
     public private(set) var currentIndex: Int = 0
     
-    public private(set) var type: LPPhotoBrowserType = .default
+    public private(set) var type: LPPhotoBrowserType = .local
     
     private var isViewDidAppear: Bool = false
     private var backgroundColor: UIColor = UIColor.black
