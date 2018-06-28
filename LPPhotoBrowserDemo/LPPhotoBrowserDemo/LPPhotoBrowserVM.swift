@@ -53,8 +53,12 @@ class LPPhotoBrowserVM {
         return ("相册图片", [])
     }()
 }
-
+public enum LPResult<Value> {
+    case success(Value)
+    case failure(Error)
+}
 extension LPPhotoBrowserVM {
+    
     func numberOfSections() -> Int {
         return 3
     }

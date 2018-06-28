@@ -11,9 +11,8 @@
 		1819CFFD20E1000A0021ABBA /* LPPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819CFFC20E1000A0021ABBA /* LPPhotoManager.swift */; };
 		181F332C20C5349B00B4D1AC /* LPPhotoDragAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */; };
 		186EDE2820BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE2720BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift */; };
-		186EDE2A20BD0C550059A0A9 /* LPPhotoBrowserModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModels.swift */; };
+		186EDE2A20BD0C550059A0A9 /* LPPhotoBrowserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModel.swift */; };
 		186EDE3120BD2B900059A0A9 /* UIApplication+LPKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3020BD2B900059A0A9 /* UIApplication+LPKit.swift */; };
-		186EDE3620BD2F840059A0A9 /* LPPhotoBrowserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3520BD2F840059A0A9 /* LPPhotoBrowserConfig.swift */; };
 		186EDE3820BD300F0059A0A9 /* LPPhotoBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3720BD300F0059A0A9 /* LPPhotoBrowserView.swift */; };
 		186EDE3A20BD30520059A0A9 /* LPPhotoBrowserViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE3920BD30520059A0A9 /* LPPhotoBrowserViewLayout.swift */; };
 		18983C2820BBE4BD009141F4 /* LPPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18983C2720BBE4BD009141F4 /* LPPhotoBrowser.swift */; };
@@ -35,9 +34,8 @@
 		1819CFFC20E1000A0021ABBA /* LPPhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoManager.swift; sourceTree = "<group>"; };
 		181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoDragAnimation.swift; sourceTree = "<group>"; };
 		186EDE2720BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserAnimatedOptions.swift; sourceTree = "<group>"; };
-		186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserModels.swift; sourceTree = "<group>"; };
+		186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserModel.swift; sourceTree = "<group>"; };
 		186EDE3020BD2B900059A0A9 /* UIApplication+LPKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+LPKit.swift"; sourceTree = "<group>"; };
-		186EDE3520BD2F840059A0A9 /* LPPhotoBrowserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserConfig.swift; sourceTree = "<group>"; };
 		186EDE3720BD300F0059A0A9 /* LPPhotoBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserView.swift; sourceTree = "<group>"; };
 		186EDE3920BD30520059A0A9 /* LPPhotoBrowserViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserViewLayout.swift; sourceTree = "<group>"; };
 		18983C1C20BBDE9D009141F4 /* LPPhotoBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LPPhotoBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,7 +76,6 @@
 		186EDE3320BD2EB10059A0A9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModels.swift */,
 				186EDE3720BD300F0059A0A9 /* LPPhotoBrowserView.swift */,
 				186EDE3920BD30520059A0A9 /* LPPhotoBrowserViewLayout.swift */,
 				E8EAE37C20C0F5530026A46C /* LPBaseBrowserCell.swift */,
@@ -110,10 +107,10 @@
 		18983C1E20BBDE9D009141F4 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				18983C9920BC0CCE009141F4 /* LPKit */,
-				186EDE3520BD2F840059A0A9 /* LPPhotoBrowserConfig.swift */,
-				18983C9120BC0754009141F4 /* LPPhotoBrowserProtocol.swift */,
 				18983C2720BBE4BD009141F4 /* LPPhotoBrowser.swift */,
+				18983C9920BC0CCE009141F4 /* LPKit */,
+				18983C9120BC0754009141F4 /* LPPhotoBrowserProtocol.swift */,
+				186EDE2920BD0C550059A0A9 /* LPPhotoBrowserModel.swift */,
 				1819CFBB20E08D820021ABBA /* NavigationBar */,
 				18BE3A8420DCF4AF005AEB7E /* ProgressHUD */,
 				186EDE3320BD2EB10059A0A9 /* Core */,
@@ -248,9 +245,8 @@
 				186EDE3120BD2B900059A0A9 /* UIApplication+LPKit.swift in Sources */,
 				E8EAE37D20C0F5530026A46C /* LPBaseBrowserCell.swift in Sources */,
 				E8EAE37920C0F3E70026A46C /* LPPhotoBrowserCell.swift in Sources */,
-				186EDE2A20BD0C550059A0A9 /* LPPhotoBrowserModels.swift in Sources */,
+				186EDE2A20BD0C550059A0A9 /* LPPhotoBrowserModel.swift in Sources */,
 				E8EAE37720C0F3400026A46C /* LPVideoBrowserCell.swift in Sources */,
-				186EDE3620BD2F840059A0A9 /* LPPhotoBrowserConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

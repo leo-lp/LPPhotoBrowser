@@ -1,5 +1,5 @@
 //
-//  LPPhotoBrowserConfig.swift
+//  LPPhotoBrowserModels.swift
 //  LPPhotoBrowser
 //
 //  Created by pengli on 2018/5/29.
@@ -7,6 +7,17 @@
 //
 
 import UIKit
+
+public struct LPPhotoBrowserType: OptionSet, Hashable {
+    public let rawValue: Int
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+    public static let local   = LPPhotoBrowserType(rawValue: 1 << 0)
+    public static let network = LPPhotoBrowserType(rawValue: 1 << 1)
+    public static let album   = LPPhotoBrowserType(rawValue: 1 << 2)
+}
+
 
 class LPPhotoBrowserConfig {
     static let shared: LPPhotoBrowserConfig = {
@@ -21,5 +32,4 @@ class LPPhotoBrowserConfig {
     
     /// 页与页之间的间距
     var distanceBetweenPages: CGFloat = 18.0
-    
 }
