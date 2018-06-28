@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1819CFBF20E08EE90021ABBA /* LPNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819CFBE20E08EE90021ABBA /* LPNavigationBar.swift */; };
-		1819CFC120E08EFD0021ABBA /* LPToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819CFC020E08EFD0021ABBA /* LPToolBar.swift */; };
 		1819CFFD20E1000A0021ABBA /* LPPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819CFFC20E1000A0021ABBA /* LPPhotoManager.swift */; };
 		181F332C20C5349B00B4D1AC /* LPPhotoDragAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */; };
 		186EDE2820BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EDE2720BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift */; };
@@ -33,7 +32,6 @@
 
 /* Begin PBXFileReference section */
 		1819CFBE20E08EE90021ABBA /* LPNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPNavigationBar.swift; sourceTree = "<group>"; };
-		1819CFC020E08EFD0021ABBA /* LPToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPToolBar.swift; sourceTree = "<group>"; };
 		1819CFFC20E1000A0021ABBA /* LPPhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoManager.swift; sourceTree = "<group>"; };
 		181F332B20C5349B00B4D1AC /* LPPhotoDragAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoDragAnimation.swift; sourceTree = "<group>"; };
 		186EDE2720BCFEBD0059A0A9 /* LPPhotoBrowserAnimatedOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPPhotoBrowserAnimatedOptions.swift; sourceTree = "<group>"; };
@@ -69,13 +67,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1819CFBB20E08D820021ABBA /* ToolBar */ = {
+		1819CFBB20E08D820021ABBA /* NavigationBar */ = {
 			isa = PBXGroup;
 			children = (
 				1819CFBE20E08EE90021ABBA /* LPNavigationBar.swift */,
-				1819CFC020E08EFD0021ABBA /* LPToolBar.swift */,
 			);
-			path = ToolBar;
+			path = NavigationBar;
 			sourceTree = "<group>";
 		};
 		186EDE3320BD2EB10059A0A9 /* Core */ = {
@@ -117,7 +114,7 @@
 				186EDE3520BD2F840059A0A9 /* LPPhotoBrowserConfig.swift */,
 				18983C9120BC0754009141F4 /* LPPhotoBrowserProtocol.swift */,
 				18983C2720BBE4BD009141F4 /* LPPhotoBrowser.swift */,
-				1819CFBB20E08D820021ABBA /* ToolBar */,
+				1819CFBB20E08D820021ABBA /* NavigationBar */,
 				18BE3A8420DCF4AF005AEB7E /* ProgressHUD */,
 				186EDE3320BD2EB10059A0A9 /* Core */,
 				18983C2920BBE517009141F4 /* Transition */,
@@ -235,7 +232,6 @@
 			files = (
 				186EDE3820BD300F0059A0A9 /* LPPhotoBrowserView.swift in Sources */,
 				18983C2B20BBE549009141F4 /* LPPhotoBrowserAnimatedTransitioning.swift in Sources */,
-				1819CFC120E08EFD0021ABBA /* LPToolBar.swift in Sources */,
 				18BE3A8820DCF4DD005AEB7E /* LPRingProgressView.swift in Sources */,
 				18983C2820BBE4BD009141F4 /* LPPhotoBrowser.swift in Sources */,
 				18983C9220BC0754009141F4 /* LPPhotoBrowserProtocol.swift in Sources */,
