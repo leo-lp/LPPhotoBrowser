@@ -11,7 +11,7 @@
 
 import UIKit
 
-extension UIViewController {
+public extension UIViewController {
     
     /// 获取Window中的顶视图控制器
     static func topController(_ viewCtrl: UIViewController? = nil) -> UIViewController? {

@@ -8,14 +8,14 @@
 
 import Photos
 
-class LPPhotoManager {
-    static let shared: LPPhotoManager = { return LPPhotoManager() }()
-    
+open class LPPhotoManager {
+    //public static let shared: LPPhotoManager = { return LPPhotoManager() }()
+    public init() { }
 }
 
 // MARK: - 保存图片
 
-extension LPPhotoManager {
+public extension LPPhotoManager {
     
     func savePhoto(_ image: UIImage, location: CLLocation?, completion: ((Error?) -> Void)?) {
         guard let data = UIImagePNGRepresentation(image)
@@ -55,7 +55,7 @@ extension LPPhotoManager {
 
 // MARK: - 相册权限认证
 
-extension LPPhotoManager {
+public extension LPPhotoManager {
     
     /// 如果得到了授权,返回true
     func authorizationStatusAuthorized() -> Bool {
