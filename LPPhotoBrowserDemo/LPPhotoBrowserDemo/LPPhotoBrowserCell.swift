@@ -47,7 +47,7 @@ class LPPhotoBrowserCell: UICollectionViewCell {
         imageView.kf.setImage(with: url, placeholder: nil, options: options, progressBlock: nil) { (image, error, cacheType, url) in
             guard let image = image else { return }
             
-            print("cacheType=\(cacheType, image.size)")
+            print("local cacheType=\(cacheType, image.size)")
             
             if imageNamed.contains("4k") {
                 self.bigPhotoFlagLabel.isHidden = false
@@ -63,8 +63,10 @@ class LPPhotoBrowserCell: UICollectionViewCell {
     
     private func bindNetworkImage(with URLString: String) {
         let url = URL(string: URLString)
-        let resizing = ResizingImageProcessor(referenceSize: CGSize(width: 200, height: 200), mode: .aspectFill)
-        let options: KingfisherOptionsInfo = [.processor(resizing)]
+//        let resizing = ResizingImageProcessor(referenceSize: CGSize(width: 100, height: 100), mode: .aspectFill)
+        
+        let crop = CroppingImageProcessor(size: CGSize(width: 150, height: 150))
+        let options: KingfisherOptionsInfo = [.processor(crop)]
         imageView.kf.setImage(with: url,
                               placeholder: nil,
                               options: options,
@@ -76,6 +78,8 @@ class LPPhotoBrowserCell: UICollectionViewCell {
                 self.bigPhotoFlagLabel.isHidden = true
             }
             
+            print("network cacheType=\(type, img?.size)")
+                                
             if let error = error {
                 print("URLString=\(URLString)")
                 print("error=\(error)")

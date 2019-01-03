@@ -204,8 +204,12 @@ extension LPPhotoBrowser: UICollectionViewDataSource, UICollectionViewDelegate, 
                                                              of: self.type) else { return }
             source.asData(nil, completion: { (data) in
                 guard let data = data else { return }
-                LPPhotoManager().savePhoto(data, location: nil, completion: { (error) in
-                    
+                let photoManager = LPPhotoManager.shared
+                photoManager.requestAuthorization({ (authorized) in
+                    guard authorized else { return }
+                    photoManager.savePhoto(data, location: nil, completion: { (error) in
+                        
+                    })
                 })
             })
         }))

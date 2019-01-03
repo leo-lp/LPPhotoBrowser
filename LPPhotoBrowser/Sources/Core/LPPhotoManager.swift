@@ -8,9 +8,8 @@
 
 import Photos
 
-open class LPPhotoManager {
-    //public static let shared: LPPhotoManager = { return LPPhotoManager() }()
-    public init() { }
+public class LPPhotoManager {
+    public static let shared: LPPhotoManager = { return LPPhotoManager() }()
 }
 
 // MARK: - 保存图片
